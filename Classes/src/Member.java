@@ -7,7 +7,7 @@ public class Member
   private int points;
   private boolean boost;
   private Address address;
-  private Date lastRecordTime;
+  private int lastRecordTime;
   public Member(String firstName, String lastName, String phoneNumber, String email ,int houseNumber, String street)
   {
     this.firstName = firstName;
@@ -17,7 +17,7 @@ public class Member
     address = new Address(houseNumber,street);
     points = 0;
     boost = false;
-    lastRecordTime = new Date();
+    lastRecordTime = 0;
   }
   public void setFirstName(String firstName)
   {this.firstName = firstName;}
@@ -61,7 +61,7 @@ public class Member
   public String getAddressStreet()
   {return address.getStreet();}
 
-  public Date getLastRecordTime()
+  public int getLastRecordTime()
   {return lastRecordTime;}
 
   public void setLastRecordTime(){}
@@ -89,7 +89,12 @@ public class Member
         email.equals(obj.getEmail()) &&
         points == obj.getPoints()  &&
         boost == obj.isBoosted() &&
-        address.equals(obj.getAddress());
-        //lastRecordTime.equals(obj.getDate());
+        address.equals(obj.getAddress()) &&
+        lastRecordTime == obj.getLastRecordTime();
+  }
+  public String toString(){
+    String temp = "My name is %S %S, my phone number is: %s, my email is: %s, I live at %S %d, my points is: %d, time since last record: %d ,  am I boosted? %B";
+    return String.format(temp,firstName,lastName,phoneNumber,email,getAddressStreet(),getAddressHouse(),lastRecordTime ,points,boost);
+
   }
 }
