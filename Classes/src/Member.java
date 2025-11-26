@@ -88,6 +88,9 @@ public class Member {
   public void addPoints(int pointAmount){
     points += pointAmount;
   }
+  public void removePoints(int pointAmount){
+    points -= pointAmount;
+  }
   public boolean isEligibleForReset() {
     return points >= 100;  //This value is magical
   }
