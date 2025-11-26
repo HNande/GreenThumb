@@ -10,6 +10,6 @@ public class TaskList {
     taskList.add(task);
   }
   public void remove(Task task){
-    taskList.remove(task);
+    taskList.remove(task)
   }
 }
