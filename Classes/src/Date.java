@@ -14,8 +14,11 @@ public Date(int day,int month, int year){
   this.year = year;
 }
 public Date(Date date){
-
+ day = date.getDay();
+ month = date.getMonth();
+ year = date.getYear();
 }
+
 public void setDay(int day)
 {this.day = day;}
 public int getDay()
@@ -28,4 +31,9 @@ public void setYear(int year)
 {this.year = year;}
 public int getYear()
 {return year;}
+
+
+
+
+
 }
