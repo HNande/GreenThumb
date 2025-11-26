@@ -82,6 +82,9 @@ public class Member {
     Community.addCommunityPoints(points);
     points = 0;
   }
+  public void timePassed(int time){
+    lastRecordTime +=time;
+  }
   public void addPoints(int pointAmount){
     points += pointAmount;
   }
