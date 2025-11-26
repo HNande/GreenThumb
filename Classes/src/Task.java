@@ -15,7 +15,7 @@ public class Task {
     if (taskType == 1) {//IF Invidiual
       if(recordMember.isBoosted()){
         float temp = Math.round(pointAmount*1.3);//30% increase in points earned
-        recordMember.addPoints(recordMember.getPoints()+Math.round(temp));
+        recordMember.addPoints(recordMember.getPoints());
       } else {
         recordMember.addPoints(recordMember.getPoints() + pointAmount);
       }
