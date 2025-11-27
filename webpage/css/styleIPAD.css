@@ -1,0 +1,128 @@
+:root {
+  --bg-layout-color: #f1fbf6;
+  --bg-container-color: #e6f9ef;
+  --bg-block-color: #d6f3df;
+  --text-primary-color: #08321c;
+  --text-secondary-color: #2a6b44;
+  --text-highlighted-color: #27b16a;
+  --text-highlighted2-color: #0fa055;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--text-font);
+  color: var(--text-primary-color);
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-layout-color);
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--text-highlighted-color);
+}
+
+h3 {
+  padding: 10px;
+}
+
+.text-highlitghted1 {
+  color: var(--text-highlighted-color);
+}
+
+.text-highlitghted2 {
+  color: var(--text-highlighted2-color);
+}
+
+h4,
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Navigation Bar */
+
+.header, 
+.header-content {
+  overflow: visible;
+}
+
+.header {
+  width: 100%;
+  margin-bottom: 40px;
+  background-color: var(--bg-container-color);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo img {
+  width: 80px;
+}
+
+.nav-bar {
+  position: relative;
+  display: inline-block;
+  overflow: visible;
+  width: 160px;
+  padding: 10px 0;
+}
+
+/* Turn the first link into a menu button | превращаем первую ссылку в кнопку меню */
+.nav-bar-item:first-child {
+  display: block;
+  background-color: var(--bg-block-color);
+  padding: 10px 15px;
+  border-radius: 8px;
+  display: block;
+  text-align: center;
+  z-index: 10;
+}
+
+/* | скрываем остальные ссылки */
+.nav-bar-item:not(:first-child) {
+  display: none;
+}
+
+/* | выпадающий блок */
+.nav-bar:hover .nav-bar-item:not(:first-child) {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  background-color: var(--bg-container-color);
+  padding: 10px 15px;
+  border-radius: 0;
+  text-align: left;
+  z-index: 20;
+}
+
+/* | оформляем выпадающий список */
+.nav-bar:hover {
+  background-color: var(--bg-container-color);
+  padding-bottom: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* | ховер для пунктов */
+.nav-bar-item:not(:first-child):hover {
+  background-color: var(--bg-block-color);
+  color: var(--text-highlighted-color);
+}
