@@ -79,7 +79,7 @@ public class Member {
     return points;
   }
   public void convertPoints(){
-    Community.addCommunityPoints(points);
+    Community.getInstance().addCommunityPoints(points);
     points = 0;
   }
   public void timePassed(int time){

@@ -1,14 +1,20 @@
-public class Community
-{
+public class Community {
+  private static final Community instance = new Community();
   private int rewardThreshold;
   private String rewardDescription;
-  private static int communityPoints;
+  private  int communityPoints;
 
-  public Community(int rewardThreshold, String rewardDescription, int communityPoints){
-    this.rewardThreshold = rewardThreshold;
-    this.rewardDescription = rewardDescription;
-    //this.communityPoints = communityPoints;??
-    Community.communityPoints = communityPoints;
+  private Community() {
+    rewardThreshold = 0;
+    rewardDescription = "";
+    communityPoints = 0;
+  }
+  // Constructor example
+  // Community community = Community.getInstance();
+  // Whenever you want to call a method, use Community.getInstance()
+  // For example Community.getInstance().setRewardThreshold();
+  public static Community getInstance() {
+    return instance;
   }
   public void setRewardThreshold(int rewardThreshold) {
     this.rewardThreshold = rewardThreshold;
@@ -22,17 +28,16 @@ public class Community
   public String getRewardDescription() {
     return rewardDescription;
   }
-  public static void setCommunityPoints(int communityPoints) {
-    Community.communityPoints = communityPoints;
+  public void setCommunityPoints(int communityPoints) {
+    this.communityPoints = communityPoints;
   }
-  public static int getCommunityPoints() {
+  public int getCommunityPoints() {
     return communityPoints;
   }
-  public static void addCommunityPoints(int pointAmount)
-  {
-    communityPoints += pointAmount;
+  public void addCommunityPoints(int pointAmount) {
+    this.communityPoints += pointAmount;
   }
-  public boolean isAboveThresold(){
+  public boolean isAboveThresold() {
     return communityPoints >= rewardThreshold;
   }
 }
