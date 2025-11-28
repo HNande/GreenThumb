@@ -1,0 +1,126 @@
+:root {
+  --bg-layout-color: #f1fbf6;
+  --bg-container-color: #e6f9ef;
+  --bg-block-color: #d6f3df;
+  --text-primary-color: #08321c;
+  --text-secondary-color: #2a6b44;
+  --text-highlighted-color: #27b16a;
+  --text-highlighted2-color: #0fa055;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--text-font);
+  color: var(--text-primary-color);
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-layout-color);
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--text-highlighted-color);
+}
+
+h3 {
+  padding: 10px;
+}
+
+.text-highlitghted1 {
+  color: var(--text-highlighted-color);
+}
+
+.text-highlitghted2 {
+  color: var(--text-highlighted2-color);
+}
+
+h4,
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Navigation Bar */
+
+.header, 
+.header-content {
+  overflow: visible;
+}
+
+.header {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo img {
+  width: 80px;
+}
+
+.nav-bar {
+  position: relative;
+}
+
+/* Style the dropdown button */
+.nav-bar-global {
+  background-color: var(--text-highlighted-color);
+  color: var(--bg-layout-color);
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 200px;
+  border-radius: 5%;
+}
+
+/* Dropdown content */
+.nav-bar-item {
+  display: none;
+  position: absolute;
+  background-color: var(--bg-block-color);
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 5%
+}
+
+/* Links inside dropdown content */
+.nav-bar-item a {
+  color: var(--text-primary-color);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.nav-bar-item a:hover {
+  background-color: var(--bg-container-color);
+  border-radius: 15%
+}
+
+/* Show the dropdown content on hover */
+.nav-bar:hover .nav-bar-item {
+  display: block;
+}
+
+/* Change background color of dropdown button on hover */
+.nav-bar:hover .nav-bar-global {
+  background-color: var(--text-highlighted2-color);
+}

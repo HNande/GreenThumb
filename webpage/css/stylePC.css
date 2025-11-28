@@ -78,7 +78,15 @@ h3 {
   gap: 70px;
 }
 
+.nav-bar-global {
+  display: none;
+}
+
 .nav-bar-item {
   font-size: 15px;
   font-weight: 600;
+}
+
+.nav-bar-item a{
+  padding: 15px;
 }
