@@ -83,10 +83,13 @@ h3 {
 }
 
 .nav-bar-item {
-  font-size: 15px;
   font-weight: 600;
 }
 
-.nav-bar-item a{
+.nav-bar-item a {
+  font-size: 22px;
+}
+
+.nav-bar-item a {
   padding: 15px;
 }
