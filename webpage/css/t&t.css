@@ -1,0 +1,22 @@
+/* Task page */
+
+.center {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 5%
+}
+
+.gaps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.block {
+  background-color: var(--bg-block-color);
+  border: solid 3px var(--text-highlighted-color);
+  border-radius: 8%;
+  width: 65%;
+  padding: 2%;
+}
+
