@@ -26,7 +26,7 @@ public class Task {
       Community.getInstance().addCommunityPoints(pointAmount);
     }
     totalCount++;
-    return new RecordedTask(name, taskType, day, month, year);
+    return new RecordedTask(name, taskType,pointAmount ,day, month, year);
   }
 
   public void setName(String name) {

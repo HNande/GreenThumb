@@ -1,5 +1,6 @@
+import java.io.Serializable;
 import java.util.ArrayList;
-public class RecordedTaskList {
+public class RecordedTaskList implements Serializable {
   private final ArrayList<RecordedTask> recordedTaskList = new ArrayList<>();
   public RecordedTaskList() {
   }

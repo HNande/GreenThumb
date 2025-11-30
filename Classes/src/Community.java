@@ -1,4 +1,6 @@
-public class Community {
+import java.io.Serializable;
+
+public class Community implements Serializable {
   private static final Community instance = new Community();
   private int rewardThreshold;
   private String rewardDescription;

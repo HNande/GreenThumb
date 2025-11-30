@@ -1,4 +1,6 @@
-public class TradeOffer {
+import java.io.Serializable;
+
+public class TradeOffer implements Serializable {
   private String name;
   private String description;
   private int cost;
@@ -11,39 +13,30 @@ public class TradeOffer {
     this.cost = cost;
     this.proposer = proposer;
   }
-
   public String getName() {
     return name;
   }
-
   public void setName(String name) {
     this.name = name;
   }
-
   public String getDescription() {
     return description;
   }
-
   public void setDescription(String description) {
     this.description = description;
   }
-
   public int getCost() {
     return cost;
   }
-
   public void setCost(int cost) {
     this.cost = cost;
   }
-
   public Member getProposer() {
     return proposer;
   }
-
   public void setProposer(Member proposer) {
     this.proposer = proposer;
   }
-
   public void executeTradeOffer(Member payer, Member reciever) {
     if (proposer.equals(payer)) {
       reciever.addPoints(cost);

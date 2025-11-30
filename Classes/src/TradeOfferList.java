@@ -1,5 +1,6 @@
+import java.io.Serializable;
 import java.util.ArrayList;
-public class TradeOfferList {
+public class TradeOfferList implements Serializable {
   private final ArrayList<TradeOffer> tradeOfferList = new ArrayList<>();
   public TradeOfferList() {
   }

@@ -1,5 +1,6 @@
+import java.io.Serializable;
 import java.util.ArrayList;
-public class MemberList {
+public class MemberList implements Serializable {
   private final ArrayList<Member> memberList = new ArrayList<>();
   public MemberList() {
   }
