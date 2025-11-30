@@ -1,11 +1,15 @@
 import java.io.Serializable;
 import java.time.LocalDate;
-// when we start the application it will fetch the current time, and compare it to a saved time
-// then loop through all the members and add to their time since last record based on how much time has passed
 public class Date implements Serializable {
   private int day;
   private int month;
   private int year;
+  public Date(){
+    LocalDate localDate = LocalDate.now();
+    day = localDate.getDayOfMonth();
+    month = localDate.getMonthValue();
+    year = localDate.getYear();
+  }
   public Date(int day, int month, int year) {
     this.day = day;
     this.month = month;
@@ -15,6 +19,9 @@ public class Date implements Serializable {
     day = date.getDay();
     month = date.getMonth();
     year = date.getYear();
+  }
+  public Date today(){
+    return new Date(day,month,year);
   }
   public void setDay(int day) {
     this.day = day;

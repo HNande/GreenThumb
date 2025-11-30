@@ -1,8 +1,12 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 public class TradeOfferList implements Serializable {
-  private final ArrayList<TradeOffer> tradeOfferList = new ArrayList<>();
-  public TradeOfferList() {
+  private ArrayList<TradeOffer> tradeOfferList;
+  public TradeOfferList(TradeOfferList tradeOfferList) {
+    this.tradeOfferList = tradeOfferList.getTradeOfferList();
+  }
+  public TradeOfferList(){
+    tradeOfferList = new ArrayList<>();
   }
   public ArrayList<TradeOffer> getTradeOfferList() {
     return new ArrayList<>(tradeOfferList);

@@ -1,16 +1,18 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+//Method for calculating how much time has passed
+//Method for saving tasks that are younger than 7 days should be in a different list,
+// or we can make it that the Recorded task list deletes all tasks older than 7 days(may be easier)
 public class GreenThumbManager {
-private String tradeOfferFile = "tradeOfferFile";
-private String memberFile = "memberFile";
-private String communityFile = "communityFile";
-private String taskFile = "taskFile";
-private String recordedTaskFile = "recordedTaskFile";
+private final String tradeOfferFile = "tradeOfferFile";
+private final String memberFile = "memberFile";
+private final String communityFile = "communityFile";
+private final String taskFile = "taskFile";
+private final String recordedTaskFile = "recordedTaskFile";
 public GreenThumbManager(){
 }
 public TradeOfferList getAllTradeOffers(){
-  TradeOfferList tradeOffers = new TradeOfferList();
+  TradeOfferList tradeOffers;
   try{
     tradeOffers = (TradeOfferList)MyFileHandler.readFromBinaryFile(tradeOfferFile);
   }catch(FileNotFoundException e) {
