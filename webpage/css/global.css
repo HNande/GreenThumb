@@ -110,7 +110,6 @@ h1 {
 }
 
 @media (max-width: 1024px) {
-
   .header,
   .header-content {
     overflow: visible;
@@ -173,7 +172,7 @@ h1 {
   /* Change color of dropdown links on hover */
   .nav-bar-item a:hover {
     background-color: var(--bg-container-color);
-    border-radius: 15%
+    border-radius: 15%;
   }
 
   /* Show the dropdown content on hover */
@@ -185,17 +184,14 @@ h1 {
   .nav-bar:hover .nav-bar-global {
     background-color: var(--text-highlighted2-color);
   }
-
 }
 
 @media (max-width: 600px) {
-
   .header {
     width: 100%;
     margin-bottom: 40px;
     background-color: transparent;
   }
-
 
   .main-content {
     flex-direction: column;
@@ -203,5 +199,4 @@ h1 {
     text-align: center;
     padding: 20px;
   }
-
 }

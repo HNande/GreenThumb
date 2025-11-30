@@ -27,3 +27,18 @@ h2 {
 .photo {
   width: 10vw;
 }
+
+.description {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  margin-bottom: 50px;
+}
+
+.headerCom {
+  margin-bottom: 20px;
+}
+
+h3 {
+  text-align: center;
+}

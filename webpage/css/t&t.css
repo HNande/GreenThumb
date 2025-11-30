@@ -3,7 +3,7 @@
 .center {
   display: grid;
   grid-template-columns: 1fr;
-  padding: 5%
+  padding: 5%;
 }
 
 .gaps {
@@ -18,5 +18,16 @@
   border-radius: 8%;
   width: 65%;
   padding: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+table,
+th,
+td {
+  border: 1px solid green;
+  border-collapse: collapse;
+  padding: 5px;
+  text-align: center;
+}
