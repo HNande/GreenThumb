@@ -6,8 +6,7 @@ public class TradeOffer implements Serializable {
   private int cost;
   private Member proposer;
 
-  public TradeOffer(String name, String description, int cost,
-      Member proposer) {
+  public TradeOffer(String name, String description, int cost, Member proposer) {
     this.name = name;
     this.description = description;
     this.cost = cost;

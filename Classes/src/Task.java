@@ -1,4 +1,6 @@
-public class Task {
+import java.io.Serializable;
+
+public class Task implements Serializable {
   private String name;
   private int pointAmount;
   private int taskType; //1 == COMMUNITY, 2 == INDIVIDUAL
@@ -16,11 +18,10 @@ public class Task {
   public RecordedTask recordTask(Member recordMember, int day, int month, int year) {
     if (taskType == 1) {//IF Invidiual
       if (recordMember.isBoosted()) {
-        float temp = Math.round(
-            pointAmount * 1.3);//30% increase in points earned
+        float temp = Math.round(pointAmount * 1.3);//30% increase in points earned
         recordMember.addPoints(recordMember.getPoints());
       } else {
-        recordMember.addPoints(recordMember.getPoints() + pointAmount);
+        recordMember.addPoints(pointAmount);
       }
     } else { //ELSE Community
       Community.getInstance().addCommunityPoints(pointAmount);

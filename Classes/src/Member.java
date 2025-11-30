@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class Member  implements Serializable {
+public class Member implements Serializable {
   private String firstName;
   private String lastName;
   private String phoneNumber;
@@ -9,13 +9,23 @@ public class Member  implements Serializable {
   private boolean boost;
   private Address address;
   private int lastRecordTime;
-  public Member(String firstName, String lastName, String phoneNumber,
-      String email, int houseNumber, String street) {
+  public Member(String firstName, String lastName, String phoneNumber, String email, int houseNumber, String street) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.phoneNumber = phoneNumber;
     this.email = email;
     address = new Address(houseNumber, street);
+    points = 0;
+    boost = false;
+    lastRecordTime = 0;
+  }
+  //Default constructor for testing purposes
+  public Member(){
+    firstName = "Bob";
+    lastName = "Green";
+    phoneNumber = "+45694200";
+    email = "greenbob@cloverville.com";
+    address = new Address(42,"Bob's street");
     points = 0;
     boost = false;
     lastRecordTime = 0;
