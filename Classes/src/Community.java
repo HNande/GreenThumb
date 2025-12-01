@@ -12,9 +12,9 @@ public class Community implements Serializable {
     communityPoints = 0;
   }
   // Constructor example
-  // Community community = Community.getInstance();
-  // Whenever you want to call a method, use Community.getInstance()
-  // For example Community.getInstance().setRewardThreshold();
+  // model.Community community = model.Community.getInstance();
+  // Whenever you want to call a method, use model.Community.getInstance()
+  // For example model.Community.getInstance().setRewardThreshold();
   public static Community getInstance() {
     return instance;
   }

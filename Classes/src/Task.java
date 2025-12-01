@@ -23,7 +23,7 @@ public class Task implements Serializable {
       } else {
         recordMember.addPoints(pointAmount);
       }
-    } else { //ELSE Community
+    } else { //ELSE model.Community
       Community.getInstance().addCommunityPoints(pointAmount);
     }
     totalCount++;
@@ -70,7 +70,7 @@ public class Task implements Serializable {
   public String toString() {
     String temp;
     if (taskType == 1) {
-      temp = "This task's name is: %S, my point amount is: %d, my task type is: Community My total count is: %d";
+      temp = "This task's name is: %S, my point amount is: %d, my task type is: model.Community My total count is: %d";
     } else {
       temp = "This task's name is: %S, my point amount is: %d, my task Type is: Individual, My total count is %d";
     }
