@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 
 /**
- *
+ * The class contains information about the Member.
  *
  * @author Nandor Hock
  *
@@ -22,13 +22,14 @@ public class Member implements Serializable
   private int lastRecordTime;
 
   /**
+   * Create new Member object with Member personal info
    *
-   * @param firstName
-   * @param lastName
-   * @param phoneNumber
-   * @param email
-   * @param houseNumber
-   * @param street
+   * @param firstName of member
+   * @param lastName of member
+   * @param phoneNumber of member
+   * @param email of member
+   * @param houseNumber where member live
+   * @param street where placed members house
    */
   public Member(String firstName, String lastName, String phoneNumber, String email, int houseNumber, String street)
   {
@@ -43,7 +44,7 @@ public class Member implements Serializable
   }
 
   /**
-   *
+   * Create a new Member object with placeholders instead of information
    */
   //Default constructor for testing purposes
   public Member()
@@ -59,8 +60,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Sets the different firstName
    *
-   * @param firstName
+   * @param firstName of the member
    */
   public void setFirstName(String firstName)
   {
@@ -68,8 +70,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Returns firstName of the member
    *
-   * @return
+   * @return firstName of the member
    */
   public String getFirstName()
   {
@@ -77,8 +80,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Sets the different lastName
    *
-   * @param lastName
+   * @param lastName of the member
    */
   public void setLastName(String lastName)
   {

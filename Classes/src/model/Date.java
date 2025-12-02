@@ -19,7 +19,7 @@ public class Date implements Serializable
   private int year;
 
   /**
-   * Creates new model.Date object with current moment information.
+   * Creates new Date object with current moment information.
    */
   public Date()
   {
@@ -44,7 +44,7 @@ public class Date implements Serializable
   }
 
   /**
-   * Creates a new model.Date object representing today's date.
+   * Creates a new Date object representing today's date.
    *
    * @param date object which from which we take information
    */
