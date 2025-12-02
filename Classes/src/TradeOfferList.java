@@ -17,5 +17,11 @@ public class TradeOfferList implements Serializable {
   public void remove(TradeOffer tradeOffer){
     tradeOfferList.remove(tradeOffer);
   }
+  public void remove(int i){
+  tradeOfferList.remove(i);
+  }
+  public TradeOffer getTradeOfferByIndex(int i){
+    return tradeOfferList.get(i);
+  }
 }
 
