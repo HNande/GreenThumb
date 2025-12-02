@@ -4,7 +4,7 @@ import model.Date;
 import model.Member;
 import model.TradeOffer;
 import model.TradeOfferList;
-
+import manager.GreenThumbManager;
 /**
  * The main class to run the GreenThumb application.
  * It demonstrates creating trade offers, adding them to a list,
