@@ -90,8 +90,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Returns lastName of the member
    *
-   * @return
+   * @return lastName of the member
    */
   public String getLastName()
   {
@@ -99,8 +100,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Sets the different phoneNumber
    *
-   * @param phoneNumber
+   * @param phoneNumber of the member
    */
   public void setPhoneNumber(String phoneNumber)
   {
@@ -108,8 +110,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Returns phoneNumber of the member
    *
-   * @return
+   * @return phoneNumber of the member
    */
   public String getPhoneNumber()
   {
@@ -117,8 +120,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Sets the different email
    *
-   * @param email
+   * @param email of the member
    */
   public void setEmail(String email)
   {
@@ -126,8 +130,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Returns email of the member
    *
-   * @return
+   * @return email of the member
    */
   public String getEmail()
   {
@@ -135,8 +140,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Sets the different address
    *
-   * @param address
+   * @param address of the member
    */
   public void setAddress(Address address)
   {
@@ -144,8 +150,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Returns address object of the member
    *
-   * @return
+   * @return address object of the member
    */
   public Address getAddress()
   {
@@ -153,8 +160,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Sets the different houseNumber
    *
-   * @param houseNumber
+   * @param houseNumber of the member
    */
   public void setAddressHouse(int houseNumber)
   {
@@ -162,8 +170,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Returns house number of the member house
    *
-   * @return
+   * @return house number of the member house
    */
   public int getAddressHouse()
   {
@@ -171,8 +180,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Sets the different street
    *
-   * @param street
+   * @param street of the member
    */
   public void setAddressStreet(String street)
   {
@@ -180,8 +190,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Returns steet name of the member house
    *
-   * @return
+   * @return steet name of the member house
    */
   public String getAddressStreet()
   {
@@ -189,8 +200,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Returns the number of time units passed since the last record was updated.
    *
-   * @return
+   * @return the time since the last record
    */
   public int getLastRecordTime()
   {
@@ -198,8 +210,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Sets the last recorded time value.
    *
-   * @param time
+   * @param time the new value representing the last recorded time
    */
   public void setLastRecordTime(int time)
   {
@@ -207,8 +220,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Enables or disables the boost status for this member.
    *
-   * @param boost
+   * @param boost true to enable boost, false to disable it
    */
   public void setBoost(boolean boost)
   {
@@ -216,8 +230,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Returns whether this member currently has boost enabled.
    *
-   * @return
+   * @return true if boost is active, false otherwise
    */
   public boolean isBoosted()
   {
@@ -225,8 +240,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Sets the total number of points this member currently has.
    *
-   * @param points
+   * @param points the new point value
    */
   public void setPoints(int points)
   {
@@ -234,8 +250,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Returns the number of points this member currently has.
    *
-   * @return
+   * @return the number of points
    */
   public int getPoints()
   {
@@ -243,7 +260,8 @@ public class Member implements Serializable
   }
 
   /**
-   *
+   * Converts all member points into community points,
+   * after conversion, the member's points are reset to zero.
    */
   public void convertPoints()
   {
@@ -252,8 +270,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Increases the last record time value by the given amount.
    *
-   * @param time
+   * @param time the amount of time to add
    */
   public void timePassed(int time)
   {
@@ -261,8 +280,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Adds the given number of points to the member's point total.
    *
-   * @param pointAmount
+   * @param pointAmount the number of points to add
    */
   public void addPoints(int pointAmount)
   {
@@ -270,8 +290,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Removes the given number of points from the member's point total.
    *
-   * @param pointAmount
+   * @param pointAmount the number of points to remove
    */
   public void removePoints(int pointAmount)
   {
@@ -279,8 +300,10 @@ public class Member implements Serializable
   }
 
   /**
+   * Checks whether this member is eligible for a points reset.
+   * A member is eligible if they have at least 100 points.
    *
-   * @return
+   * @return true if points >= 100, false otherwise
    */
   public boolean isEligibleForReset()
   {
@@ -288,9 +311,10 @@ public class Member implements Serializable
   }
 
   /**
+   * Compares two Member objects for equality based on all fields.
    *
-   * @param obj
-   * @return
+   * @param obj the Member to compare with
+   * @return true if all fields match, false otherwise
    */
   public boolean equals(Member obj)
   {
@@ -302,8 +326,9 @@ public class Member implements Serializable
   }
 
   /**
+   * Returns a formatted String containing all details about this member.
    *
-   * @return
+   * @return a formatted string with member information
    */
   public String toString()
   {
