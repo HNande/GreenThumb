@@ -6,7 +6,9 @@ import model.TradeOffer;
 import model.TradeOfferList;
 
 /**
- * The class
+ * The main class to run the GreenThumb application.
+ * It demonstrates creating trade offers, adding them to a list,
+ * and saving/loading them using GreenThumbManager.
  *
  * @author Nandor Hock
  *
@@ -16,8 +18,10 @@ public class RunGreenThumbApplication
 {
 
   /**
+   * The entry point of the application.
+   * Demonstrates example usage of TradeOffer and TradeOfferList.
    *
-   * @param args
+   * @param args ...
    */
   public static void main(String[] args)
   {
