@@ -1,3 +1,10 @@
+package main;
+
+import model.Date;
+import model.Member;
+import model.TradeOffer;
+import model.TradeOfferList;
+
 public class RunGreenThumbApplication
 {
   public static void main(String[] args) {

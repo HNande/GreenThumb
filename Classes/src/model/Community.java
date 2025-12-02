@@ -1,45 +1,127 @@
+package model;
+
 import java.io.Serializable;
 
-public class Community implements Serializable {
+/**
+ * A class representing an address, containing the house number and street name.
+ * Used to store information about the location of a person or object
+ *
+ * @author Nandor Hock
+ *
+ * @version 02.12.2025
+ */
+public class Community implements Serializable
+{
+
   private static final Community instance = new Community();
   private int rewardThreshold;
   private String rewardDescription;
   private  int communityPoints;
 
-  private Community() {
+  /**
+   * Creates a new model.Community object without parameters
+   */
+  private Community()
+  {
     rewardThreshold = 0;
     rewardDescription = "";
     communityPoints = 0;
   }
+
   // Constructor example
-  // Community community = Community.getInstance();
-  // Whenever you want to call a method, use Community.getInstance()
-  // For example Community.getInstance().setRewardThreshold();
-  public static Community getInstance() {
+  // model.Community community = model.Community.getInstance();
+  // Whenever you want to call a method, use model.Community.getInstance()
+  // For example model.Community.getInstance().setRewardThreshold();
+
+  /**
+   * Returns the single instance of model.Community
+   *
+   * @return the shared model.Community instance
+   */
+  public static Community getInstance()
+  {
     return instance;
   }
-  public void setRewardThreshold(int rewardThreshold) {
+
+  /**
+   * Sets the new reward threshold
+   *
+   * @param rewardThreshold the new reward threshold
+   */
+  public void setRewardThreshold(int rewardThreshold)
+  {
     this.rewardThreshold = rewardThreshold;
   }
-  public int getRewardThreshold() {
+
+  /**
+   * Returns the reward threshold
+   *
+   * @return the number of points required to receive a reward
+   */
+  public int getRewardThreshold()
+  {
     return rewardThreshold;
   }
-  public void setRewardDescription(String rewardDescription) {
+
+  /**
+   * Sets the new reward description
+   *
+   * @param rewardDescription the new reward description
+   */
+  public void setRewardDescription(String rewardDescription)
+  {
     this.rewardDescription = rewardDescription;
   }
-  public String getRewardDescription() {
+
+  /**
+   * Returns the reward description
+   *
+   * @return the text describing the reward
+   */
+  public String getRewardDescription()
+  {
     return rewardDescription;
   }
-  public void setCommunityPoints(int communityPoints) {
+
+  /**
+   * Sets the amount of community points.
+   *
+   * @param communityPoints the new total number of points
+   */
+  public void setCommunityPoints(int communityPoints)
+  {
     this.communityPoints = communityPoints;
   }
-  public int getCommunityPoints() {
+
+  /**
+   * Returns number of community points
+   *
+   * @return the total number of community points
+   */
+  public int getCommunityPoints()
+  {
     return communityPoints;
   }
-  public void addCommunityPoints(int pointAmount) {
+
+  /**
+   * Add the given amount of points to current value
+   *
+   * @param pointAmount the number of points we add
+   */
+  public void addCommunityPoints(int pointAmount)
+  {
     this.communityPoints += pointAmount;
   }
-  public boolean isAboveThresold() {
+
+  /**
+   * Returns whether the community has reached or exceeded
+   * the reward threshold.
+   *
+   * @return true if communityPoints >= rewardThreshold, otherwise false
+   */
+  public boolean isAboveThresold()
+  {
     return communityPoints >= rewardThreshold;
   }
+
 }

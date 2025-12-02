@@ -1,3 +1,6 @@
+import model.*;
+import utils.MyFileHandler;
+
 public class GreenThumbManager {
   private final String tradeOfferFile = "tradeOfferFile";
   private final String memberFile = "memberFile";

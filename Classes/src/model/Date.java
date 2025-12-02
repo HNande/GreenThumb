@@ -1,44 +1,128 @@
+package model;
+
 import java.io.Serializable;
 import java.time.LocalDate;
-public class Date implements Serializable {
+
+/**
+ * The class holds information related to dates, containing day, month and year.
+ * Used to store information about dates.
+ *
+ * @author Nandor Hock
+ *
+ * @version 02.12.2025
+ */
+public class Date implements Serializable
+{
+
   private int day;
   private int month;
   private int year;
-  public Date(){
+
+  /**
+   * Creates new model.Date object with current moment information.
+   */
+  public Date()
+  {
     LocalDate localDate = LocalDate.now();
     day = localDate.getDayOfMonth();
     month = localDate.getMonthValue();
     year = localDate.getYear();
   }
-  public Date(int day, int month, int year) {
+
+  /**
+   * Creates a new date object using the given date.
+   *
+   * @param day current day in month
+   * @param month current month
+   * @param year current year
+   */
+  public Date(int day, int month, int year)
+  {
     this.day = day;
     this.month = month;
     this.year = year;
   }
-  public Date(Date date) {
+
+  /**
+   * Creates a new model.Date object representing today's date.
+   *
+   * @param date object which from which we take information
+   */
+  public Date(Date date)
+  {
     day = date.getDay();
     month = date.getMonth();
     year = date.getYear();
   }
-  public Date today(){
+
+  /**
+   * Returns the date
+   *
+   * @return the new date object with info from current date
+   */
+  public Date today()
+  {
     return new Date(day,month,year);
   }
-  public void setDay(int day) {
+
+  /**
+   * Sets the new day
+   *
+   * @param day the new day
+   */
+  public void setDay(int day)
+  {
     this.day = day;
   }
-  public int getDay() {
+
+  /**
+   * Returns the day.
+   *
+   * @return the day from this date
+   */
+  public int getDay()
+  {
     return day;
   }
-  public void setMonth(int month) {
+
+  /**
+   * Sets the new month
+   *
+   * @param month the new month
+   */
+  public void setMonth(int month)
+  {
     this.month = month;
   }
-  public int getMonth() {
+
+  /**
+   * Returns the month.
+   *
+   * @return the month from this date
+   */
+  public int getMonth()
+  {
     return month;
   }
-  public void setYear(int year) {
+
+  /**
+   * Sets the new year
+   *
+   * @param year the new year
+   */
+  public void setYear(int year)
+  {
     this.year = year;
   }
-  public int getYear() {
+
+  /**
+   * Returns the year.
+   *
+   * @return the year from this date
+   */
+  public int getYear()
+  {
     return year;
   }
+
 }
