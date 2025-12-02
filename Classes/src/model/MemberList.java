@@ -1,3 +1,5 @@
+import model.Member;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 public class MemberList implements Serializable {
