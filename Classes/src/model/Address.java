@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 
 /**
- * A class representing an address, containing the house number and street name.
+ * The class representing an address, containing the house number and street name.
  * Used to store information about the location of a person or object
  *
  * @author Nandor Hock
@@ -17,7 +17,7 @@ public class Address implements Serializable
   private String Street;
 
   /**
-   * Creates a new model.Address with the given house number and street name
+   * Creates a new Address with the given house number and street name
    *
    * @param houseNumber the number of the house
    * @param Street the name of the street
