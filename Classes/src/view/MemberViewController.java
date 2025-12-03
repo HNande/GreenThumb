@@ -3,14 +3,19 @@ package view;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import manager.GreenThumbManager;
 import model.Address;
 import model.Member;
 import model.MemberList;
+
+import java.io.IOException;
 
 /**
  *
@@ -41,6 +46,8 @@ public class MemberViewController
   @FXML private Button tradeOffers;
   @FXML private Button communit;
   @FXML private Button members;
+
+  @FXML private Button taskButton;
 
   /**
    *
@@ -97,33 +104,88 @@ public class MemberViewController
   }
 
   @FXML
-  public void handTask()
+  private void handTask()
   {
-
+    try
+    {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TaskView.fxml"));
+      Scene scene = new Scene(loader.load());
+      Stage stage = (Stage) taskButton.getScene().getWindow();
+      stage.setScene(scene);
+      stage.show();
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @FXML
   public void handRecorderTasks()
   {
-
+    try
+    {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/RecordedTaskView.fxml"));
+      Scene scene = new Scene(loader.load());
+      Stage stage = (Stage) taskButton.getScene().getWindow();
+      stage.setScene(scene);
+      stage.show();
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @FXML
   public void handTradeOffers()
   {
-
+    try
+    {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TradeOfferView.fxml"));
+      Scene scene = new Scene(loader.load());
+      Stage stage = (Stage) taskButton.getScene().getWindow();
+      stage.setScene(scene);
+      stage.show();
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @FXML
   public void handleCommunit()
   {
-
+    try
+    {
+     FXMLLoader loader = new FXMLLoader(getClass().getResource("/viev/CommunityView"));
+     Scene scene = new Scene(loader.load());
+     Stage stage = (Stage) taskButton.getScene().getWindow();
+     stage.setScene(scene);
+     stage.show();
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @FXML
-  public void handMembers()
+  private void handMembers()
   {
-
+    try
+    {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MemberView.fxml"));
+      Scene scene = new Scene(loader.load());
+      Stage stage = (Stage) taskButton.getScene().getWindow();
+      stage.setScene(scene);
+      stage.show();
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
   }
 
 }
