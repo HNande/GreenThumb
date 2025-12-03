@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskViewController">
    <children>
-      <ToolBar layoutY="8.0" prefHeight="18.0" prefWidth="406.0">
+      <ToolBar layoutY="8.0" prefHeight="18.0" prefWidth="400.0">
         <items>
           <Button mnemonicParsing="false" text="Tasks" />
             <Button mnemonicParsing="false" text="Recorded Tasks" />
@@ -18,16 +14,16 @@
             <Button mnemonicParsing="false" text="Members" />
         </items>
       </ToolBar>
-      <Button alignment="TOP_RIGHT" layoutX="488.0" layoutY="13.0" mnemonicParsing="false" text="Delete" />
-      <Button alignment="TOP_RIGHT" layoutX="547.0" layoutY="13.0" mnemonicParsing="false" text="Add" />
-      <Button alignment="TOP_RIGHT" layoutX="596.0" layoutY="13.0" mnemonicParsing="false" text="Save/Apply" />
-      <Button alignment="TOP_RIGHT" layoutX="427.0" layoutY="13.0" mnemonicParsing="false" text="Record" />
-      <TableView layoutX="9.0" layoutY="60.0" prefHeight="333.0" prefWidth="674.0">
+      <Button alignment="TOP_RIGHT" layoutX="471.0" layoutY="13.0" mnemonicParsing="false" text="Delete" />
+      <Button alignment="TOP_RIGHT" layoutX="528.0" layoutY="13.0" mnemonicParsing="false" text="Add" />
+      <Button alignment="TOP_RIGHT" layoutX="575.0" layoutY="13.0" mnemonicParsing="false" text="Save/Apply" />
+      <Button alignment="TOP_RIGHT" layoutX="410.0" layoutY="13.0" mnemonicParsing="false" text="Record" />
+      <TableView fx:id="taskTable" layoutX="14.0" layoutY="51.0" prefHeight="334.0" prefWidth="663.0">
         <columns>
-          <TableColumn prefWidth="148.0" text="Task Name" />
-          <TableColumn prefWidth="148.79998779296875" text="Point Amount" />
-            <TableColumn prefWidth="121.5999755859375" text="Task Type" />
-            <TableColumn prefWidth="118.4000244140625" text="Total Count" />
+          <TableColumn fx:id="taskNameCol" prefWidth="200" text="Task Name" />
+          <TableColumn fx:id="taskPointCol" prefWidth="125" text="Point Amount" />
+            <TableColumn fx:id="taskTypecol" prefWidth="200.0" text="Task Type" />
+            <TableColumn fx:id="taskTotalcol" prefWidth="145.0" text="Total Count" />
         </columns>
       </TableView>
    </children>

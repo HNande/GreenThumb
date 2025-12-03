@@ -1,10 +1,14 @@
 package main;
 
-import model.Date;
-import model.Member;
-import model.TradeOffer;
-import model.TradeOfferList;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import model.*;
 import manager.GreenThumbManager;
+
+import java.io.IOException;
+
 /**
  * The main class to run the GreenThumb application.
  * It demonstrates creating trade offers, adding them to a list,
@@ -14,7 +18,7 @@ import manager.GreenThumbManager;
  *
  * @version 02.12.2025
  */
-public class RunGreenThumbApplication
+public class RunGreenThumbApplication extends Application
 {
 
   /**
@@ -27,27 +31,24 @@ public class RunGreenThumbApplication
   {
     GreenThumbManager manager = new GreenThumbManager();
     TradeOfferList allTradeOffers = new TradeOfferList();
+    TaskList allTasks = new TaskList();
     Date today = new Date();
     //Couple of examples
     allTradeOffers.add(new TradeOffer("balls", "Dummy balls text",69 ,new Member()));
     allTradeOffers.add(new TradeOffer("Buvany", "God of War and Thunder with a sprinkle of love",69 ,new Member()));
     allTradeOffers.add(new TradeOffer("Supreme Allan", "The one who grades",69 ,new Member()));
-    for(int i = 0; i != allTradeOffers.getTradeOfferList().size();i++)
-    {
-      System.out.println(allTradeOffers.getTradeOfferByIndex(i).getName());
-    }
-    manager.saveTradeOffers(allTradeOffers);
-    allTradeOffers = manager.getAllTradeOffers();
-    for(int i = 0; i != allTradeOffers.getTradeOfferList().size();i++)
-    {
-      System.out.println(allTradeOffers.getTradeOfferByIndex(i).getName());
-    }
+    allTasks.add(new Task("Watching paint dry", 420,2));
+    allTasks.add(new Task("Eating KFC", 600,1));
+    allTasks.add(new Task("Doing it sexy style", 420,2));
+    manager.saveTasks(allTasks);
+    launch(args);
+  }
 
-
-
-
-
-
-
+  public void start(Stage primaryStage) throws IOException {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TaskView.fxml"));
+    Scene scene = new Scene(loader.load());
+    primaryStage.setTitle("Task View");
+    primaryStage.setScene(scene);
+    primaryStage.show();
   }
 }
