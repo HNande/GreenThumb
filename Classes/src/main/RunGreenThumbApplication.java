@@ -44,6 +44,13 @@ public class RunGreenThumbApplication extends Application
     launch(args);
   }
 
+  /**
+   * @param primaryStage the primary stage for this application, onto which
+   * the application scene can be set.
+   * Applications may create other stages, if needed, but they will not be
+   * primary stages.
+   * @throws IOException
+   */
   public void start(Stage primaryStage) throws IOException {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TaskView.fxml"));
     Scene scene = new Scene(loader.load());
