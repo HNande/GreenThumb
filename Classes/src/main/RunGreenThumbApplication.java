@@ -29,7 +29,6 @@ public class RunGreenThumbApplication extends Application
    */
   public static void main(String[] args)
   {
-    GreenThumbManager manager = new GreenThumbManager();
     TradeOfferList allTradeOffers = new TradeOfferList();
     TaskList allTasks = new TaskList();
     Date today = new Date();
@@ -40,7 +39,7 @@ public class RunGreenThumbApplication extends Application
     allTasks.add(new Task("Watching paint dry", 420,2));
     allTasks.add(new Task("Eating KFC", 600,1));
     allTasks.add(new Task("Doing it sexy style", 420,2));
-    manager.saveTasks(allTasks);
+    GreenThumbManager.saveTasks(allTasks);
     launch(args);
   }
 

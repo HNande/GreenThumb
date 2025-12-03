@@ -7,17 +7,17 @@
    <children>
       <ToolBar layoutY="8.0" prefHeight="18.0" prefWidth="400.0">
         <items>
-          <Button mnemonicParsing="false" text="Tasks" />
-            <Button mnemonicParsing="false" text="Recorded Tasks" />
-            <Button mnemonicParsing="false" text="Trade Offers" />
-            <Button mnemonicParsing="false" text="Community" />
-            <Button mnemonicParsing="false" text="Members" />
+          <Button fx:id="tasks" mnemonicParsing="false" onAction="#handleTasks" text="Tasks" />
+            <Button fx:id="recordedTasks" mnemonicParsing="false" onAction="#handleRecordedTasks" text="Recorded Tasks" />
+            <Button fx:id="tradeOffers" mnemonicParsing="false" onAction="#handleTradeOffers" text="Trade Offers" />
+            <Button fx:id="community" mnemonicParsing="false" onAction="#handleCommunity" text="Community" />
+            <Button fx:id="members" mnemonicParsing="false" onAction="#handleMembers" text="Members" />
         </items>
       </ToolBar>
-      <Button alignment="TOP_RIGHT" layoutX="471.0" layoutY="13.0" mnemonicParsing="false" text="Delete" />
-      <Button alignment="TOP_RIGHT" layoutX="528.0" layoutY="13.0" mnemonicParsing="false" text="Add" />
-      <Button alignment="TOP_RIGHT" layoutX="575.0" layoutY="13.0" mnemonicParsing="false" text="Save/Apply" />
-      <Button alignment="TOP_RIGHT" layoutX="410.0" layoutY="13.0" mnemonicParsing="false" text="Record" />
+      <Button fx:id="deleteButton" alignment="TOP_RIGHT" layoutX="471.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleDelete" text="Delete" />
+      <Button fx:id="add" alignment="TOP_RIGHT" layoutX="528.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleAdd" text="Add" />
+      <Button fx:id="saveApply" alignment="TOP_RIGHT" layoutX="575.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleSave" text="Save/Apply" />
+      <Button fx:id="record" alignment="TOP_RIGHT" layoutX="410.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleRecord" text="Record" />
       <TableView fx:id="taskTable" layoutX="14.0" layoutY="51.0" prefHeight="334.0" prefWidth="663.0">
         <columns>
           <TableColumn fx:id="taskNameCol" prefWidth="200" text="Task Name" />

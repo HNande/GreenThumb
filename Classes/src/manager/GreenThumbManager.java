@@ -13,11 +13,11 @@ import utils.MyFileHandler;
  */
 public class GreenThumbManager
 {
-  private final String tradeOfferFile = "tradeOfferFile";
-  private final String memberFile = "memberFile";
-  private final String communityFile = "communityFile";
-  private final String taskFile = "taskFile";
-  private final String recordedTaskFile = "recordedTaskFile";
+  private static final String tradeOfferFile = "tradeOfferFile";
+  private static final String memberFile = "memberFile";
+  private static final String communityFile = "communityFile";
+  private static final String taskFile = "taskFile";
+  private static final String recordedTaskFile = "recordedTaskFile";
 
   /**
    * Creates a new GreenThumbManager.
@@ -31,7 +31,7 @@ public class GreenThumbManager
    *
    * @return list of all trade offers
    */
-  public TradeOfferList getAllTradeOffers()
+  public static TradeOfferList getAllTradeOffers()
   {
     TradeOfferList tradeOffers;
     tradeOffers = (TradeOfferList) MyFileHandler.readFromBinaryFile(tradeOfferFile);
@@ -43,7 +43,7 @@ public class GreenThumbManager
    *
    * @param tradeOfferList the trade offers to save
    */
-  public void saveTradeOffers(TradeOfferList tradeOfferList)
+  public static void saveTradeOffers(TradeOfferList tradeOfferList)
   {
     MyFileHandler.writeToBinaryFile(tradeOfferFile, tradeOfferList);
   }
@@ -53,7 +53,7 @@ public class GreenThumbManager
    *
    * @return list of all members
    */
-  public MemberList getAllMembers()
+  public static MemberList getAllMembers()
   {
     return (MemberList) MyFileHandler.readFromBinaryFile(memberFile);
   }
@@ -63,7 +63,7 @@ public class GreenThumbManager
    *
    * @param memberList the members to save
    */
-  public void saveMembers(MemberList memberList)
+  public static void saveMembers(MemberList memberList)
   {
       MyFileHandler.writeToBinaryFile(memberFile, memberList);
   }
@@ -73,7 +73,7 @@ public class GreenThumbManager
    *
    * @return list of all tasks
    */
-  public TaskList getAllTasks()
+  public static TaskList getAllTasks()
   {
     return (TaskList) MyFileHandler.readFromBinaryFile(taskFile);
   }
@@ -83,7 +83,7 @@ public class GreenThumbManager
    *
    * @param taskList the tasks to save
    */
-  public void saveTasks(TaskList taskList)
+  public static void saveTasks(TaskList taskList)
   {
       MyFileHandler.writeToBinaryFile(taskFile, taskList);
   }
@@ -93,7 +93,7 @@ public class GreenThumbManager
    *
    * @return list of all recorded tasks
    */
-  public RecordedTaskList getAllRecordedTasks()
+  public static RecordedTaskList getAllRecordedTasks()
   {
     return (RecordedTaskList) MyFileHandler.readFromBinaryFile(recordedTaskFile);
   }
@@ -103,7 +103,7 @@ public class GreenThumbManager
    *
    * @param recordedTaskList the recorded tasks to save
    */
-  public void saveRecordedTasks(RecordedTaskList recordedTaskList)
+  public static void saveRecordedTasks(RecordedTaskList recordedTaskList)
   {
       MyFileHandler.writeToBinaryFile(recordedTaskFile, recordedTaskList);
   }
@@ -113,7 +113,7 @@ public class GreenThumbManager
    *
    * @return community data
    */
-  public Community getCommunity()
+  public static Community getCommunity()
   {
     Community community;
     return  (Community) MyFileHandler.readFromBinaryFile(communityFile);
@@ -124,7 +124,7 @@ public class GreenThumbManager
    *
    * @param community the community to save
    */
-  public void saveCommunity(Community community) {
+  public static void saveCommunity(Community community) {
       MyFileHandler.writeToBinaryFile(communityFile, community);
 
   }

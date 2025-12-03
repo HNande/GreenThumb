@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RecordedTaskViewController">
     <children>
         <VBox layoutX="12.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="801.0">
             <children>
@@ -16,11 +16,11 @@
                     <children>
                         <HBox prefHeight="46.0" prefWidth="429.0" spacing="10.0">
                             <children>
-                                <Button mnemonicParsing="false" text="Tasks" />
-                                <Button mnemonicParsing="false" text="Recorded Tasks" />
-                                <Button mnemonicParsing="false" text="Trade Offers" />
-                                <Button mnemonicParsing="false" text="Communit" />
-                                <Button mnemonicParsing="false" text="Members" />
+                                <Button fx:id="task" mnemonicParsing="false" onAction="#handTask" text="Tasks" />
+                                <Button fx:id="recorderTasks" mnemonicParsing="false" onAction="#handRecorderTasks" text="Recorded Tasks" />
+                                <Button fx:id="tradeOffers" mnemonicParsing="false" onAction="#handTradeOffers" text="Trade Offers" />
+                                <Button fx:id="communit" mnemonicParsing="false" onAction="#handleCommunit" text="Communit" />
+                                <Button fx:id="members" mnemonicParsing="false" onAction="#handMembers" text="Members" />
                             </children>
                             <opaqueInsets>
                                 <Insets />
@@ -36,10 +36,10 @@
                 </HBox>
                 <TableView prefHeight="409.0" prefWidth="742.0">
                     <columns>
-                        <TableColumn prefWidth="402.4000062942505" text="Name" />
-                        <TableColumn minWidth="0.0" prefWidth="62.4000244140625" text="Age" />
-                        <TableColumn prefWidth="229.60003662109375" text="Nickname" />
-                        <TableColumn prefWidth="107.99993896484375" text="Employee" />
+                        <TableColumn fx:id="taskName" prefWidth="215.19997596740723" text="Task Name" />
+                        <TableColumn fx:id="pointAmount" minWidth="0.0" prefWidth="199.20001220703125" text="Point Amount" />
+                        <TableColumn fx:id="taskType" prefWidth="200.00003051757812" text="Task Type" />
+                        <TableColumn fx:id="totalCount" prefWidth="192.7999267578125" text="Total Count" />
                     </columns>
                 </TableView>
             </children>
