@@ -47,7 +47,6 @@ public class ControllerHelper {
     alert.setTitle(title);
     alert.setHeaderText(null);
     alert.setContentText(message);
-    alert.showAndWait();
     Optional<ButtonType> result = alert.showAndWait();
     return result.isPresent() && result.get() == ButtonType.OK;
   }

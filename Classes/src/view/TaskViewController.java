@@ -4,6 +4,7 @@ import model.TaskList;
 import model.Task;
 import manager.GreenThumbManager;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,23 +18,24 @@ import static utils.ControllerHelper.*;
 /**
  *@author Nandor Hock
  *
- * @version 03.12.2025
+ * @version 04.12.2025
  */
 public class TaskViewController
 {
-  public Button recordedTasks;
-  public Button record;
-  public Button tradeOffers;
-  public Button tasks;
-  public Button community;
-  public Button members;
-  public Button add;
+  @FXML private Button recordedTasks;
+  @FXML private Button record;
+  @FXML private Button tradeOffers;
+  @FXML private Button tasks;
+  @FXML private Button community;
+  @FXML private Button members;
+  @FXML private Button add;
+  @FXML private Button deleteButton;
   @FXML private TableView<Task> taskTable;
   @FXML private TableColumn<Task, String> taskNameCol;
   @FXML private TableColumn<Task, Integer> taskPointCol;
   @FXML private TableColumn<Task, Integer> taskTypecol;
   @FXML private TableColumn<Task, Integer> taskTotalcol;
-  @FXML private Button deleteButton;
+
   private TaskList taskList = GreenThumbManager.getAllTasks();
   /**
    *
@@ -87,7 +89,8 @@ public class TaskViewController
 
   }
   public void handleRecord(){
-
+    Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
+    TaskRecordingDialog.setTaskForRecording(selectedTask);
   }
   public void handleDelete(){
     Task selectedTask = taskTable.getSelectionModel().getSelectedItem(); // selectedTask is now the Object itself how cool is that
@@ -101,9 +104,6 @@ public class TaskViewController
     }
   }
   public void handleAdd(){
-
-  }
-  public void handleSave(){
 
   }
 }
