@@ -1,8 +1,10 @@
 package view;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.TableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import model.TaskList;
 import model.Task;
 import manager.GreenThumbManager;
@@ -36,8 +38,8 @@ public class TaskViewController
   @FXML private TableView<Task> taskTable;
   @FXML private TableColumn<Task, String> taskNameCol;
   @FXML private TableColumn<Task, Integer> taskPointCol;
-  @FXML private TableColumn<Task, Integer> taskTypecol;
-  @FXML private TableColumn<Task, Integer> taskTotalcol;
+  @FXML private TableColumn<Task, Integer> taskTypeCol;
+  @FXML private TableColumn<Task, Integer> taskTotalCol;
 
   private TaskList taskList = GreenThumbManager.getAllTasks();
   /**
@@ -49,8 +51,8 @@ public class TaskViewController
     //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/cell/PropertyValueFactory.html
     taskNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
     taskPointCol.setCellValueFactory(new PropertyValueFactory<>("pointAmount"));
-    taskTypecol.setCellValueFactory(new PropertyValueFactory<>("taskType"));
-    taskTotalcol.setCellValueFactory(new PropertyValueFactory<>("totalCount"));
+    taskTypeCol.setCellValueFactory(new PropertyValueFactory<>("taskType"));
+    taskTotalCol.setCellValueFactory(new PropertyValueFactory<>("totalCount"));
     taskTable.setEditable(true);
 
     taskTable.getItems().addAll(taskList.getTaskList());
@@ -58,21 +60,67 @@ public class TaskViewController
     //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/cell/TextFieldTableCell.html
     taskNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
     taskNameCol.setOnEditCommit(event -> {
-      boolean pass = true;
       String input = event.getNewValue();
-      Task task = event.getRowValue();//Thats the Object in which you are making the edit
+      Task task = event.getRowValue();
       if (isNullOrEmpty(input)) {
-        showErrorMessage("Empty value error message ","Edited value cannot be empty.");
-        pass = false;
-      } else if (input.trim().length() < 4 || input.trim().length() > 32 ){
-        showErrorMessage("Name outside of bounds ","Edited value cannot be less than 4, or more than 32 characters.");
-        pass = false;
-      } else if (taskNameAlreadyExists(taskList.getTaskList(),input)) {
-        showErrorMessage("Name already exists ","Edited value cannot already exist in list.");
-        pass = false;
-      }if(pass)
-        task.setName(input.trim());
-      taskTable.refresh();
+        taskTable.refresh();
+        return;
+      }
+      if (input.trim().length() < 4 || input.trim().length() > 32) {
+        showErrorMessage("Name outside of bounds", "Edited value cannot be less than 4, or more than 32 characters.");
+        taskTable.refresh();
+        return;
+      }
+      if (taskNameAlreadyExists(taskList.getTaskList(), input)) {
+        taskTable.refresh();
+        return;
+      }
+      task.setName(input.trim());
+      GreenThumbManager.saveTasks(taskList);
+    });
+    taskPointCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+    taskPointCol.setOnEditCommit(event -> {
+      Integer input = event.getNewValue();
+      Task task = event.getRowValue();
+      if (ControllerHelper.isValidInteger(input)) {
+        taskTable.refresh();
+        return;
+      }
+      task.setPointAmount(input);
+      GreenThumbManager.saveTasks(taskList);
+    });
+    //This whole lambda function took me several hours to figure out how to make
+    //Basically it has senior dev, ai, and even a book's hands in it, glorious triumvirate
+    taskTypeCol.setCellFactory(column -> new TableCell<>() {
+      public void updateItem(Integer item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setText(null);
+        } else {
+          switch (item) {
+            case 1:
+              setText("Community");
+              break;
+            case 2:
+              setText("Individual");
+              break;
+            default:
+          }
+        }
+      }
+      public void startEdit() {
+        super.startEdit();
+
+        Task task = getTableRow().getItem();
+        if (task != null) {
+          int currentValue = task.getTaskType();
+          int newValue = (currentValue == 1) ? 2 : 1;
+          task.setTaskType(newValue);
+          GreenThumbManager.saveTasks(taskList);
+          getTableView().refresh();
+        }
+        cancelEdit();
+      }
     });
   }
 
@@ -83,6 +131,18 @@ public class TaskViewController
 
   }
   public void handleTradeOffers(){
+    try{
+      System.out.println(getClass().getResource("TradeOfferView.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TradeOfferView.fxml"));
+      AnchorPane root = loader.load();
+      TradeOfferViewController controller = loader.getController();
+      Stage stage = new Stage();
+      stage.setTitle("Trade Offer View");
+      stage.setScene(new Scene(root));
+      stage.show();
+    }catch(IOException e){
+      e.printStackTrace();
+    }
 
   }
   public void handleCommunity(){

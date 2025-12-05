@@ -32,9 +32,9 @@
           <TableColumn fx:id="taskNameCol" prefWidth="200" text="Task Name"/>
           <TableColumn fx:id="taskPointCol" prefWidth="125"
                        text="Point Amount"/>
-          <TableColumn fx:id="taskTypecol" prefWidth="200.0"
+          <TableColumn fx:id="taskTypeCol" prefWidth="200.0"
                        text="Task Type"/>
-          <TableColumn fx:id="taskTotalcol" prefWidth="145.0"
+          <TableColumn fx:id="taskTotalCol" prefWidth="145.0"
                        text="Total Count"/>
       </columns>
     </TableView>
