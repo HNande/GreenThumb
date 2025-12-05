@@ -93,9 +93,14 @@ public class TaskViewController
   }
   public void handleRecord(){
     Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
-    TaskRecordingDialogController.setTaskForRecording(selectedTask);
+
     if(selectedTask != null){
     try {
+      for(int i = 0; i < taskList.getTaskList().size();i++){
+        if(taskList.getElementByIndex(i) == selectedTask){
+          TaskRecordingDialogController.setTaskIndex(i);
+        }
+      }
       FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskRecordingDialog.fxml"));
       AnchorPane root = loader.load();
       TaskRecordingDialogController controller = loader.getController();
@@ -105,6 +110,9 @@ public class TaskViewController
       stage.setScene(new Scene(root));
       controller.setStage(stage);
       stage.showAndWait();
+      taskList = GreenThumbManager.getAllTasks();
+      taskTable.getItems().clear();
+      taskTable.getItems().addAll(taskList.getTaskList());
     }catch (IOException e) {
       e.printStackTrace();
     }
@@ -116,7 +124,14 @@ public class TaskViewController
       if (showConfirmationMessage("Deletion confirmation", "Do you really want to delete: "+selectedTask.getName()+"?")){
       taskTable.getItems().remove(selectedTask);
       taskList.remove(selectedTask);
-      taskTable.refresh();
+      /*Probably the worst way to implement this updating sequence,
+      as each time we are changing anything inside the lists,
+      it clears, and repopulates the whole table.
+       */
+      GreenThumbManager.saveTasks(taskList);
+      taskTable.getItems().clear();
+      taskTable.getItems().addAll(taskList.getTaskList());
+
       showWarningMessage("Delete successful","Object has been deleted successfully");
       }
     }
@@ -132,6 +147,10 @@ public class TaskViewController
       stage.setScene(new Scene(root));
       controller.setStage(stage);
       stage.showAndWait();
+      taskList = GreenThumbManager.getAllTasks();
+      taskTable.getItems().clear();
+      taskTable.getItems().addAll(taskList.getTaskList());
+
     }catch (IOException e) {
       e.printStackTrace();
     }

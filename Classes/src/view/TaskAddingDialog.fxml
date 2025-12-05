@@ -1,14 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.TaskAddingDialogController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="380.0" prefWidth="281.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskAddingDialogController">
+    <VBox layoutX="21.0" layoutY="14.0" prefHeight="317.0" prefWidth="240.0">
+        <TextArea editable="false" prefHeight="42.0" prefWidth="240.0" text="Please provide the task name:&#10;">
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+        </TextArea>
+        <TextField fx:id="taskNameField" onAction="#handleTaskName" promptText="Between 4-32 characters">
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+        </TextField>
+        <TextArea editable="false" layoutX="10.0" layoutY="10.0" prefHeight="42.0" prefWidth="240.0" text="Please provide the point amount:&#10;">
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </TextArea>
+        <TextField fx:id="taskPointField" onAction="#handleTaskPointAmount" promptText="Whole Number">
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor>
+        </TextField>
+        <TextArea editable="false" layoutX="10.0" layoutY="48.0" prefHeight="24.0" prefWidth="175.0" text="Please provide the task type:">
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </TextArea>
+        <TextField fx:id="taskTypeField" onAction="#handleTaskType" promptText="1 for Community, 2 for Individual">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+    </VBox>
+    <HBox layoutX="35.0" layoutY="332.0" prefHeight="26.0" prefWidth="212.0">
+        <Button fx:id="confirmButton" defaultButton="true"
+                mnemonicParsing="false" onAction="#handleConfirm"
+                text="Confirm"/>
+        <Button fx:id="cancelButton" alignment="CENTER" cancelButton="true"
+                mnemonicParsing="false" onAction="#handleCancel" text="Cancel"
+                textAlignment="CENTER" textFill="RED">
+          <HBox.margin>
+              <Insets left="100.0"/>
+          </HBox.margin>
+        </Button>
+    </HBox>
 </AnchorPane>

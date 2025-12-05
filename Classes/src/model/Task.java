@@ -44,17 +44,18 @@ public class Task implements Serializable
    */
   public RecordedTask recordTask(Member recordMember, int day, int month, int year,boolean boost)
   {
-    if (taskType == 1) { // INDIVIDUAL
+    if (taskType == 1) { // COMMUNITY
       if (boost) {
         float temp = (float) (pointAmount * 1.3); // 30% increase in points
         recordMember.addPoints(Math.round(temp));
       } else {
         recordMember.addPoints(pointAmount);
       }
-    } else { // COMMUNITY
+    } else { // INDIVIDUAL
       Community.getInstance().addCommunityPoints(pointAmount);
+
     }
-    totalCount++;
+    System.out.println("Current Total count "+totalCount);
     return new RecordedTask(name, taskType, pointAmount, day, month, year);
   }
 
@@ -136,6 +137,13 @@ public class Task implements Serializable
   public int getTotalCount()
   {
     return totalCount;
+  }
+  /**
+   * Increments the total count by 1.
+   *
+   */
+  public void addToTotalCount(){
+    totalCount++;
   }
 
   /**

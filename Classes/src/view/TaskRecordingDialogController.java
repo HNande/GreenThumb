@@ -26,7 +26,8 @@ public class TaskRecordingDialogController {
   private Stage stage;
   private final MemberList memberList = GreenThumbManager.getAllMembers();
   private final RecordedTaskList recordedTaskList = GreenThumbManager.getAllRecordedTasks();
-  private static Task task;
+  private static int index;
+  private TaskList taskList= GreenThumbManager.getAllTasks();
   private boolean boost;
   private int day;
   private int month;
@@ -53,29 +54,31 @@ public class TaskRecordingDialogController {
     this.stage = stage;
   }
 
-  public static void setTaskForRecording(Task task){
-    TaskRecordingDialogController.task = task;
+  public static void setTaskIndex(int i){
+    TaskRecordingDialogController.index = i;
   }
 
   public void handleRecord(ActionEvent actionEvent) {
     Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
     if(selectedMember ==null){
-      ControllerHelper.showErrorMessage("Member Selection error", "Please select a Memeber before recording");
+      ControllerHelper.showErrorMessage("Member Selection error", "Please select a Member before recording");
       return;
     }
     if(day != 0) {
         ControllerHelper.showErrorMessage("Date Pick Error", "Please pick a date before recording");
         return;
     }
-      recordedTaskList.add(task.recordTask(selectedMember, day, month, year, boost));
-      GreenThumbManager.saveRecordedTasks(recordedTaskList);
-      GreenThumbManager.saveMembers(memberList);
-      task = null;
-      day = 0;
-      month = 0;
-      year = 0;
-      boost = false;
-      stage.close();
+    //This records the task inside the list based on the index value, and adds the returning Recorded Task object to the RecordedTask List
+    recordedTaskList.add(taskList.getElementByIndex(index).recordTask(selectedMember, day, month, year, boost));
+    taskList.getElementByIndex(index).addToTotalCount();
+    GreenThumbManager.saveRecordedTasks(recordedTaskList);
+    GreenThumbManager.saveMembers(memberList);
+    GreenThumbManager.saveTasks(taskList);
+    day = 0;
+    month = 0;
+    year = 0;
+    boost = false;
+    stage.close();
   }
   public void toggleBoost(ActionEvent actionEvent) {
     boost = boostButton.isSelected();
@@ -88,7 +91,6 @@ public class TaskRecordingDialogController {
     System.out.println("Day: " +day+" Month: "+month+" Year: "+year);
   }
   public void cancelTaskRecord(ActionEvent actionEvent) {
-    task = null;
     stage.close();
   }
 }

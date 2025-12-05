@@ -50,4 +50,8 @@ public class TaskList implements Serializable
   {
     taskList.remove(task);
   }
+
+  public Task  getElementByIndex(int i){
+   return taskList.get(i);
+  }
 }
