@@ -66,8 +66,7 @@ public class MemberViewController
     email.setCellValueFactory(new PropertyValueFactory<>("email"));
     points.setCellValueFactory(new PropertyValueFactory<>("points"));
     address.setCellValueFactory(new PropertyValueFactory<>("address"));
-    GreenThumbManager manager = new GreenThumbManager();
-    MemberList memberList = manager.getAllMembers();
+    MemberList memberList = GreenThumbManager.getAllMembers();
 
     memberTable.getItems().addAll(memberList.getMemberList());
 

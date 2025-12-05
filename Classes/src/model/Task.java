@@ -42,12 +42,12 @@ public class Task implements Serializable
    * @param year year of the task
    * @return a new RecordedTask object
    */
-  public RecordedTask recordTask(Member recordMember, int day, int month, int year)
+  public RecordedTask recordTask(Member recordMember, int day, int month, int year,boolean boost)
   {
     if (taskType == 1) { // INDIVIDUAL
-      if (recordMember.isBoosted()) {
-        float temp = Math.round(pointAmount * 1.3); // 30% increase in points
-        recordMember.addPoints(recordMember.getPoints());
+      if (boost) {
+        float temp = (float) (pointAmount * 1.3); // 30% increase in points
+        recordMember.addPoints(Math.round(temp));
       } else {
         recordMember.addPoints(pointAmount);
       }

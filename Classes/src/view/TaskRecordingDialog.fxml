@@ -4,19 +4,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="466.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskRecordingDialog">
-   <DatePicker fx:id="datePicker" layoutX="87.0" layoutY="14.0" />
+<AnchorPane prefHeight="400.0" prefWidth="466.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskRecordingDialogController">
+   <DatePicker fx:id="datePicker" layoutX="87.0" layoutY="14.0" onAction="#handleDatePicker" />
    <Button fx:id="cancelButton" layoutX="341.0" layoutY="14.0" mnemonicParsing="false" onAction="#cancelTaskRecord" prefHeight="26.0" prefWidth="109.0" text="Cancel" textAlignment="CENTER">
       <font>
          <Font name="System Bold" size="12.0" />
       </font></Button>
-   <ToggleButton fx:id="boostButton" layoutX="271.0" layoutY="14.0" mnemonicParsing="false" onAction="#toggleBoost" text="Boosted" textFill="RED" />
+   <ToggleButton fx:id="boostButton" layoutX="271.0" layoutY="14.0" mnemonicParsing="false" onAction="#toggleBoost" text="Boosted" />
     <Button fx:id="recordButton" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleRecord" prefHeight="36.0" prefWidth="66.0" text="Record" textAlignment="CENTER" />
-    <TableView fx:id="memberTable" layoutY="51.0" prefHeight="348.0" prefWidth="464.0">
+    <TableView fx:id="memberTable" layoutY="51.0" prefHeight="348.0" prefWidth="586.0">
         <columns>
             <TableColumn fx:id="memberFirstNameCol" prefWidth="160" text="First Name" />
-         <TableColumn fx:id="memberLastNameCol" prefWidth="160" text="Last Name" />
-         <TableColumn fx:id="memberTimeSinceLastRecord" prefWidth="130" text="Time since last record" />
+         <TableColumn fx:id="memberLastNameCol" prefWidth="172.0" text="Last Name" />
+            <TableColumn fx:id="memberPointAmountCol" prefWidth="113.0" text="Points" />
+         <TableColumn fx:id="memberTimeSinceLastRecord" prefWidth="135." text="Days since last record" />
         </columns>
     </TableView>
 </AnchorPane>

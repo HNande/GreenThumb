@@ -48,8 +48,7 @@ public class RecordedTaskViewController
     pointAmount.setCellValueFactory(new PropertyValueFactory<>("pointAmount"));
     taskType.setCellValueFactory(new PropertyValueFactory<>("taskType"));
     totalCount.setCellValueFactory(new PropertyValueFactory<>("totalCount"));
-    GreenThumbManager manager = new GreenThumbManager();
-    TaskList taskList = manager.getAllTasks();
+    TaskList taskList = GreenThumbManager.getAllTasks();
 
     taskTable.getItems().addAll(taskList.getTaskList());
 

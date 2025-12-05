@@ -1,17 +1,20 @@
 package view;
-import javafx.scene.control.ButtonType;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import model.TaskList;
 import model.Task;
 import manager.GreenThumbManager;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import java.util.Optional;
+import utils.ControllerHelper;
+
+import java.io.IOException;
 
 import static utils.ControllerHelper.*;
 
@@ -90,10 +93,25 @@ public class TaskViewController
   }
   public void handleRecord(){
     Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
-    TaskRecordingDialog.setTaskForRecording(selectedTask);
+    TaskRecordingDialogController.setTaskForRecording(selectedTask);
+    if(selectedTask != null){
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskRecordingDialog.fxml"));
+      AnchorPane root = loader.load();
+      TaskRecordingDialogController controller = loader.getController();
+      System.out.println("Controller passed");
+      Stage stage = new Stage();
+      stage.setTitle("Task recording dialog");
+      stage.setScene(new Scene(root));
+      controller.setStage(stage);
+      stage.showAndWait();
+    }catch (IOException e) {
+      e.printStackTrace();
+    }
+    }
   }
   public void handleDelete(){
-    Task selectedTask = taskTable.getSelectionModel().getSelectedItem(); // selectedTask is now the Object itself how cool is that
+    Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
     if(selectedTask != null){
       if (showConfirmationMessage("Deletion confirmation", "Do you really want to delete: "+selectedTask.getName()+"?")){
       taskTable.getItems().remove(selectedTask);
@@ -104,6 +122,19 @@ public class TaskViewController
     }
   }
   public void handleAdd(){
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskAddingDialog.fxml"));
+      AnchorPane root = loader.load();
+      TaskAddingDialogController controller = loader.getController();
+      System.out.println("Controller passed");
+      Stage stage = new Stage();
+      stage.setTitle("Task recording dialog");
+      stage.setScene(new Scene(root));
+      controller.setStage(stage);
+      stage.showAndWait();
+    }catch (IOException e) {
+      e.printStackTrace();
+    }
 
   }
 }

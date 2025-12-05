@@ -31,15 +31,22 @@ public class RunGreenThumbApplication extends Application
   {
     TradeOfferList allTradeOffers = new TradeOfferList();
     TaskList allTasks = new TaskList();
+    MemberList allMembers = new MemberList();
+    RecordedTaskList allRecordedTasks = new RecordedTaskList();
     Date today = new Date();
     //Couple of examples
+    allMembers.add(new Member());
     allTradeOffers.add(new TradeOffer("balls", "Dummy balls text",69 ,new Member()));
     allTradeOffers.add(new TradeOffer("Buvany", "God of War and Thunder with a sprinkle of love",69 ,new Member()));
     allTradeOffers.add(new TradeOffer("Supreme Allan", "The one who grades",69 ,new Member()));
     allTasks.add(new Task("Watching paint dry", 420,2));
     allTasks.add(new Task("Eating KFC", 600,1));
     allTasks.add(new Task("Doing it sexy style", 420,2));
+    allRecordedTasks.add(new Task("Doing it sexy style", 420,2).recordTask(new Member(),4,12,2025,false));
+    GreenThumbManager.saveRecordedTasks(allRecordedTasks);
     GreenThumbManager.saveTasks(allTasks);
+    GreenThumbManager.saveTradeOffers(allTradeOffers);
+    GreenThumbManager.saveMembers(allMembers);
     launch(args);
   }
 

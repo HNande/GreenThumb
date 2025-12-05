@@ -39,7 +39,6 @@ public class Member implements Serializable
     this.email = email;
     address = new Address(houseNumber, street);
     points = 0;
-    boost = false;
     lastRecordTime = 0;
   }
 
@@ -55,7 +54,6 @@ public class Member implements Serializable
     email = "greenbob@cloverville.com";
     address = new Address(42,"Bob's street");
     points = 0;
-    boost = false;
     lastRecordTime = 0;
   }
 
@@ -220,26 +218,6 @@ public class Member implements Serializable
   }
 
   /**
-   * Enables or disables the boost status for this member.
-   *
-   * @param boost true to enable boost, false to disable it
-   */
-  public void setBoost(boolean boost)
-  {
-    this.boost = boost;
-  }
-
-  /**
-   * Returns whether this member currently has boost enabled.
-   *
-   * @return true if boost is active, false otherwise
-   */
-  public boolean isBoosted()
-  {
-    return boost;
-  }
-
-  /**
    * Sets the total number of points this member currently has.
    *
    * @param points the new point value
@@ -321,7 +299,6 @@ public class Member implements Serializable
     return firstName.equals(obj.getFirstName()) && lastName.equals(
         obj.getLastName()) && phoneNumber.equals(obj.getPhoneNumber())
         && email.equals(obj.getEmail()) && points == obj.getPoints()
-        && boost == obj.isBoosted() && address.equals(obj.getAddress())
         && lastRecordTime == obj.getLastRecordTime();
   }
 
@@ -332,9 +309,9 @@ public class Member implements Serializable
    */
   public String toString()
   {
-    String temp = "My name is %S %S, my phone number is: %s, my email is: %s, I live at %S %d, my points is: %d, time since last record: %d, am I boosted? %B";
+    String temp = "My name is %S %S, my phone number is: %s, my email is: %s, I live at %S %d, my points is: %d, time since last record: %d";
     return String.format(temp, lastName,firstName , phoneNumber, email,
-        getAddressStreet(), getAddressHouse(), lastRecordTime, points, boost);
+        getAddressStreet(), getAddressHouse(), lastRecordTime, points);
   }
 
 }

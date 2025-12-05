@@ -8,41 +8,55 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.RecordedTaskViewController">
-    <children>
-        <VBox layoutX="12.0" layoutY="13.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="801.0">
-            <children>
-                <HBox prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <HBox prefHeight="46.0" prefWidth="429.0" spacing="10.0">
-                            <children>
-                                <Button fx:id="task" mnemonicParsing="false" onAction="#handTask" text="Tasks" />
-                                <Button fx:id="recorderTasks" mnemonicParsing="false" onAction="#handRecorderTasks" text="Recorded Tasks" />
-                                <Button fx:id="tradeOffers" mnemonicParsing="false" onAction="#handTradeOffers" text="Trade Offers" />
-                                <Button fx:id="communit" mnemonicParsing="false" onAction="#handleCommunit" text="Communit" />
-                                <Button fx:id="members" mnemonicParsing="false" onAction="#handMembers" text="Members" />
-                            </children>
-                            <opaqueInsets>
-                                <Insets />
-                            </opaqueInsets>
-                            <HBox.margin>
-                                <Insets />
-                            </HBox.margin>
-                            <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </padding>
-                        </HBox>
-                    </children>
-                </HBox>
-                <TableView prefHeight="409.0" prefWidth="742.0">
-                    <columns>
-                        <TableColumn fx:id="taskName" prefWidth="215.19997596740723" text="Task Name" />
-                        <TableColumn fx:id="pointAmount" minWidth="0.0" prefWidth="199.20001220703125" text="Point Amount" />
-                        <TableColumn fx:id="taskType" prefWidth="200.00003051757812" text="Task Type" />
-                        <TableColumn fx:id="totalCount" prefWidth="192.7999267578125" text="Total Count" />
-                    </columns>
-                </TableView>
-            </children>
-        </VBox>
-    </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="425.0" prefWidth="828.0"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="view.RecordedTaskViewController">
+    <VBox layoutX="12.0" layoutY="13.0" maxHeight="-Infinity"
+          maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+          prefHeight="400.0" prefWidth="801.0">
+        <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="46.0" prefWidth="429.0"
+                  spacing="10.0">
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0"
+                            top="10.0"/>
+                </padding>
+                <Button fx:id="task" mnemonicParsing="false"
+                        onAction="#handTask" text="Tasks"/>
+                <Button fx:id="recorderTasks"
+                        mnemonicParsing="false"
+                        onAction="#handRecorderTasks"
+                        text="Recorded Tasks"/>
+                <Button fx:id="tradeOffers" mnemonicParsing="false"
+                        onAction="#handTradeOffers"
+                        text="Trade Offers"/>
+                <Button fx:id="communit" mnemonicParsing="false"
+                        onAction="#handleCommunit" text="Communit"/>
+                <Button fx:id="members" mnemonicParsing="false"
+                        onAction="#handMembers" text="Members"/>
+            </HBox>
+        </HBox>
+        <TableView prefHeight="409.0" prefWidth="742.0">
+            <columns>
+                <TableColumn fx:id="taskName" prefWidth="215.19997596740723"
+                             text="Task Name"/>
+                <TableColumn fx:id="pointAmount" minWidth="0.0"
+                             prefWidth="199.20001220703125"
+                             text="Point Amount"/>
+                <TableColumn fx:id="taskType" prefWidth="200.00003051757812"
+                             text="Task Type"/>
+                <TableColumn fx:id="totalCount"
+                             prefWidth="192.7999267578125"
+                             text="Total Count"/>
+            </columns>
+        </TableView>
+    </VBox>
 </AnchorPane>
