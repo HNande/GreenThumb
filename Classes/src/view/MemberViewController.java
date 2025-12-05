@@ -75,31 +75,52 @@ public class MemberViewController
   @FXML
   public void handleDelete()
   {
-
+    Member selected = memberTable.getSelectionModel().getSelectedItem();
+    if (selected == null) return;
+    MemberList list = GreenThumbManager.getAllMembers();
+    list.remove(selected);
+    GreenThumbManager.saveMembers(list);
+    memberTable.getItems().remove(selected);
   }
 
   @FXML
   public void handleAdd()
   {
-
+    Member newMember = new Member();
+    MemberList list = GreenThumbManager.getAllMembers();
+    list.add(newMember);
+    GreenThumbManager.saveMembers(list);
+    memberTable.getItems().add(newMember);
+    memberTable.getSelectionModel().select(newMember);
   }
 
   @FXML
   public void handleSave()
   {
-
+    MemberList list = new MemberList();
+    for (Member m : memberTable.getItems())
+    {
+      list.add(m);
+    }
+    GreenThumbManager.saveMembers(list);
   }
 
   @FXML
-  public void handleConvert()
-  {
-
+  public void handleConvert() {
+    MemberList list = GreenThumbManager.getAllMembers();
+    for (Member m : list.getMemberList())
+    {
+      m.convertPoints();
+    }
+    GreenThumbManager.saveMembers(list);
+    memberTable.getItems().setAll(list.getMemberList());
   }
 
   @FXML
   public void handleReset()
   {
-
+    MemberList list = GreenThumbManager.getAllMembers();
+    memberTable.getItems().setAll(list.getMemberList());
   }
 
   @FXML
