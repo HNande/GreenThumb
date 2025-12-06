@@ -89,8 +89,7 @@ public class TaskViewController
       task.setPointAmount(input);
       GreenThumbManager.saveTasks(taskList);
     });
-    //This whole lambda function took me several hours to figure out how to make
-    //Basically it has senior dev, ai, and even a book's hands in it, glorious triumvirate
+
     taskTypeCol.setCellFactory(column -> new TableCell<>() {
       public void updateItem(Integer item, boolean empty) {
         super.updateItem(item, empty);

@@ -77,8 +77,7 @@ public class TradeOfferViewController {
       TradeOffer tradeOffer = event.getRowValue();
 
       if (isNullOrEmpty(input)) {
-        showErrorMessage("Empty value error message",
-            "Edited value cannot be empty.");
+        showErrorMessage("Empty value error message", "Edited value cannot be empty.");
         pass = false;
       } else if (input.trim().length() < 4 || input.trim().length() > 64) {
         showErrorMessage("Name outside of bounds", "Edited value cannot be less than 4 characters and more than 64.");
