@@ -1,4 +1,5 @@
 package view;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
@@ -19,14 +20,11 @@ import utils.ControllerHelper;
 import java.io.IOException;
 
 import static utils.ControllerHelper.*;
-
 /**
- *@author Nandor Hock
- *
+ * @author Nandor Hock
  * @version 04.12.2025
  */
-public class TaskViewController
-{
+public class TaskViewController {
   @FXML private Button recordedTasks;
   @FXML private Button record;
   @FXML private Button tradeOffers;
@@ -42,12 +40,11 @@ public class TaskViewController
   @FXML private TableColumn<Task, Integer> taskTotalCol;
 
   private TaskList taskList = GreenThumbManager.getAllTasks();
+
   /**
    *
    */
-  @FXML
-  public void initialize()
-  {
+  @FXML public void initialize() {
     //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/cell/PropertyValueFactory.html
     taskNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
     taskPointCol.setCellValueFactory(new PropertyValueFactory<>("pointAmount"));
@@ -123,14 +120,15 @@ public class TaskViewController
     });
   }
 
-  public void handleTasks(){
+  public void handleTasks() {
 
   }
-  public void handleRecordedTasks(){
+  public void handleRecordedTasks() {
 
   }
-  public void handleTradeOffers(){
-    try{
+
+  public void handleTradeOffers() {
+    try {
       System.out.println(getClass().getResource("TradeOfferView.fxml"));
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TradeOfferView.fxml"));
       AnchorPane root = loader.load();
@@ -139,63 +137,70 @@ public class TaskViewController
       stage.setTitle("Trade Offer View");
       stage.setScene(new Scene(root));
       stage.show();
-    }catch(IOException e){
+    }
+    catch (IOException e) {
       e.printStackTrace();
     }
 
   }
-  public void handleCommunity(){
+
+  public void handleCommunity() {
 
   }
-  public void handleMembers(){
+
+  public void handleMembers() {
 
   }
-  public void handleRecord(){
+
+  public void handleRecord() {
     Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
 
-    if(selectedTask != null){
-    try {
-      for(int i = 0; i < taskList.getTaskList().size();i++){
-        if(taskList.getElementByIndex(i) == selectedTask){
-          TaskRecordingDialogController.setTaskIndex(i);
+    if (selectedTask != null) {
+      try {
+        for (int i = 0; i < taskList.getTaskList().size(); i++) {
+          if (taskList.getElementByIndex(i) == selectedTask) {
+            TaskRecordingDialogController.setTaskIndex(i);
+          }
         }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskRecordingDialog.fxml"));
+        AnchorPane root = loader.load();
+        TaskRecordingDialogController controller = loader.getController();
+        System.out.println("Controller passed");
+        Stage stage = new Stage();
+        stage.setTitle("Task recording dialog");
+        stage.setScene(new Scene(root));
+        controller.setStage(stage);
+        stage.showAndWait();
+        taskList = GreenThumbManager.getAllTasks();
+        taskTable.getItems().clear();
+        taskTable.getItems().addAll(taskList.getTaskList());
       }
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskRecordingDialog.fxml"));
-      AnchorPane root = loader.load();
-      TaskRecordingDialogController controller = loader.getController();
-      System.out.println("Controller passed");
-      Stage stage = new Stage();
-      stage.setTitle("Task recording dialog");
-      stage.setScene(new Scene(root));
-      controller.setStage(stage);
-      stage.showAndWait();
-      taskList = GreenThumbManager.getAllTasks();
-      taskTable.getItems().clear();
-      taskTable.getItems().addAll(taskList.getTaskList());
-    }catch (IOException e) {
-      e.printStackTrace();
-    }
+      catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
-  public void handleDelete(){
+
+  public void handleDelete() {
     Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
-    if(selectedTask != null){
-      if (showConfirmationMessage("Deletion confirmation", "Do you really want to delete: "+selectedTask.getName()+"?")){
-      taskTable.getItems().remove(selectedTask);
-      taskList.remove(selectedTask);
+    if (selectedTask != null) {
+      if (showConfirmationMessage("Deletion confirmation", "Do you really want to delete: " + selectedTask.getName() + "?")) {
+        taskTable.getItems().remove(selectedTask);
+        taskList.remove(selectedTask);
       /*Probably the worst way to implement this updating sequence,
       as each time we are changing anything inside the lists,
       it clears, and repopulates the whole table.
        */
-      GreenThumbManager.saveTasks(taskList);
-      taskTable.getItems().clear();
-      taskTable.getItems().addAll(taskList.getTaskList());
+        GreenThumbManager.saveTasks(taskList);
+        taskTable.getItems().clear();
+        taskTable.getItems().addAll(taskList.getTaskList());
 
-      showWarningMessage("Delete successful","Object has been deleted successfully");
+        showWarningMessage("Delete successful", "Object has been deleted successfully");
       }
     }
   }
-  public void handleAdd(){
+
+  public void handleAdd() {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskAddingDialog.fxml"));
       AnchorPane root = loader.load();
@@ -209,8 +214,8 @@ public class TaskViewController
       taskList = GreenThumbManager.getAllTasks();
       taskTable.getItems().clear();
       taskTable.getItems().addAll(taskList.getTaskList());
-
-    }catch (IOException e) {
+    }
+    catch (IOException e) {
       e.printStackTrace();
     }
 
