@@ -1,6 +1,5 @@
 package view;
 
-import com.sun.jdi.ThreadGroupReference;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,9 +31,9 @@ public class TradeOfferViewController {
     @FXML private TableColumn<TradeOffer, String> description;
     @FXML private TableColumn<TradeOffer, String> proposer;
 
-    @FXML private Button deleteButton;
-    @FXML private Button executeButton;
-    @FXML private Button addButton;
+  @FXML private Button deleteButton;
+  @FXML private Button executeButton;
+  @FXML private Button addButton;
 
     @FXML private Button tasks;
     @FXML private Button recorderTasks;
@@ -42,18 +41,18 @@ public class TradeOfferViewController {
     @FXML private Button community;
     @FXML private Button members;
 
-    @FXML private TextField nameField;
-    @FXML private TextField costField;
-    @FXML private TextField descriptionField;
-    @FXML private TextField proposerNameField;
-    @FXML private TextField proposerLastNameField;
+  @FXML private TextField nameField;
+  @FXML private TextField costField;
+  @FXML private TextField descriptionField;
+  @FXML private TextField proposerNameField;
+  @FXML private TextField proposerLastNameField;
 
-    @FXML private ComboBox<Member> proposerCombo;
-    @FXML private ComboBox<Member> payerCombo;
+  @FXML private ComboBox<Member> proposerCombo;
+  @FXML private ComboBox<Member> payerCombo;
 
-    private Stage stage;
-    private final MemberList memberList = GreenThumbManager.getAllMembers();
-    private TradeOfferList tradeOfferList = GreenThumbManager.getAllTradeOffers();
+  private Stage stage;
+  private final MemberList memberList = GreenThumbManager.getAllMembers();
+  private TradeOfferList tradeOfferList = GreenThumbManager.getAllTradeOffers();
 
 
     @FXML
@@ -74,13 +73,13 @@ public class TradeOfferViewController {
         cost.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         description.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        proposerCombo.getItems().setAll(memberList.getMemberList());
-        payerCombo.getItems().setAll(memberList.getMemberList());
+    proposerCombo.getItems().setAll(memberList.getMemberList());
+    payerCombo.getItems().setAll(memberList.getMemberList());
 
-        name.setOnEditCommit(event -> {
-            boolean pass = true;
-            String input = event.getNewValue();
-            TradeOffer tradeOffer = event.getRowValue();
+    name.setOnEditCommit(event -> {
+      boolean pass = true;
+      String input = event.getNewValue();
+      TradeOffer tradeOffer = event.getRowValue();
 
             if (isNullOrEmpty(input))
             {
@@ -99,10 +98,10 @@ public class TradeOfferViewController {
             }
         });
 
-        cost.setOnEditCommit(event -> {
-            boolean pass = true;
-            Integer input = event.getNewValue();
-            TradeOffer tradeOffer = event.getRowValue();
+    cost.setOnEditCommit(event -> {
+      boolean pass = true;
+      Integer input = event.getNewValue();
+      TradeOffer tradeOffer = event.getRowValue();
 
             if (input == null)
             {
@@ -126,28 +125,23 @@ public class TradeOfferViewController {
             String input = event.getNewValue();
             TradeOffer tradeOffer = event.getRowValue();
 
-            if (isNullOrEmpty(input))
-            {
-                showErrorMessage("Empty value error message", "Edited value cannot be empty.");
-                pass = false;
-            }
-            else if (input.trim().length() > 500)
-            {
-                showErrorMessage("Description outside of bounds", "Description cannot be more than 500 characters.");
-                pass = false;
-            }
-            if (pass)
-            {
-                tradeOffer.setDescription(input.trim());
-                tradeOfferTable.refresh();
-            }
-        });
-    }
+      if (isNullOrEmpty(input)) {
+        showErrorMessage("Empty value error message", "Edited value cannot be empty.");
+        pass = false;
+      } else if (input.trim().length() > 500) {
+        showErrorMessage("Description outside of bounds", "Description cannot be more than 500 characters.");
+        pass = false;
+      }
+      if (pass) {
+        tradeOffer.setDescription(input.trim());
+        tradeOfferTable.refresh();
+      }
+    });
+  }
 
-    public void setStage(Stage stage)
-    {
-        this.stage = stage;
-    }
+  public void setStage(Stage stage) {
+    this.stage = stage;
+  }
 
     @FXML
     private void handleTasks()
@@ -239,33 +233,22 @@ public class TradeOfferViewController {
     {
         TradeOffer selectedTradeOffer = tradeOfferTable.getSelectionModel().getSelectedItem();
 
-        if (e.getSource() == deleteButton && selectedTradeOffer != null)
-        {
-            if (ControllerHelper.showConfirmationMessage("Deletion confirmation",
-                    "Do you really want to delete: " + selectedTradeOffer.getName() + "?"))
-            {
-                tradeOfferTable.getItems().remove(selectedTradeOffer);
-                tradeOfferList.remove(selectedTradeOffer);
-                tradeOfferTable.refresh();
-                GreenThumbManager.saveTradeOffers(tradeOfferList);
-                showWarningMessage("Delete successful", "Object has been deletd successfully");
-            }
-            else
-            {
-                showWarningMessage("Delete cancelled", "The deletion process was cancelled");
-            }
-        }
-        else if (e.getSource() == addButton)
-        {
-            boolean pass = true;
+    if (e.getSource() == deleteButton && selectedTradeOffer != null) {
+      showConfirmationMessage("Deletion confirmation", "Do you really want to delete: " + selectedTradeOffer.getName() + "?");
+      tradeOfferTable.getItems().remove(selectedTradeOffer);
+      tradeOfferList.remove(selectedTradeOffer);
+      tradeOfferTable.refresh();
+      showWarningMessage("Delete successful", "Object has been deletd successfully");
+    } else if (e.getSource() == addButton) {
+      boolean pass = true;
 
-            String nameText = nameField.getText().trim();
-            String costText = costField.getText().trim();
-            String descriptionText = descriptionField.getText().trim();
-            String proposerName = proposerNameField.getText().trim();
-            String proposerLastName = proposerLastNameField.getText().trim();
+      String nameText = nameField.getText().trim();
+      String costText = costField.getText().trim();
+      String descriptionText = descriptionField.getText().trim();
+      String proposerName = proposerNameField.getText().trim();
+      String proposerLastName = proposerLastNameField.getText().trim();
 
-            Member selectedMember = null;
+      Member selectedMember = null;
 
             for (int i = 0; i < memberList.getMemberList().size(); i++)
             {
@@ -326,35 +309,32 @@ public class TradeOfferViewController {
                 GreenThumbManager.saveTradeOffers(tradeOfferList);
             }
 
-            nameField.clear();
-            costField.clear();
-            descriptionField.clear();
-            proposerNameField.clear();
-            proposerLastNameField.clear();
+      nameField.clear();
+      costField.clear();
+      descriptionField.clear();
+      proposerNameField.clear();
+      proposerLastNameField.clear();
 
-            tradeOfferTable.refresh();
-        }
-        else if (e.getSource() == executeButton)
-        {
-            proposerCombo.setVisible(true);
-            proposerCombo.setManaged(true);
-            payerCombo.setVisible(true);
-            payerCombo.setManaged(true);
+      tradeOfferTable.refresh();
+    } else if (e.getSource() == executeButton) {
+      proposerCombo.setVisible(true);
+      proposerCombo.setManaged(true);
+      payerCombo.setVisible(true);
+      payerCombo.setManaged(true);
 
-            Member payer = payerCombo.getSelectionModel().getSelectedItem();
-            Member proposer = proposerCombo.getSelectionModel().getSelectedItem();
+      Member payer = payerCombo.getSelectionModel().getSelectedItem();
+      Member proposer = proposerCombo.getSelectionModel().getSelectedItem();
 
-            if (payer == proposer)
-            {
-                showErrorMessage("The proposer is the same as the payer", "The proposer and the payer can't be the same.");
-            }
+      if (payer == proposer) {
+        showErrorMessage("The proposer is the same as the payer", "The proposer and the payer can't be the same.");
+      }
 
-            TradeOffer tradeOfferExecution = tradeOfferTable.getSelectionModel().getSelectedItem();
+      TradeOffer tradeOfferExecution = tradeOfferTable.getSelectionModel()
+          .getSelectedItem();
 
-            if (tradeOfferExecution == null)
-            {
-            showErrorMessage("Invalid Execution", "No trade offer found.");
-            }
+      if (tradeOfferExecution == null) {
+        showErrorMessage("Invalid Execution", "No trade offer found.");
+      }
 
             int cost = tradeOfferExecution.getCost();
 
