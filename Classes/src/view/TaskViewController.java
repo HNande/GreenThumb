@@ -25,12 +25,6 @@ import static utils.ControllerHelper.*;
  * @version 04.12.2025
  */
 public class TaskViewController {
-  @FXML private Button recordedTasks;
-  @FXML private Button record;
-  @FXML private Button tradeOffers;
-  @FXML private Button tasks;
-  @FXML private Button community;
-  @FXML private Button members;
   @FXML private Button add;
   @FXML private Button deleteButton;
   @FXML private TableView<Task> taskTable;
@@ -38,9 +32,7 @@ public class TaskViewController {
   @FXML private TableColumn<Task, Integer> taskPointCol;
   @FXML private TableColumn<Task, Integer> taskTypeCol;
   @FXML private TableColumn<Task, Integer> taskTotalCol;
-
   private TaskList taskList = GreenThumbManager.getAllTasks();
-
   /**
    *
    */

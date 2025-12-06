@@ -60,9 +60,9 @@ public class RunGreenThumbApplication extends Application
    * @throws IOException
    */
   public void start(Stage primaryStage) throws IOException {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Memberview.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
     Scene scene = new Scene(loader.load());
-    primaryStage.setTitle("Task View");
+    primaryStage.setTitle("Green Thumb ");
     primaryStage.setScene(scene);
     primaryStage.setOnCloseRequest(event -> {
       System.out.println("Application is closing...");

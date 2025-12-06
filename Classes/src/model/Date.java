@@ -124,5 +124,9 @@ public class Date implements Serializable
   {
     return year;
   }
+  public String toString(){
+    String temp = " %d/%d/%d";
+    return String.format(temp,getDay(),getMonth(),getYear());
+  }
 
 }
