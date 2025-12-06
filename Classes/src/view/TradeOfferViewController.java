@@ -24,22 +24,22 @@ import static utils.ControllerHelper.showErrorMessage;
 import static utils.ControllerHelper.taskNameAlreadyExists;
 
 public class TradeOfferViewController {
-    @FXML
-    private TableView<TradeOffer> tradeOfferTable;
-    @FXML private TableColumn<TradeOffer, String> name;
-    @FXML private TableColumn<TradeOffer, Integer> cost;
-    @FXML private TableColumn<TradeOffer, String> description;
-    @FXML private TableColumn<TradeOffer, String> proposer;
+
+  @FXML private TableView<TradeOffer> tradeOfferTable;
+  @FXML private TableColumn<TradeOffer, String> name;
+  @FXML private TableColumn<TradeOffer, Integer> cost;
+  @FXML private TableColumn<TradeOffer, String> description;
+  @FXML private TableColumn<TradeOffer, String> proposer;
 
   @FXML private Button deleteButton;
   @FXML private Button executeButton;
   @FXML private Button addButton;
 
-    @FXML private Button tasks;
-    @FXML private Button recorderTasks;
-    @FXML private Button tradeOffers;
-    @FXML private Button community;
-    @FXML private Button members;
+  @FXML private Button tasks;
+  @FXML private Button recordedTasks;
+  @FXML private Button tradeOffers;
+  @FXML private Button community;
+  @FXML private Button members;
 
   @FXML private TextField nameField;
   @FXML private TextField costField;
@@ -54,24 +54,19 @@ public class TradeOfferViewController {
   private final MemberList memberList = GreenThumbManager.getAllMembers();
   private TradeOfferList tradeOfferList = GreenThumbManager.getAllTradeOffers();
 
+  @FXML public void initialize() {
+    name.setCellValueFactory(new PropertyValueFactory<>("name"));
+    cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
+    description.setCellValueFactory(new PropertyValueFactory<>("description"));
+    proposer.setCellValueFactory(cellData -> new SimpleStringProperty(
+        cellData.getValue().getProposer().getFirstName() + " " + cellData.getValue().getProposer().getLastName()));
 
-    @FXML
-    public void initialize(){
-        name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
-        description.setCellValueFactory(new PropertyValueFactory<>("description"));
-        proposer.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getProposer().getFirstName() + " "
-                        + cellData.getValue().getProposer().getLastName())
-        );
+    tradeOfferTable.setEditable(true);
+    tradeOfferTable.getItems().addAll(tradeOfferList.getTradeOfferList());
 
-
-        tradeOfferTable.setEditable(true);
-        tradeOfferTable.getItems().addAll(tradeOfferList.getTradeOfferList());
-
-        name.setCellFactory(TextFieldTableCell.forTableColumn());
-        cost.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        description.setCellFactory(TextFieldTableCell.forTableColumn());
+    name.setCellFactory(TextFieldTableCell.forTableColumn());
+    cost.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+    description.setCellFactory(TextFieldTableCell.forTableColumn());
 
     proposerCombo.getItems().setAll(memberList.getMemberList());
     payerCombo.getItems().setAll(memberList.getMemberList());
@@ -81,49 +76,42 @@ public class TradeOfferViewController {
       String input = event.getNewValue();
       TradeOffer tradeOffer = event.getRowValue();
 
-            if (isNullOrEmpty(input))
-            {
-                showErrorMessage("Empty value error message", "Edited value cannot be empty.");
-                pass = false;
-            }
-            else if (input.trim().length() < 4 || input.trim().length() > 64)
-            {
-                showErrorMessage("Name outside of bounds", "Edited value cannot be less than 4 characters and more than 64.");
-                pass = false;
-            }
-            if (pass)
-            {
-                tradeOffer.setName(input.trim());
-                tradeOfferTable.refresh();
-            }
-        });
+      if (isNullOrEmpty(input)) {
+        showErrorMessage("Empty value error message",
+            "Edited value cannot be empty.");
+        pass = false;
+      } else if (input.trim().length() < 4 || input.trim().length() > 64) {
+        showErrorMessage("Name outside of bounds", "Edited value cannot be less than 4 characters and more than 64.");
+        pass = false;
+      }
+      if (pass) {
+        tradeOffer.setName(input.trim());
+        tradeOfferTable.refresh();
+      }
+    });
 
     cost.setOnEditCommit(event -> {
       boolean pass = true;
       Integer input = event.getNewValue();
       TradeOffer tradeOffer = event.getRowValue();
 
-            if (input == null)
-            {
-                showErrorMessage("Empty value error message", "Edited value cannot be empty.");
-                pass = false;
-            }
-            else if (input < 0)
-            {
-                    showErrorMessage("Wrong number format", "Edited value must be a whole positive number.");
-                    pass = false;
-            }
-            if (pass)
-            {
-                tradeOffer.setCost(input);
-                tradeOfferTable.refresh();
-            }
-        });
+      if (input == null) {
+        showErrorMessage("Empty value error message", "Edited value cannot be empty.");
+        pass = false;
+      } else if (input < 0) {
+        showErrorMessage("Wrong number format", "Edited value must be a whole positive number.");
+        pass = false;
+      }
+      if (pass) {
+        tradeOffer.setCost(input);
+        tradeOfferTable.refresh();
+      }
+    });
 
-        description.setOnEditCommit(event -> {
-            boolean pass = true;
-            String input = event.getNewValue();
-            TradeOffer tradeOffer = event.getRowValue();
+    description.setOnEditCommit(event -> {
+      boolean pass = true;
+      String input = event.getNewValue();
+      TradeOffer tradeOffer = event.getRowValue();
 
       if (isNullOrEmpty(input)) {
         showErrorMessage("Empty value error message", "Edited value cannot be empty.");
@@ -143,95 +131,74 @@ public class TradeOfferViewController {
     this.stage = stage;
   }
 
-    @FXML
-    private void handleTasks()
-    {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TaskView.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage stage = (Stage) tasks.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+  public void handleTasks() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TaskView.fxml"));
+      Scene scene = new Scene(loader.load());
+      Stage stage = (Stage) tasks.getScene().getWindow();
+      stage.setScene(scene);
+      stage.show();
     }
-
-    @FXML
-    public void handleRecordedTasks()
-    {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/RecordedTaskView.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage stage = (Stage) recorderTasks.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+    catch (IOException e) {
+      e.printStackTrace();
     }
+  }
 
-    @FXML
-    public void handleTradeOffers()
-    {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TradeOfferView.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage stage = (Stage) tradeOffers.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+  public void handleRecordedTasks() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/RecordedTaskView.fxml"));
+      Scene scene = new Scene(loader.load());
+      Stage stage = (Stage) recordedTasks.getScene().getWindow();
+      stage.setScene(scene);
+      stage.show();
     }
-
-    @FXML
-    public void handleCommunity()
-    {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/viev/CommunityView"));
-            Scene scene = new Scene(loader.load());
-            Stage stage = (Stage) community.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+    catch (IOException e) {
+      e.printStackTrace();
     }
+  }
 
-    @FXML
-    private void handleMembers()
-    {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MemberView.fxml"));
-            Scene scene = new Scene(loader.load());
-            Stage stage = (Stage) members.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+  public void handleTradeOffers() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TradeOfferView.fxml"));
+      Scene scene = new Scene(loader.load());
+      Stage stage = (Stage) tradeOffers.getScene().getWindow();
+      stage.setScene(scene);
+      stage.show();
     }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
-    @FXML
-    public void handleEvents(ActionEvent e)
-    {
-        TradeOffer selectedTradeOffer = tradeOfferTable.getSelectionModel().getSelectedItem();
+  public void handleCommunity() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CommunityView.fxml"));
+      Scene scene = new Scene(loader.load());
+      Stage stage = (Stage) community.getScene().getWindow();
+      stage.setScene(scene);
+      stage.show();
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void handleMembers() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MemberView.fxml"));
+      Scene scene = new Scene(loader.load());
+      Stage stage = (Stage) members.getScene().getWindow();
+      stage.setScene(scene);
+      stage.show();
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void handleEvents(javafx.event.ActionEvent e) {
+
+    TradeOffer selectedTradeOffer = tradeOfferTable.getSelectionModel().getSelectedItem();
 
     if (e.getSource() == deleteButton && selectedTradeOffer != null) {
       showConfirmationMessage("Deletion confirmation", "Do you really want to delete: " + selectedTradeOffer.getName() + "?");
@@ -250,64 +217,48 @@ public class TradeOfferViewController {
 
       Member selectedMember = null;
 
-            for (int i = 0; i < memberList.getMemberList().size(); i++)
-            {
-                Member member = memberList.getMemberList().get(i);
-                if (member.getFirstName().equals(proposerName)
-                        && member.getLastName().equals(proposerLastName))
-                {
-                    selectedMember = member;
-                    break;
-                }
-            }
+      for (int i = 0; i < memberList.getMemberList().size(); i++) {
+        Member member = memberList.getMemberList().get(i);
+        if (member.getFirstName().equals(proposerName) && member.getLastName().equals(proposerLastName)) {
+          selectedMember = member;
+          break;
+        }
+      }
 
-            if (isNullOrEmpty(nameText))
-            {
-                showErrorMessage("Empty value error message", "Entered value cannot be empty.");
-                pass = false;
-            }
-            else if (nameText.trim().length() < 4 || nameText.trim().length() > 64)
-            {
-                showErrorMessage("Name outside bounds", "Name must be between 4 and 64 characters.");
-                pass = false;
-            }
-            else if (isNullOrEmpty(descriptionText))
-            {
-                showErrorMessage("Empty value error message", "Entered value cannot be empty.");
-                pass = false;
-            }
-            else if (descriptionText.trim().length() > 500)
-            {
-                showErrorMessage("Description outside of bounds", "Description cannot be more than 500 characters.");
-                pass = false;
-            }
-            else if (isNullOrEmpty(costText))
-            {
-                showErrorMessage("Empty value error message", "Entered value cannot be empty.");
-                pass = false;
-            }
-            else if (Integer.parseInt(costText) < 0)
-            {
-                showErrorMessage("Wrong number format", "Entered value must be a whole positive number.");
-                pass = false;
-            }
-            else if (ControllerHelper.tradeOfferNameAlreadyExists(tradeOfferList.getTradeOfferList(), nameText))
-            {
-            showErrorMessage("Duplicate TradeOffer", "A trade offer with this name already exists.");
-            pass = false;
-            }
-            else if (selectedMember == null)
-            {
-                showErrorMessage("Invalid Proposer", "No member found with that first and last name.");
-                pass = false;
-            }
-            if (pass)
-            {
-                TradeOffer tradeOffer = new TradeOffer(nameText, descriptionText, Integer.parseInt(costText), selectedMember);
-                tradeOfferList.add(tradeOffer);
-                tradeOfferTable.getItems().add(tradeOffer);
-                GreenThumbManager.saveTradeOffers(tradeOfferList);
-            }
+      if (isNullOrEmpty(nameText)) {
+        showErrorMessage("Empty value error message", "Entered value cannot be empty.");
+        pass = false;
+      } else if (nameText.trim().length() < 4
+          || nameText.trim().length() > 64) {
+        showErrorMessage("Name outside bounds", "Name must be between 4 and 64 characters.");
+        pass = false;
+      } else if (isNullOrEmpty(descriptionText)) {
+        showErrorMessage("Empty value error message", "Entered value cannot be empty.");
+        pass = false;
+      } else if (descriptionText.trim().length() > 500) {
+        showErrorMessage("Description outside of bounds", "Description cannot be more than 500 characters.");
+        pass = false;
+      } else if (isNullOrEmpty(costText)) {
+        showErrorMessage("Empty value error message", "Entered value cannot be empty.");
+        pass = false;
+      } else if (Integer.parseInt(costText) < 0) {
+        showErrorMessage("Wrong number format", "Entered value must be a whole positive number.");
+        pass = false;
+      } else if (ControllerHelper.tradeOfferNameAlreadyExists(
+          tradeOfferList.getTradeOfferList(), nameText)) {
+        showErrorMessage("Duplicate TradeOffer", "A trade offer with this name already exists.");
+        pass = false;
+      } else if (selectedMember == null) {
+        showErrorMessage("Invalid Proposer", "No member found with that first and last name.");
+        pass = false;
+      }
+      if (pass) {
+        TradeOffer tradeOffer = new TradeOffer(nameText, descriptionText,
+            Integer.parseInt(costText), selectedMember);
+        tradeOfferList.add(tradeOffer);
+        tradeOfferTable.getItems().add(tradeOffer);
+        GreenThumbManager.saveTradeOffers(tradeOfferList);
+      }
 
       nameField.clear();
       costField.clear();
@@ -336,26 +287,18 @@ public class TradeOfferViewController {
         showErrorMessage("Invalid Execution", "No trade offer found.");
       }
 
-            int cost = tradeOfferExecution.getCost();
+      if (payer.getPoints() < tradeOfferExecution.getCost()) {
+        showErrorMessage("Points missing", "Not enough points for paying.");
+      } else {
+        tradeOfferExecution.executeTradeOffer(payer, proposer);
 
-            if (payer.getPoints() < cost)
-            {
-                showErrorMessage("Points missing", "Not enough points for paying.");
-            }
-            else
-            {
-                tradeOfferExecution.executeTradeOffer(payer, proposer);
-
-                proposer.setPoints(proposer.getPoints() + cost);
-                payer.setPoints(payer.getPoints() - cost);
-            }
-
-            tradeOfferTable.refresh();
-
-            proposerCombo.setVisible(false);
-            proposerCombo.setManaged(false);
-            payerCombo.setVisible(false);
-            payerCombo.setManaged(false);
-        }
+      }
+      GreenThumbManager.saveMembers(memberList);
+      proposerCombo.setVisible(false);
+      proposerCombo.setManaged(false);
+      payerCombo.setVisible(false);
+      payerCombo.setManaged(false);
     }
+
+  }
 }
