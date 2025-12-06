@@ -34,9 +34,15 @@ public class RunGreenThumbApplication extends Application
     MemberList allMembers = new MemberList();
     RecordedTaskList allRecordedTasks = new RecordedTaskList();
     Date today = new Date();
+
+     Member newMember = new Member("John", "Doe", "+45123456", "green@gmail.com",
+             67, "Green Street");
+
+     newMember.setPoints(100);
     //Couple of examples
     allMembers.add(new Member());
-    allTradeOffers.add(new TradeOffer("balls", "Dummy balls text",69 ,new Member()));
+    allMembers.add(newMember);
+    allTradeOffers.add(new TradeOffer("balls", "Dummy balls text",69 ,newMember));
     allTradeOffers.add(new TradeOffer("Buvany", "God of War and Thunder with a sprinkle of love",69 ,new Member()));
     allTradeOffers.add(new TradeOffer("Supreme Allan", "The one who grades",69 ,new Member()));
     allTasks.add(new Task("Watching paint dry", 420,2));

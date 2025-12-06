@@ -5,37 +5,34 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import manager.GreenThumbManager;
 import model.*;
 import utils.ControllerHelper;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
+import javafx.event.ActionEvent;
 
 import static utils.ControllerHelper.*;
-import static utils.ControllerHelper.showErrorMessage;
-import static utils.ControllerHelper.taskNameAlreadyExists;
 
 public class TradeOfferViewController {
+
   @FXML private TableView<TradeOffer> tradeOfferTable;
   @FXML private TableColumn<TradeOffer, String> name;
   @FXML private TableColumn<TradeOffer, Integer> cost;
   @FXML private TableColumn<TradeOffer, String> description;
   @FXML private TableColumn<TradeOffer, String> proposer;
 
-  @FXML private Button deleteButton;
-  @FXML private Button executeButton;
-  @FXML private Button addButton;
+    @FXML private Button deleteButton;
+    @FXML private Button executeButton;
+    @FXML private Button addButton;
 
   @FXML private Button tasks;
-  @FXML private Button recorderTasks;
+  @FXML private Button recordedTasks;
   @FXML private Button tradeOffers;
   @FXML private Button community;
   @FXML private Button members;
@@ -46,12 +43,12 @@ public class TradeOfferViewController {
   @FXML private TextField proposerNameField;
   @FXML private TextField proposerLastNameField;
 
-  @FXML private ComboBox<Member> proposerCombo;
-  @FXML private ComboBox<Member> payerCombo;
+    @FXML private ComboBox<Member> proposerCombo;
+    @FXML private ComboBox<Member> payerCombo;
 
-  private Stage stage;
-  private final MemberList memberList = GreenThumbManager.getAllMembers();
-  private TradeOfferList tradeOfferList = GreenThumbManager.getAllTradeOffers();
+    private Stage stage;
+    private TradeOfferList tradeOfferList = GreenThumbManager.getAllTradeOffers();
+    private final MemberList memberList = GreenThumbManager.getAllMembers();
 
   @FXML public void initialize() {
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -59,37 +56,64 @@ public class TradeOfferViewController {
     description.setCellValueFactory(new PropertyValueFactory<>("description"));
     proposer.setCellValueFactory(cellData -> new SimpleStringProperty(
         cellData.getValue().getProposer().getFirstName() + " " + cellData.getValue().getProposer().getLastName()));
+
     tradeOfferTable.setEditable(true);
     tradeOfferTable.getItems().addAll(tradeOfferList.getTradeOfferList());
+
     name.setCellFactory(TextFieldTableCell.forTableColumn());
     cost.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     description.setCellFactory(TextFieldTableCell.forTableColumn());
 
-    proposerCombo.getItems().setAll(memberList.getMemberList());
-    payerCombo.getItems().setAll(memberList.getMemberList());
+        proposerCombo.getItems().setAll(memberList.getMemberList());
+        payerCombo.getItems().setAll(memberList.getMemberList());
 
-    name.setOnEditCommit(event -> {
-      boolean pass = true;
-      String input = event.getNewValue();
-      TradeOffer tradeOffer = event.getRowValue();
+        name.setOnEditCommit(event -> {
+            String newValue = event.getNewValue();
+            String oldValue = event.getOldValue();
+            TradeOffer tradeOffer = event.getRowValue();
 
-      if (isNullOrEmpty(input)) {
-        showErrorMessage("Empty value error message", "Edited value cannot be empty.");
-        pass = false;
-      } else if (input.trim().length() < 4 || input.trim().length() > 64) {
-        showErrorMessage("Name outside of bounds", "Edited value cannot be less than 4 characters and more than 64.");
-        pass = false;
-      }
-      if (pass) {
-        tradeOffer.setName(input.trim());
-        tradeOfferTable.refresh();
-      }
-    });
+            if (isNullOrEmpty(newValue)) {
+                showErrorMessage("Empty value error", "Name cannot be empty.");
+                tradeOffer.setName(oldValue);
+            } else if (newValue.trim().length() < 4 || newValue.trim().length() > 64) {
+                showErrorMessage("Name length error", "Name must be between 4 and 64 characters.");
+                tradeOffer.setName(oldValue);
+            } else {
+                tradeOffer.setName(newValue.trim());
+                GreenThumbManager.saveTradeOffers(tradeOfferList);
+            }
+            tradeOfferTable.refresh();
+        });
 
-    cost.setOnEditCommit(event -> {
-      boolean pass = true;
-      Integer input = event.getNewValue();
-      TradeOffer tradeOffer = event.getRowValue();
+        // TradeOfferViewController.java, inside initialize()
+
+// ... (existing code) ...
+
+// --- Setup for the 'cost' column with inline exception handling ---
+        cost.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter() {
+
+            // Override fromString() here to include try-catch
+            @Override
+            public Integer fromString(String value) {
+                if (value == null || value.trim().isEmpty()) {
+                    ControllerHelper.showErrorMessage("Invalid or Empty Cost",
+                            "Input was left empty. Value reverted.");
+                    return null;
+                }
+                try {
+                    return Integer.valueOf(value.trim());
+                } catch (NumberFormatException e) {
+                    showErrorMessage("Input Error",
+                            "Cost must be a whole number. Input failed.");
+                    return null;
+                }
+            }
+        }));
+
+        cost.setOnEditCommit(event -> {
+            Integer newValue = event.getNewValue();
+            Integer oldValue = event.getOldValue();
+            TradeOffer tradeOffer = event.getRowValue();
 
       if (input == null) {
         showErrorMessage("Empty value error message", "Edited value cannot be empty.");
@@ -103,30 +127,31 @@ public class TradeOfferViewController {
         tradeOfferTable.refresh();
       }
     });
+
     description.setOnEditCommit(event -> {
       boolean pass = true;
       String input = event.getNewValue();
       TradeOffer tradeOffer = event.getRowValue();
 
-      if (isNullOrEmpty(input)) {
-        showErrorMessage("Empty value error message", "Edited value cannot be empty.");
-        pass = false;
-      } else if (input.trim().length() > 500) {
-        showErrorMessage("Description outside of bounds", "Description cannot be more than 500 characters.");
-        pass = false;
-      }
-      if (pass) {
-        tradeOffer.setDescription(input.trim());
-        tradeOfferTable.refresh();
-      }
-    });
-  }
+            if (isNullOrEmpty(newValue)) {
+                showErrorMessage("Empty value error", "Description cannot be empty.");
+                tradeOffer.setDescription(oldValue);
+            } else if (newValue.trim().length() > 500) {
+                showErrorMessage("Description length error", "Description cannot be more than 500 characters.");
+                tradeOffer.setDescription(oldValue);
+            } else {
+                tradeOffer.setDescription(newValue.trim());
+                GreenThumbManager.saveTradeOffers(tradeOfferList);
+            }
+            tradeOfferTable.refresh();
+        });
+    }
 
-  public void setStage(Stage stage) {
-    this.stage = stage;
-  }
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
-  private void handleTasks() {
+  public void handleTasks() {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TaskView.fxml"));
       Scene scene = new Scene(loader.load());
@@ -139,12 +164,11 @@ public class TradeOfferViewController {
     }
   }
 
-  @FXML public void handleRecordedTasks() {
+  public void handleRecordedTasks() {
     try {
-      FXMLLoader loader = new FXMLLoader(
-          getClass().getResource("/view/RecordedTaskView.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/RecordedTaskView.fxml"));
       Scene scene = new Scene(loader.load());
-      Stage stage = (Stage) recorderTasks.getScene().getWindow();
+      Stage stage = (Stage) recordedTasks.getScene().getWindow();
       stage.setScene(scene);
       stage.show();
     }
@@ -153,10 +177,9 @@ public class TradeOfferViewController {
     }
   }
 
-  @FXML public void handleTradeOffers() {
+  public void handleTradeOffers() {
     try {
-      FXMLLoader loader = new FXMLLoader(
-          getClass().getResource("/view/TradeOfferView.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TradeOfferView.fxml"));
       Scene scene = new Scene(loader.load());
       Stage stage = (Stage) tradeOffers.getScene().getWindow();
       stage.setScene(scene);
@@ -166,10 +189,10 @@ public class TradeOfferViewController {
       e.printStackTrace();
     }
   }
-  @FXML public void handleCommunity() {
+
+  public void handleCommunity() {
     try {
-      FXMLLoader loader = new FXMLLoader(
-          getClass().getResource("/view/CommunityView"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CommunityView.fxml"));
       Scene scene = new Scene(loader.load());
       Stage stage = (Stage) community.getScene().getWindow();
       stage.setScene(scene);
@@ -180,7 +203,7 @@ public class TradeOfferViewController {
     }
   }
 
-  @FXML private void handleMembers() {
+  public void handleMembers() {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MemberView.fxml"));
       Scene scene = new Scene(loader.load());
@@ -193,9 +216,9 @@ public class TradeOfferViewController {
     }
   }
 
-  @FXML public void handleEvents(ActionEvent e) {
-    TradeOffer selectedTradeOffer = tradeOfferTable.getSelectionModel()
-        .getSelectedItem();
+  public void handleEvents(javafx.event.ActionEvent e) {
+
+    TradeOffer selectedTradeOffer = tradeOfferTable.getSelectionModel().getSelectedItem();
 
     if (e.getSource() == deleteButton && selectedTradeOffer != null) {
       showConfirmationMessage("Deletion confirmation", "Do you really want to delete: " + selectedTradeOffer.getName() + "?");
@@ -216,8 +239,7 @@ public class TradeOfferViewController {
 
       for (int i = 0; i < memberList.getMemberList().size(); i++) {
         Member member = memberList.getMemberList().get(i);
-        if (member.getFirstName().equals(proposerName) && member.getLastName()
-            .equals(proposerLastName)) {
+        if (member.getFirstName().equals(proposerName) && member.getLastName().equals(proposerLastName)) {
           selectedMember = member;
           break;
         }
@@ -242,7 +264,8 @@ public class TradeOfferViewController {
       } else if (Integer.parseInt(costText) < 0) {
         showErrorMessage("Wrong number format", "Entered value must be a whole positive number.");
         pass = false;
-      } else if (ControllerHelper.tradeOfferNameAlreadyExists(tradeOfferList.getTradeOfferList(), nameText)) {
+      } else if (ControllerHelper.tradeOfferNameAlreadyExists(
+          tradeOfferList.getTradeOfferList(), nameText)) {
         showErrorMessage("Duplicate TradeOffer", "A trade offer with this name already exists.");
         pass = false;
       } else if (selectedMember == null) {
@@ -250,7 +273,8 @@ public class TradeOfferViewController {
         pass = false;
       }
       if (pass) {
-        TradeOffer tradeOffer = new TradeOffer(nameText, descriptionText, Integer.parseInt(costText), selectedMember);
+        TradeOffer tradeOffer = new TradeOffer(nameText, descriptionText,
+            Integer.parseInt(costText), selectedMember);
         tradeOfferList.add(tradeOffer);
         tradeOfferTable.getItems().add(tradeOffer);
         GreenThumbManager.saveTradeOffers(tradeOfferList);
@@ -287,16 +311,14 @@ public class TradeOfferViewController {
         showErrorMessage("Points missing", "Not enough points for paying.");
       } else {
         tradeOfferExecution.executeTradeOffer(payer, proposer);
+
       }
-      GreenThumbManager.saveTradeOffers(tradeOfferList);
-      tradeOfferList = GreenThumbManager.getAllTradeOffers();
-      tradeOfferTable.getItems().clear();
-      tradeOfferTable.getItems().addAll(tradeOfferList.getTradeOfferList());
-      tradeOfferTable.refresh();
+      GreenThumbManager.saveMembers(memberList);
       proposerCombo.setVisible(false);
       proposerCombo.setManaged(false);
       payerCombo.setVisible(false);
       payerCombo.setManaged(false);
     }
+
   }
 }

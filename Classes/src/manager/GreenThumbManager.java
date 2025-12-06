@@ -7,7 +7,7 @@ import utils.MyFileHandler;
  * It handles saving and loading of trade offers, members, tasks, recorded tasks, and community data.
  * All data is stored in binary files.
  *
- * @author Nandor Hock
+ * @author Sofia Golban
  *
  * @version 02.12.2025
  */
