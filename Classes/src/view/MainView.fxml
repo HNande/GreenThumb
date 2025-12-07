@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.MainViewController"
-            prefHeight="400.0" prefWidth="600.0">
-    <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" >
-        <Tab fx:id="tasksTab" text="Tasks" closable="false"/>
-        <Tab fx:id="taskRecordsTab" text="Task Records" closable="false"/>
-        <Tab fx:id="communityTab" text="Community" closable="false"/>
-        <Tab fx:id="membersTab" text="Members" closable="false"/>
-        <Tab fx:id="tradeOfferTab" text="Trade Offers" closable="false"/>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainViewController">
+    <TabPane  tabClosingPolicy="UNAVAILABLE">
+        <Tab fx:id="tasksTab" closable="false" text="Tasks" />
+        <Tab fx:id="taskRecordsTab" closable="false" text="Task Records" />
+        <Tab fx:id="communityTab" closable="false" text="Community" />
+        <Tab fx:id="membersTab" closable="false" text="Members" />
+        <Tab fx:id="tradeOfferTab" closable="false" text="Trade Offers" />
     </TabPane>
 </AnchorPane>

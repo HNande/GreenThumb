@@ -40,6 +40,7 @@ public class TaskRecordingDialogController {
     memberTimeSinceLastRecord.setCellValueFactory(new PropertyValueFactory<>("lastRecordTime"));
     memberTable.getItems().addAll(memberList.getMemberList());
     datePicker.setValue(LocalDate.now());
+    System.out.println("Table set");
 
     boostButton.selectedProperty().addListener((obs, previousSelection, currentSelection) -> {
       if (currentSelection) {

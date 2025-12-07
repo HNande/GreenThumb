@@ -30,7 +30,6 @@ public class ControllerHelper {
    * @param input to be checked
    */
   public static boolean isNullOrEmpty(String input) {
-    showErrorMessage("Empty value error message", "Edited value cannot be empty.");
     return input == null || input.trim().isEmpty();
   }
   /**

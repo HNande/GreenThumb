@@ -42,7 +42,6 @@ public class TradeOfferAddController {
         this.memberList = memberList;
     }
 
-    @FXML
     public void handleTradeOfferName(ActionEvent actionEvent) {
         String input = nameField.getText().trim();
         validName = false;
@@ -59,7 +58,6 @@ public class TradeOfferAddController {
         if (!validName) nameField.clear();
     }
 
-    @FXML
     public void handleTradeOfferDescription(ActionEvent actionEvent) {
         String input = descriptionField.getText().trim();
         validDescription = false;
@@ -74,7 +72,6 @@ public class TradeOfferAddController {
         if (!validDescription) descriptionField.clear();
     }
 
-    @FXML
     public void handleTradeOfferCost(ActionEvent actionEvent) {
         String input = costField.getText().trim();
         validCost = false;
@@ -99,7 +96,6 @@ public class TradeOfferAddController {
         }
     }
 
-    @FXML
     public void handleProposerFields(ActionEvent actionEvent) {
         selectedProposer = null;
         String firstName = proposerNameField.getText().trim();
@@ -125,7 +121,6 @@ public class TradeOfferAddController {
         }
     }
 
-    @FXML
     public void handleCancel(ActionEvent actionEvent) {
         nameField.clear();
         costField.clear();
@@ -135,7 +130,6 @@ public class TradeOfferAddController {
         stage.close();
     }
 
-    @FXML
     public void handleConfirm(ActionEvent actionEvent) {
         handleTradeOfferName(null);
         handleTradeOfferDescription(null);
