@@ -50,7 +50,11 @@ public class TaskList implements Serializable
   {
     taskList.remove(task);
   }
-
+  /**
+   * Accesses an element inside the Arraylist based on index value.
+   * @return Task
+   * @param i index from which the task is accessed
+   */
   public Task  getElementByIndex(int i){
    return taskList.get(i);
   }

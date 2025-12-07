@@ -19,7 +19,7 @@ public class Community implements Serializable
   private  int communityPoints;
 
   /**
-   * Creates a new model.Community object without parameters
+   * Creates a new Community object without parameters
    */
   private Community()
   {
@@ -29,14 +29,14 @@ public class Community implements Serializable
   }
 
   // Constructor example
-  // model.Community community = model.Community.getInstance();
-  // Whenever you want to call a method, use model.Community.getInstance()
-  // For example model.Community.getInstance().setRewardThreshold();
+  // Community community = Community.getInstance();
+  // Whenever you want to call a method, use Community.getInstance()
+  // For example Community.getInstance().setRewardThreshold();
 
   /**
-   * Returns the single instance of model.Community
+   * Returns the single instance of Community
    *
-   * @return the shared model.Community instance
+   * @return the shared Community instance
    */
   public static Community getInstance()
   {

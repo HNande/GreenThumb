@@ -67,5 +67,9 @@ public class Address implements Serializable
   {
     return Street;
   }
+  public String toString(){
+    String temp = " %s %d";
+    return String.format(temp,getStreet(),getHouseNumber());
+  }
 
 }

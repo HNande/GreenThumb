@@ -30,10 +30,49 @@ public class ControllerHelper {
    * @param input to be checked
    */
   public static boolean isNullOrEmpty(String input) {
+    showErrorMessage("Empty value error message", "Edited value cannot be empty.");
     return input == null || input.trim().isEmpty();
   }
   /**
-   * Returns whether in the ArrayList<Task> the string already exists.
+   * Returns whether parameter is negative, or if not an integer.
+   *
+   * @return boolean
+   *
+   * @param input to be checked
+   */
+  public static boolean isValidInteger(int input) {
+    try {
+      if (input < 0) {
+        showErrorMessage("Point Format error","Point amount must be a positive.");
+        return false;
+      }
+    } catch (NumberFormatException e) {
+      showErrorMessage("Point Format Error","Point amount must be a valid number without decimal points..");
+      return false;
+    }
+    return true;
+  }
+  /**
+   * Returns whether parameter is a valid Task Type.
+   *
+   * @return boolean
+   *
+   * @param input to be checked
+   */
+  public static boolean isValidTaskType(int input) {
+    try {
+      if (input > 2 || input < 1 ) {
+        showErrorMessage("Point Format error","Point amount must be either 1, or 2.");
+        return false;
+      }
+    } catch (NumberFormatException e) {
+      showErrorMessage("Point Format Error","Point amount must be a valid number without decimal points..");
+      return false;
+    }
+    return true;
+  }
+  /**
+   * Returns whether the ArrayList<Task> contains string..
    *
    * @return boolean
    *
@@ -42,8 +81,10 @@ public class ControllerHelper {
    */
   public static boolean taskNameAlreadyExists(ArrayList<Task> list, String string){
     for(int i = 0; i != list.size();i++){
-      if (list.get(i).getName().equals(string.trim()))
+      if (list.get(i).getName().equals(string.trim())){
+        showErrorMessage("Name already exists", "Edited value cannot already exist in list.");
         return true;
+      }
     }
     return false;
   }
