@@ -53,7 +53,11 @@ public class TaskRecordingDialogController {
   public void setStage(Stage stage){
     this.stage = stage;
   }
-
+  /**
+   * Sets the Arraylist index of the selected task from the TaskView.
+   *
+   * @param i is the index inside the ArrayList
+   */
   public static void setTaskIndex(int i){
     TaskRecordingDialogController.index = i;
   }

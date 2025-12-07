@@ -78,7 +78,6 @@ public class TaskViewController {
       task.setPointAmount(input);
       GreenThumbManager.saveTasks(taskList);
     });
-
     taskTypeCol.setCellFactory(column -> new TableCell<>() {
       public void updateItem(Integer item, boolean empty) {
         super.updateItem(item, empty);

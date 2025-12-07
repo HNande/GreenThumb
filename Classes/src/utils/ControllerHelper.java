@@ -33,7 +33,13 @@ public class ControllerHelper {
     showErrorMessage("Empty value error message", "Edited value cannot be empty.");
     return input == null || input.trim().isEmpty();
   }
-
+  /**
+   * Returns whether parameter is negative, or if not an integer.
+   *
+   * @return boolean
+   *
+   * @param input to be checked
+   */
   public static boolean isValidInteger(int input) {
     try {
       if (input < 0) {
@@ -46,6 +52,13 @@ public class ControllerHelper {
     }
     return true;
   }
+  /**
+   * Returns whether parameter is a valid Task Type.
+   *
+   * @return boolean
+   *
+   * @param input to be checked
+   */
   public static boolean isValidTaskType(int input) {
     try {
       if (input > 2 || input < 1 ) {
