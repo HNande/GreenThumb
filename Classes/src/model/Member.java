@@ -56,7 +56,6 @@ public class Member implements Serializable
     points = 0;
     lastRecordTime = 0;
   }
-
   /**
    * Sets the different firstName
    *
@@ -296,10 +295,19 @@ public class Member implements Serializable
    */
   public boolean equals(Member obj)
   {
-    return firstName.equals(obj.getFirstName()) && lastName.equals(
-        obj.getLastName()) && phoneNumber.equals(obj.getPhoneNumber())
-        && email.equals(obj.getEmail()) && points == obj.getPoints()
-        && lastRecordTime == obj.getLastRecordTime();
+      if (obj == null || getClass() != obj.getClass())
+      {
+          return false;
+      }
+      else
+      {
+          Member member = (Member) obj;
+
+          return firstName.equals(obj.getFirstName()) && lastName.equals(
+                  obj.getLastName()) && phoneNumber.equals(obj.getPhoneNumber())
+                  && email.equals(obj.getEmail()) && points == obj.getPoints()
+                  && lastRecordTime == obj.getLastRecordTime();
+      }
   }
 
   /**
