@@ -73,7 +73,6 @@ public class RunGreenThumbApplication extends Application
     primaryStage.setScene(scene);
     primaryStage.setOnCloseRequest(event -> {
       System.out.println("Application closing");
-      GreenThumbManager.saveFileToJson(GreenThumbManager.getAllTasks());
       GreenThumbManager.saveFileToJson(GreenThumbManager.getCommunity());
       GreenThumbManager.saveFileToJson(GreenThumbManager.getAllRecordedTasks());
       GreenThumbManager.saveFileToJson(GreenThumbManager.getAllTradeOffers());

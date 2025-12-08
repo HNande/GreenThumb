@@ -121,15 +121,12 @@ public class TaskViewController {
   }
 
   public void handleRecord() {
-    Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
+     int index = taskTable.getSelectionModel().getSelectedIndex();
 
-    if (selectedTask != null) {
+    if (index >= 0 ) {
       try {
-        for (int i = 0; i < taskList.getTaskList().size(); i++) {
-          if (taskList.getElementByIndex(i) == selectedTask) {
-            TaskRecordingDialogController.setTaskIndex(i);
-          }
-        }
+            TaskRecordingDialogController.setTaskIndex(index);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskRecordingDialog.fxml"));
         AnchorPane root = loader.load();
         TaskRecordingDialogController controller = loader.getController();
@@ -177,6 +174,9 @@ public class TaskViewController {
       taskNameField.clear();
       taskTypeField.clear();
       taskPointField.clear();
+      validPointAmount = false;
+      validTaskName = false;
+      validTaskType = false;
     }else{
       ControllerHelper.showErrorMessage("Missing or Invalid Input Error","Please fill in all fields with correct data before confirming.");
     }
