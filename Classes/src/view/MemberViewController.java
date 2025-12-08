@@ -1,7 +1,6 @@
 package view;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,7 +21,7 @@ import java.io.IOException;
  *
  * @author Artem Salatskyi
  *
- * @version 02.12.2025
+ * @version 03.12.2025
  */
 public class MemberViewController
 {
@@ -49,27 +48,19 @@ public class MemberViewController
 
   @FXML private Button taskButton;
 
-  /**
-   *
-   *
-   * @author Artem Salatskyi
-   *
-   * @version 03.12.2025
-   */
   @FXML
   public void initialize()
   {
-
     firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
     lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
     phoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
     email.setCellValueFactory(new PropertyValueFactory<>("email"));
     points.setCellValueFactory(new PropertyValueFactory<>("points"));
     address.setCellValueFactory(new PropertyValueFactory<>("address"));
+
     MemberList memberList = GreenThumbManager.getAllMembers();
-
-    memberTable.getItems().addAll(memberList.getMemberList());
-
+    // Надёжно заполняем таблицу (чтобы не дублировать данные)
+    memberTable.getItems().setAll(memberList.getMemberList());
   }
 
   @FXML
@@ -86,12 +77,30 @@ public class MemberViewController
   @FXML
   public void handleAdd()
   {
-    Member newMember = new Member();
-    MemberList list = GreenThumbManager.getAllMembers();
-    list.add(newMember);
-    GreenThumbManager.saveMembers(list);
-    memberTable.getItems().add(newMember);
-    memberTable.getSelectionModel().select(newMember);
+    try
+    {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MemberAddView.fxml"));
+      Scene scene = new Scene(loader.load());
+
+      MemberAddController ctrl = loader.getController();
+      Stage dialog = new Stage();
+      dialog.setTitle("Add New Member");
+      dialog.initOwner(addButton.getScene().getWindow());
+      ctrl.setStage(dialog);
+      ctrl.setList(GreenThumbManager.getAllMembers());
+
+      dialog.setScene(scene);
+      dialog.showAndWait();
+
+      // refresh
+      MemberList list = GreenThumbManager.getAllMembers();
+      memberTable.getItems().setAll(list.getMemberList());
+
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
   }
 
   @FXML
@@ -106,7 +115,8 @@ public class MemberViewController
   }
 
   @FXML
-  public void handleConvert() {
+  public void handleConvert()
+  {
     MemberList list = GreenThumbManager.getAllMembers();
     for (Member m : list.getMemberList())
     {
@@ -123,14 +133,13 @@ public class MemberViewController
     memberTable.getItems().setAll(list.getMemberList());
   }
 
-  @FXML
-  private void handTask()
+  private void openView(String fxmlPath, Button source)
   {
     try
     {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TaskView.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
       Scene scene = new Scene(loader.load());
-      Stage stage = (Stage) taskButton.getScene().getWindow();
+      Stage stage = (Stage) source.getScene().getWindow();
       stage.setScene(scene);
       stage.show();
     }
@@ -138,74 +147,41 @@ public class MemberViewController
     {
       e.printStackTrace();
     }
+  }
+
+  @FXML
+  private void handTask()
+  {
+    Button src = (task != null) ? task : taskButton;
+    openView("/view/TaskView.fxml", src);
   }
 
   @FXML
   public void handRecorderTasks()
   {
-    try
-    {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/RecordedTaskView.fxml"));
-      Scene scene = new Scene(loader.load());
-      Stage stage = (Stage) taskButton.getScene().getWindow();
-      stage.setScene(scene);
-      stage.show();
-    }
-    catch (IOException e)
-    {
-      e.printStackTrace();
-    }
+    Button src = (recorderTasks != null) ? recorderTasks : taskButton;
+    openView("/view/RecordedTaskView.fxml", src);
   }
 
   @FXML
   public void handTradeOffers()
   {
-    try
-    {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TradeOfferView.fxml"));
-      Scene scene = new Scene(loader.load());
-      Stage stage = (Stage) taskButton.getScene().getWindow();
-      stage.setScene(scene);
-      stage.show();
-    }
-    catch (IOException e)
-    {
-      e.printStackTrace();
-    }
+    Button src = (tradeOffers != null) ? tradeOffers : taskButton;
+    openView("/view/TradeOfferView.fxml", src);
   }
 
   @FXML
   public void handleCommunit()
   {
-    try
-    {
-     FXMLLoader loader = new FXMLLoader(getClass().getResource("/viev/CommunityView"));
-     Scene scene = new Scene(loader.load());
-     Stage stage = (Stage) taskButton.getScene().getWindow();
-     stage.setScene(scene);
-     stage.show();
-    }
-    catch (IOException e)
-    {
-      e.printStackTrace();
-    }
+    Button src = (communit != null) ? communit : taskButton;
+    openView("/view/CommunityView.fxml", src);
   }
 
   @FXML
   private void handMembers()
   {
-    try
-    {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MemberView.fxml"));
-      Scene scene = new Scene(loader.load());
-      Stage stage = (Stage) taskButton.getScene().getWindow();
-      stage.setScene(scene);
-      stage.show();
-    }
-    catch (IOException e)
-    {
-      e.printStackTrace();
-    }
+    Button src = (members != null) ? members : taskButton;
+    openView("/view/MemberView.fxml", src);
   }
 
 }

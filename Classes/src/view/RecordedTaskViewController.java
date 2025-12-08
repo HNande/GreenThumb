@@ -13,7 +13,7 @@ import model.Task;
 /**
  *
  *
- * @author Artem Salatskyi
+ * @author Nandor Hock
  *
  * @version 03.12.2025
  */
