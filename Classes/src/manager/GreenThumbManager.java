@@ -21,6 +21,7 @@ public class GreenThumbManager
   private static final String taskFile = "taskFile";
   private static final String recordedTaskFile = "recordedTaskFile";
   private static final String recordedTaskJsonFile = "recordedTaskJsonFile";
+  private static final String dateFile = "datefile";
 
   /**
    * Creates a new GreenThumbManager.
@@ -118,10 +119,13 @@ public class GreenThumbManager
    */
   public static Community getCommunity()
   {
-    Community community;
     return  (Community) MyFileHandler.readFromBinaryFile(communityFile);
   }
 
+  public static Date getDate()
+  {
+    return  (Date) MyFileHandler.readFromBinaryFile(dateFile);
+  }
   /**
    * Saves the given community to the file.
    *
@@ -129,6 +133,9 @@ public class GreenThumbManager
    */
   public static void saveCommunity(Community community) {
       MyFileHandler.writeToBinaryFile(communityFile, community);
+  }
+  public static void saveDate(Date date) {
+    MyFileHandler.writeToBinaryFile(dateFile, date);
   }
   public static void saveFileToJson(RecordedTaskList recordedTaskList) {
     MyFileHandler.writeToJsonFile(recordedTaskJsonFile,recordedTaskList);

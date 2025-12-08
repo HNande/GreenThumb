@@ -7,7 +7,9 @@ import javafx.stage.Stage;
 import model.*;
 import manager.GreenThumbManager;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 
 /**
  * The main class to run the GreenThumb application.
@@ -29,32 +31,42 @@ public class RunGreenThumbApplication extends Application
    */
   public static void main(String[] args)
   {
-    TradeOfferList allTradeOffers = new TradeOfferList();
-    TaskList allTasks = new TaskList();
-    MemberList allMembers = new MemberList();
-    RecordedTaskList allRecordedTasks = new RecordedTaskList();
-    Community community = Community.getInstance();
-    Date today = new Date();
+    Community community = GreenThumbManager.getCommunity();
 
-     Member newMember = new Member("John", "Doe", "+45123456", "green@gmail.com",
-             67, "Green Street");
+    TaskList allTasks = GreenThumbManager.getAllTasks();
+    if(allTasks == null){
+      allTasks = new TaskList();
+      allTasks.add(new Task("Helping the elderly", 40,2));
+      allTasks.add(new Task("Eating veggies", 30,1));
+      GreenThumbManager.saveTasks(allTasks);
+    }
+    MemberList allMembers = GreenThumbManager.getAllMembers();
+    if(allMembers == null){
+      allMembers = new MemberList();
+      allMembers.add(new Member());
+      GreenThumbManager.saveMembers(allMembers);
+    }
+    TradeOfferList allTradeOffers = GreenThumbManager.getAllTradeOffers();
+    if(allTradeOffers == null){
+      allTradeOffers = new TradeOfferList();
+      allTradeOffers.add(new TradeOffer("Buying carrots", "In need of 500 carrots for my carrot pie project",500 ,new Member()));
+      GreenThumbManager.saveTradeOffers(allTradeOffers);
+    }
+    RecordedTaskList allRecordedTasks = GreenThumbManager.getAllRecordedTasks();
+    if(allRecordedTasks == null){
+     allRecordedTasks = new RecordedTaskList();
+     GreenThumbManager.saveRecordedTasks(allRecordedTasks);
+    }
+    Date oldDate = GreenThumbManager.getDate();
+    if(oldDate != null ){
+      LocalDate today = LocalDate.now();
+      allMembers.updateTimeForMembers((oldDate.timePeriod(today)));
+    } else {
+      oldDate = new Date();
+      GreenThumbManager.saveDate(oldDate);
+    }
+    GreenThumbManager.saveCommunity(community);
 
-     newMember.setPoints(100);
-    allMembers.add(new Member());
-    allMembers.add(newMember);
-    allTradeOffers.add(new TradeOffer("balls", "Dummy balls text",69 ,newMember));
-    allTradeOffers.add(new TradeOffer("Buvany", "God of War and Thunder with a sprinkle of love",69 ,new Member()));
-    allTradeOffers.add(new TradeOffer("Supreme Allan", "The one who grades",69 ,new Member()));
-    allTasks.add(new Task("Watching paint dry", 420,2));
-    allTasks.add(new Task("Eating KFC", 600,1));
-    allTasks.add(new Task("Doing it sexy style", 420,2));
-    allRecordedTasks.add(new Task("Doing it sexy style", 420,2).recordTask(new Member(),4,12,2025,false));
-    System.out.println("balls");
-    GreenThumbManager.saveRecordedTasks(allRecordedTasks);
-    GreenThumbManager.saveTasks(allTasks);
-    GreenThumbManager.saveTradeOffers(allTradeOffers);
-    GreenThumbManager.saveMembers(allMembers);
-    GreenThumbManager.saveCommunity(Community.getInstance());
     launch(args);
   }
 

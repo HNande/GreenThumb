@@ -34,12 +34,13 @@ public class Task implements Serializable
   }
 
   /**
-   * Records the task for a member or community and returns a RecordedTask.
+   * Records the task for a member and add points to that member or Community and returns a RecordedTask.
    *
    * @param recordMember the member performing the task
    * @param day day of the task
    * @param month month of the task
    * @param year year of the task
+   * @param boost whether the task should give 30% more points
    * @return a new RecordedTask object
    */
   public RecordedTask recordTask(Member recordMember, int day, int month, int year,boolean boost)
@@ -55,7 +56,7 @@ public class Task implements Serializable
       Community.getInstance().addCommunityPoints(pointAmount);
 
     }
-    System.out.println("Current Total count "+totalCount);
+    recordMember.setLastRecordTime(0);
     return new RecordedTask(name, taskType, pointAmount, day, month, year);
   }
 
