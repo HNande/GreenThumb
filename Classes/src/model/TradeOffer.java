@@ -122,20 +122,8 @@ public class TradeOffer implements Serializable
    */
   public void executeTradeOffer(Member payer, Member reciever)
   {
-    if (proposer.equals(payer))
-    {
-      reciever.addPoints(cost);
-      proposer.removePoints(cost);
-    }
-    else if (proposer.equals(reciever))
-    {
-      proposer.addPoints(cost);
       payer.removePoints(cost);
-    }
-    else
-    {
-      System.out.println("Proposer must be one of the members");
-    }
+      reciever.addPoints(cost);
   }
 
   /**

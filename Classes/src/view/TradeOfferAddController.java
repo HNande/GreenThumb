@@ -3,7 +3,10 @@ package view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import manager.GreenThumbManager;
 import model.Member;
@@ -16,13 +19,23 @@ import static utils.ControllerHelper.*;
 
 public class TradeOfferAddController {
 
-    @FXML private Button confirmButton;
-    @FXML private Button cancelButton;
-    @FXML private TextField nameField;
-    @FXML private TextField costField;
-    @FXML private TextField descriptionField;
-    @FXML private TextField proposerNameField;
-    @FXML private TextField proposerLastNameField;
+    @FXML
+    private Button confirmButton;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private TextField nameField;
+    @FXML
+    private TextField costField;
+    @FXML
+    private TextField descriptionField;
+
+    @FXML
+    private TableView<Member> memberTable;
+    @FXML
+    private TableColumn<Member, String> firstNameColumn;
+    @FXML
+    private TableColumn<Member, String> lastNameColumn;
 
     private TradeOfferList tradeOfferList;
     private MemberList memberList;
@@ -31,7 +44,15 @@ public class TradeOfferAddController {
     private boolean validName = false;
     private boolean validCost = false;
     private boolean validDescription = false;
-    private Member selectedProposer = null;
+
+    @FXML
+    public void initialize() {
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+
+        memberTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        });
+    }
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -40,107 +61,52 @@ public class TradeOfferAddController {
     public void setLists(TradeOfferList tradeOfferList, MemberList memberList) {
         this.tradeOfferList = tradeOfferList;
         this.memberList = memberList;
-    }
-
-    public void handleTradeOfferName(ActionEvent actionEvent) {
-        String input = nameField.getText().trim();
-        validName = false;
-
-        if (isNullOrEmpty(input)) {
-            ControllerHelper.showErrorMessage("Name Empty Error", "Name must not be empty.");
-        } else if (input.length() < 4 || input.length() > 64) {
-            ControllerHelper.showErrorMessage("Name Length Error", "Name must be between 4 and 64 characters.");
-        } else if (tradeOfferNameAlreadyExists(tradeOfferList.getTradeOfferList(), input)) {
-            ControllerHelper.showErrorMessage("Duplicate TradeOffer", "A trade offer with this name already exists.");
-        } else {
-            validName = true;
-        }
-        if (!validName) nameField.clear();
-    }
-
-    public void handleTradeOfferDescription(ActionEvent actionEvent) {
-        String input = descriptionField.getText().trim();
-        validDescription = false;
-
-        if (isNullOrEmpty(input)) {
-            ControllerHelper.showErrorMessage("Description Empty Error", "Description must not be empty.");
-        } else if (input.length() > 500) {
-            ControllerHelper.showErrorMessage("Description Length Error", "Description cannot exceed 500 characters.");
-        } else {
-            validDescription = true;
-        }
-        if (!validDescription) descriptionField.clear();
-    }
-
-    public void handleTradeOfferCost(ActionEvent actionEvent) {
-        String input = costField.getText().trim();
-        validCost = false;
-
-        if (isNullOrEmpty(input)) {
-            ControllerHelper.showErrorMessage("Cost Empty Error", "Cost must not be empty.");
-            costField.clear();
-            return;
-        }
-
-        try {
-            int cost = Integer.parseInt(input);
-            if (cost < 0) {
-                ControllerHelper.showErrorMessage("Cost Format Error","Cost amount must be a non-negative number.");
-                costField.clear();
-                return;
-            }
-            validCost = true;
-        } catch (NumberFormatException e){
-            ControllerHelper.showErrorMessage("Cost Format Error","Cost must be a valid whole number.");
-            costField.clear();
+        if (memberList != null) {
+            memberTable.getItems().setAll(memberList.getMemberList());
         }
     }
 
-    public void handleProposerFields(ActionEvent actionEvent) {
-        selectedProposer = null;
-        String firstName = proposerNameField.getText().trim();
-        String lastName = proposerLastNameField.getText().trim();
-
-        if (isNullOrEmpty(firstName) || isNullOrEmpty(lastName)) {
-            ControllerHelper.showErrorMessage("Missing Proposer Data", "Please enter both the First Name and Last Name of the proposer.");
-            return;
-        }
-
-        for (int i = 0; i < memberList.getMemberList().size(); i++) {
-            Member member = memberList.getMemberList().get(i);
-
-            if (member.getFirstName().equals(firstName) &&
-                    member.getLastName().equals(lastName)) {
-                selectedProposer = member;
-                break;
-            }
-        }
-
-        if (selectedProposer == null) {
-            ControllerHelper.showErrorMessage("Invalid Proposer", "No member found with that name.");
-        }
-    }
-
-    public void handleCancel(ActionEvent actionEvent) {
-        nameField.clear();
-        costField.clear();
-        descriptionField.clear();
-        proposerNameField.clear();
-        proposerLastNameField.clear();
-        stage.close();
-    }
-
+    @FXML
     public void handleConfirm(ActionEvent actionEvent) {
-        handleTradeOfferName(null);
-        handleTradeOfferDescription(null);
-        handleTradeOfferCost(null);
-        handleProposerFields(null);
+
+        Member selectedProposer = memberTable.getSelectionModel().getSelectedItem();
+
+        String nameInput = nameField.getText().trim();
+        String descriptionInput = descriptionField.getText().trim();
+        String costInput = costField.getText().trim();
+
+        StringBuilder consolidatedError = new StringBuilder();
+        int emptyCount = 0;
+
+        if (isNullOrEmpty(nameInput)) {
+            consolidatedError.append("The Name field is empty.\n");
+            emptyCount++;
+        }
+        if (isNullOrEmpty(descriptionInput)) {
+            consolidatedError.append("The Description field is empty.\n");
+            emptyCount++;
+        }
+        if (isNullOrEmpty(costInput)) {
+            consolidatedError.append("The Cost field is empty.\n");
+            emptyCount++;
+        }
+        if (selectedProposer == null) {
+            consolidatedError.append("Please select a Proposer from the table.\n");
+        }
+
+        if (emptyCount >= 2 || selectedProposer == null) {
+            ControllerHelper.showErrorMessage(
+                    "Missing Required Fields",
+                    "Please fill in the missing information:\n" + consolidatedError.toString()
+            );
+            return;
+        }
 
         if (validName && validCost && validDescription && selectedProposer != null) {
             try {
-                String name = nameField.getText().trim();
-                int cost = Integer.parseInt(costField.getText().trim());
-                String description = descriptionField.getText().trim();
+                String name = nameInput;
+                int cost = Integer.parseInt(costInput);
+                String description = descriptionInput;
 
                 TradeOffer tradeOffer = new TradeOffer(name, description, cost, selectedProposer);
                 tradeOfferList.add(tradeOffer);
@@ -152,7 +118,20 @@ public class TradeOfferAddController {
                 e.printStackTrace();
             }
         } else {
-            ControllerHelper.showErrorMessage("Missing or Invalid Input Error","Please fill in all fields with correct data before confirming.");
+
+            ControllerHelper.showErrorMessage(
+                    "Missing or Invalid Input Error",
+                    "Please check all fields for correct data and ensure a proposer is selected."
+            );
         }
+    }
+
+    @FXML
+    public void handleCancel(ActionEvent actionEvent) {
+        nameField.clear();
+        costField.clear();
+        descriptionField.clear();
+        memberTable.getSelectionModel().clearSelection();
+        stage.close();
     }
 }
