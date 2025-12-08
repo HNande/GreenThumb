@@ -317,7 +317,7 @@ public class Member implements Serializable
    */
   public String toString()
   {
-    String temp = "My name is %S %S, my phone number is: %s, my email is: %s, I live at %S %d, my points is: %d, time since last record: %d";
+    String temp = "My name is %s %s, my phone number is: %s, my email is: %s, I live at %S %d, my points is: %d, time since last record: %d";
     return String.format(temp, lastName,firstName , phoneNumber, email,
         getAddressStreet(), getAddressHouse(), lastRecordTime, points);
   }
