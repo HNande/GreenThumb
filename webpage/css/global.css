@@ -13,7 +13,9 @@
   font-family: var(--text-font);
   color: var(--text-primary-color);
 }
-
+#tasks{
+  text-decoration: none;
+}
 body {
   margin: 0;
   background-color: var(--bg-layout-color);
