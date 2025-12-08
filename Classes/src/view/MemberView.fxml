@@ -25,8 +25,8 @@
                 <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDelete" text="Delete" />
                 <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAdd" text="Add" />
                 <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSave" text="Save/Apply" />
-                <Button fx:id="convertButton" mnemonicParsing="false" onAction="#handleConvert" text="Convert" />
-                <Button fx:id="resetButton" mnemonicParsing="false" onAction="#handleReset" text="Reset" />
+                <Button fx:id="resetButton" mnemonicParsing="false" onAction="#handleConvert" text="Reset" />
+                <Button fx:id="updateButton" mnemonicParsing="false" onAction="#handleReset" text="Update" />
             </HBox>
         </HBox>
         <TableView fx:id="memberTable" prefHeight="409.0" prefWidth="802.0">

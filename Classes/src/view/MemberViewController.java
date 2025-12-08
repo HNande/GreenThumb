@@ -37,8 +37,8 @@ public class MemberViewController
   @FXML private Button deleteButton;
   @FXML private Button addButton;
   @FXML private Button saveButton;
-  @FXML private Button convertButton;
   @FXML private Button resetButton;
+  @FXML private Button updateButton;
 
   @FXML private Button task;
   @FXML private Button recorderTasks;
