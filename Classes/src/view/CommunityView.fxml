@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CommunityViewController">
-
+   <children>
+      <TextField id="communityPoints" fx:id="communityPointsField" layoutX="339.0" layoutY="113.0" />
+      <TextField id="rewardThreshold" fx:id="rewardThresholdField" layoutX="339.0" layoutY="174.0" />
+      <TextField id="rewardDescription" fx:id="rewardDescriptionField" layoutX="339.0" layoutY="235.0" prefHeight="70.0" prefWidth="150.0" />
+      <Text layoutX="321.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reward Threshold:" />
+      <Text layoutX="298.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Community Points:" />
+      <Text layoutX="317.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reward Description:" />
+      <Button id="reset" layoutX="391.0" layoutY="334.0" mnemonicParsing="false" text="Reset" textFill="RED" />
+   </children>
 </AnchorPane>
