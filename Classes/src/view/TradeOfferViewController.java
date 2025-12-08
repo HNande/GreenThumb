@@ -37,9 +37,6 @@ public class TradeOfferViewController {
     @FXML private Button community;
     @FXML private Button members;
 
-    @FXML private ComboBox<Member> proposerCombo;
-    @FXML private ComboBox<Member> payerCombo;
-
     private Stage stage;
     private TradeOfferList tradeOfferList = GreenThumbManager.getAllTradeOffers();
     private final MemberList memberList = GreenThumbManager.getAllMembers();
@@ -56,11 +53,25 @@ public class TradeOfferViewController {
         tradeOfferTable.getItems().addAll(tradeOfferList.getTradeOfferList());
 
         name.setCellFactory(TextFieldTableCell.forTableColumn());
-        cost.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        description.setCellFactory(TextFieldTableCell.forTableColumn());
+        cost.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter() {
 
-        proposerCombo.getItems().setAll(memberList.getMemberList());
-        payerCombo.getItems().setAll(memberList.getMemberList());
+            @Override
+            public Integer fromString(String value) {
+                if (value == null || value.trim().isEmpty()) {
+                    ControllerHelper.showErrorMessage("Invalid or Empty Cost",
+                            "Input was left empty. Value reverted.");
+                    return null;
+                }
+                try {
+                    return Integer.valueOf(value.trim());
+                } catch (NumberFormatException e) {
+                    showErrorMessage("Input Error",
+                            "Cost must be a whole number. Input failed.");
+                    return null;
+                }
+            }
+        }));
+        description.setCellFactory(TextFieldTableCell.forTableColumn());
 
         name.setOnEditCommit(event -> {
             String newValue = event.getNewValue();
@@ -79,31 +90,6 @@ public class TradeOfferViewController {
             }
             tradeOfferTable.refresh();
         });
-
-        // TradeOfferViewController.java, inside initialize()
-
-// ... (existing code) ...
-
-// --- Setup for the 'cost' column with inline exception handling ---
-        cost.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter() {
-
-            // Override fromString() here to include try-catch
-            @Override
-            public Integer fromString(String value) {
-                if (value == null || value.trim().isEmpty()) {
-                    ControllerHelper.showErrorMessage("Invalid or Empty Cost",
-                            "Input was left empty. Value reverted.");
-                    return null;
-                }
-                try {
-                    return Integer.valueOf(value.trim());
-                } catch (NumberFormatException e) {
-                    showErrorMessage("Input Error",
-                            "Cost must be a whole number. Input failed.");
-                    return null;
-                }
-            }
-        }));
 
         cost.setOnEditCommit(event -> {
             Integer newValue = event.getNewValue();

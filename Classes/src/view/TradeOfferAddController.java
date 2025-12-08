@@ -3,7 +3,10 @@ package view;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import manager.GreenThumbManager;
 import model.Member;
@@ -21,8 +24,10 @@ public class TradeOfferAddController {
     @FXML private TextField nameField;
     @FXML private TextField costField;
     @FXML private TextField descriptionField;
-    @FXML private TextField proposerNameField;
-    @FXML private TextField proposerLastNameField;
+
+    @FXML private TableView<Member> memberTable;
+    @FXML private TableColumn<Member, String> firstNameColumn;
+    @FXML private TableColumn<Member, String> lastNameColumn;
 
     private TradeOfferList tradeOfferList;
     private MemberList memberList;
@@ -31,7 +36,15 @@ public class TradeOfferAddController {
     private boolean validName = false;
     private boolean validCost = false;
     private boolean validDescription = false;
-    private Member selectedProposer = null;
+
+    @FXML
+    public void initialize() {
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+
+        memberTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+        });
+    }
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -40,6 +53,9 @@ public class TradeOfferAddController {
     public void setLists(TradeOfferList tradeOfferList, MemberList memberList) {
         this.tradeOfferList = tradeOfferList;
         this.memberList = memberList;
+        if (memberList != null) {
+            memberTable.getItems().setAll(memberList.getMemberList());
+        }
     }
 
     @FXML
@@ -56,7 +72,7 @@ public class TradeOfferAddController {
         } else {
             validName = true;
         }
-        if (!validName) nameField.clear();
+        if (!validName && actionEvent != null) nameField.clear();
     }
 
     @FXML
@@ -71,7 +87,7 @@ public class TradeOfferAddController {
         } else {
             validDescription = true;
         }
-        if (!validDescription) descriptionField.clear();
+        if (!validDescription && actionEvent != null) descriptionField.clear();
     }
 
     @FXML
@@ -81,7 +97,7 @@ public class TradeOfferAddController {
 
         if (isNullOrEmpty(input)) {
             ControllerHelper.showErrorMessage("Cost Empty Error", "Cost must not be empty.");
-            costField.clear();
+            if (actionEvent != null) costField.clear();
             return;
         }
 
@@ -89,39 +105,13 @@ public class TradeOfferAddController {
             int cost = Integer.parseInt(input);
             if (cost < 0) {
                 ControllerHelper.showErrorMessage("Cost Format Error","Cost amount must be a non-negative number.");
-                costField.clear();
+                if (actionEvent != null) costField.clear();
                 return;
             }
             validCost = true;
         } catch (NumberFormatException e){
             ControllerHelper.showErrorMessage("Cost Format Error","Cost must be a valid whole number.");
-            costField.clear();
-        }
-    }
-
-    @FXML
-    public void handleProposerFields(ActionEvent actionEvent) {
-        selectedProposer = null;
-        String firstName = proposerNameField.getText().trim();
-        String lastName = proposerLastNameField.getText().trim();
-
-        if (isNullOrEmpty(firstName) || isNullOrEmpty(lastName)) {
-            ControllerHelper.showErrorMessage("Missing Proposer Data", "Please enter both the First Name and Last Name of the proposer.");
-            return;
-        }
-
-        for (int i = 0; i < memberList.getMemberList().size(); i++) {
-            Member member = memberList.getMemberList().get(i);
-
-            if (member.getFirstName().equals(firstName) &&
-                    member.getLastName().equals(lastName)) {
-                selectedProposer = member;
-                break;
-            }
-        }
-
-        if (selectedProposer == null) {
-            ControllerHelper.showErrorMessage("Invalid Proposer", "No member found with that name.");
+            if (actionEvent != null) costField.clear();
         }
     }
 
@@ -130,8 +120,7 @@ public class TradeOfferAddController {
         nameField.clear();
         costField.clear();
         descriptionField.clear();
-        proposerNameField.clear();
-        proposerLastNameField.clear();
+        memberTable.getSelectionModel().clearSelection();
         stage.close();
     }
 
@@ -140,7 +129,14 @@ public class TradeOfferAddController {
         handleTradeOfferName(null);
         handleTradeOfferDescription(null);
         handleTradeOfferCost(null);
-        handleProposerFields(null);
+
+        // NEW: Get selected proposer from TableView
+        Member selectedProposer = memberTable.getSelectionModel().getSelectedItem();
+
+        if (selectedProposer == null) {
+            ControllerHelper.showErrorMessage("Missing Proposer", "Please select a member from the table to be the proposer.");
+            return;
+        }
 
         if (validName && validCost && validDescription && selectedProposer != null) {
             try {
@@ -158,7 +154,7 @@ public class TradeOfferAddController {
                 e.printStackTrace();
             }
         } else {
-            ControllerHelper.showErrorMessage("Missing or Invalid Input Error","Please fill in all fields with correct data before confirming.");
+            ControllerHelper.showErrorMessage("Missing or Invalid Input Error","Please fill in all fields with correct data and select a proposer before confirming.");
         }
     }
 }
