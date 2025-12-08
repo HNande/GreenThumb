@@ -2,13 +2,14 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List; // Используем List для лучшего абстрагирования
 
 /**
  * The class contains an array of all members and information about them.
  *
  * @author Nandor Hock
  *
- * @version 02.12.2025
+ * @version 09.12.2025
  */
 public class MemberList implements Serializable
 {
@@ -29,13 +30,12 @@ public class MemberList implements Serializable
   }
 
   /**
-   * Returns a copy of the list of all members.
-   *
-   * @return a new list containing all members
+   * Returns a reference to the list of all members.
+   * * @return the internal ArrayList containing all members
    */
-  public ArrayList<Member> getMemberList()
+  public List<Member> getMemberList() // Возвращаем интерфейс List
   {
-    return new ArrayList<>(memberList);
+    return memberList; // ИСПРАВЛЕНИЕ: Возвращаем ССЫЛКУ, а не КОПИЮ
   }
 
   /**

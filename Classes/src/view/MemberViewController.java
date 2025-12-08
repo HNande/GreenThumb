@@ -22,7 +22,7 @@ import java.io.IOException;
  *
  * @author Artem Salatskyi
  *
- * @version 03.12.2025
+ * @version 09.12.2025
  */
 public class MemberViewController
 {
@@ -62,12 +62,35 @@ public class MemberViewController
   }
 
   /**
-   * Deletes the selected member from the table and saves the updated list.
+   * Deletes the selected member from the table and saves the updated list,
+   * after asking the user for confirmation.
    */
   public void handleDelete()
   {
     Member selected = memberTable.getSelectionModel().getSelectedItem();
-    if (selected == null) return;
+    if (selected == null)
+    {
+      Alert warn = new Alert(Alert.AlertType.WARNING);
+      warn.setTitle("No Member Selected");
+      warn.setHeaderText("No member was selected");
+      warn.setContentText("Please choose a member you want to delete.");
+      warn.showAndWait();
+      return;
+    }
+
+    // ДОБАВЛЕНО: Диалог подтверждения удаления
+    Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+    confirm.setTitle("Confirm Deletion");
+    confirm.setHeaderText("Are you sure you want to delete this member?");
+    confirm.setContentText(
+        "Member: " + selected.getFirstName() + " " + selected.getLastName() + "\n" +
+            "This action cannot be undone. Do you want to continue?"
+    );
+
+    if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK)
+      return;
+
+    // Фактическое удаление:
     memberTable.getItems().remove(selected);
     memberList.getMemberList().remove(selected);
     GreenThumbManager.saveMembers(memberList);
@@ -90,11 +113,14 @@ public class MemberViewController
       dialog.setTitle("Add New Member");
       dialog.initOwner(addButton.getScene().getWindow());
       ctrl.setStage(dialog);
-      ctrl.setList(GreenThumbManager.getAllMembers());
+
+      // ИСПРАВЛЕНИЕ СИНХРОНИЗАЦИИ: Передаем локальный memberList
+      ctrl.setList(this.memberList);
 
       dialog.setScene(scene);
       dialog.showAndWait();
 
+      // Обновляем таблицу, используя уже измененный локальный список.
       memberTable.getItems().setAll(memberList.getMemberList());
 
     }
@@ -164,7 +190,10 @@ public class MemberViewController
     GreenThumbManager.saveMembers(memberList);
     GreenThumbManager.saveCommunity(Community.getInstance());
 
-    memberTable.refresh();
+    // ИСПРАВЛЕНИЕ ОБНОВЛЕНИЯ ОЧКОВ: Принудительное обновление
+    memberTable.getColumns().get(0).setVisible(false);
+    memberTable.getColumns().get(0).setVisible(true);
+    // memberTable.refresh(); // Не требуется, т.к. принудительное обновление более надежно
 
     Alert info = new Alert(Alert.AlertType.INFORMATION);
     info.setTitle("Conversion Complete");
@@ -202,7 +231,10 @@ public class MemberViewController
     selected.setPoints(0);
     GreenThumbManager.saveMembers(memberList);
 
-    memberTable.refresh();
+    // ИСПРАВЛЕНИЕ ОБНОВЛЕНИЯ ОЧКОВ: Принудительное обновление
+    memberTable.getColumns().get(0).setVisible(false);
+    memberTable.getColumns().get(0).setVisible(true);
+    // memberTable.refresh(); // Не требуется, т.к. принудительное обновление более надежно
   }
 
   /**
@@ -226,5 +258,22 @@ public class MemberViewController
     {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Reloads the MemberList from the manager and updates the TableView content.
+   * This is called both on initialization and upon returning to this view
+   * from other screens to ensure points are up-to-date.
+   */
+  public void refreshView()
+  {
+    memberList = GreenThumbManager.getAllMembers();
+    memberTable.getItems().setAll(memberList.getMemberList());
+    if (memberTable.getColumns().size() > 0)
+    {
+      memberTable.getColumns().get(0).setVisible(false);
+      memberTable.getColumns().get(0).setVisible(true);
+    }
+    memberTable.refresh();
   }
 }

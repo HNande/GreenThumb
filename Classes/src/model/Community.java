@@ -8,15 +8,15 @@ import java.io.Serializable;
  *
  * @author Nandor Hock
  *
- * @version 02.12.2025
+ * @version 09.12.2025
  */
 public class Community implements Serializable
-{
+{ 
+  private static Community instance = null;
 
-  private static final Community instance = new Community();
   private int rewardThreshold;
   private String rewardDescription;
-  private  int communityPoints;
+  private int communityPoints;
 
   /**
    * Creates a new Community object without parameters
@@ -28,19 +28,34 @@ public class Community implements Serializable
     communityPoints = 0;
   }
 
-  // Constructor example
-  // Community community = Community.getInstance();
-  // Whenever you want to call a method, use Community.getInstance()
-  // For example Community.getInstance().setRewardThreshold();
-
   /**
-   * Returns the single instance of Community
+   * Returns the single instance of Community, creating it if necessary.
    *
    * @return the shared Community instance
    */
   public static Community getInstance()
   {
+    // Ленивая инициализация
+    if (instance == null)
+    {
+      instance = new Community();
+    }
     return instance;
+  }
+
+  /**
+   * Sets the shared Community instance to the loaded object.
+   * This is called during application startup.
+   *
+   * @param loadedCommunity the community object loaded from file
+   */
+  public static void setInstance(Community loadedCommunity)
+  {
+    if (loadedCommunity != null)
+    {
+      // Заменяем текущий Singleton загруженным экземпляром
+      instance = loadedCommunity;
+    }
   }
 
   /**
