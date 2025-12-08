@@ -2,10 +2,7 @@ package view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import manager.GreenThumbManager;
@@ -34,6 +31,8 @@ public class TradeOfferExecuteController {
     private Member selectedPayer = null;
     private Member selectedProposer = null;
 
+    private Member originalProposer = null;
+
     @FXML
     public void initialize() {
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -51,11 +50,13 @@ public class TradeOfferExecuteController {
         this.selectedOffer = offer;
         this.memberList = list;
 
+        this.originalProposer = offer.getProposer();
+
         offerNameLabel.setText("Trade Offer: " + offer.getName() + " (Cost: " + offer.getCost() + " points)");
 
         memberTable.getItems().setAll(list.getMemberList());
 
-        selectedProposer = offer.getProposer();
+        selectedProposer = this.originalProposer;
 
         memberTable.getSelectionModel().select(selectedProposer);
 
@@ -72,10 +73,10 @@ public class TradeOfferExecuteController {
         }
 
         if (selectedProposer != null) {
-            proposerStatusLabel.setText(String.format("Receiver (Proposer): %s %s (Points: %d)",
+            proposerStatusLabel.setText(String.format("Receiver: %s %s (Points: %d)",
                     selectedProposer.getFirstName(), selectedProposer.getLastName(), selectedProposer.getPoints()));
         } else {
-            proposerStatusLabel.setText("Receiver (Proposer): (Not Selected)");
+            proposerStatusLabel.setText("Receiver: (Not Selected)");
         }
         memberTable.refresh();
     }
@@ -83,6 +84,7 @@ public class TradeOfferExecuteController {
     private void checkAndEnableExecuteButton() {
         executeTradeButton.setDisable(selectedPayer == null || selectedProposer == null);
     }
+
 
     @FXML
     private void handleAssignPayer(ActionEvent event) {
@@ -94,6 +96,13 @@ public class TradeOfferExecuteController {
 
         if (selectedMember.equals(selectedProposer)) {
             showErrorMessage("Invalid Assignment", "This member is already selected as the Receiver/Proposer.");
+            return;
+        }
+
+        if (!selectedMember.equals(originalProposer) && selectedProposer != null && !selectedProposer.equals(originalProposer)) {
+            showErrorMessage("Constraint Violation",
+                    String.format("The Original Proposer (%s %s) must be either the Payer or the Receiver.",
+                            originalProposer.getFirstName(), originalProposer.getLastName()));
             return;
         }
 
@@ -112,6 +121,13 @@ public class TradeOfferExecuteController {
 
         if (selectedMember.equals(selectedPayer)) {
             showErrorMessage("Invalid Assignment", "This member is already selected as the Payer.");
+            return;
+        }
+
+        if (!selectedMember.equals(originalProposer) && selectedPayer != null && !selectedPayer.equals(originalProposer)) {
+            showErrorMessage("Constraint Violation",
+                    String.format("The Original Proposer (%s %s) must be either the Payer or the Receiver.",
+                            originalProposer.getFirstName(), originalProposer.getLastName()));
             return;
         }
 
@@ -145,7 +161,7 @@ public class TradeOfferExecuteController {
                         selectedPayer.getFirstName(), selectedPayer.getLastName(), selectedOffer.getCost(),
                         selectedProposer.getFirstName(), selectedProposer.getLastName(), selectedOffer.getName()))) {
 
-                selectedOffer.executeTradeOffer(selectedPayer, selectedProposer);
+            selectedOffer.executeTradeOffer(selectedPayer, selectedProposer);
 
             GreenThumbManager.saveMembers(memberList);
 
