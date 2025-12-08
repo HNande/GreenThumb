@@ -15,8 +15,13 @@ import model.MemberList;
 import java.io.IOException;
 
 /**
+ * Controller for displaying and managing the list of members.
+ *
+ * Supports adding, deleting, saving, converting points,
+ * and resetting points for individual members.
  *
  * @author Artem Salatskyi
+ *
  * @version 03.12.2025
  */
 public class MemberViewController
@@ -44,6 +49,10 @@ public class MemberViewController
 
   @FXML private Button taskButton;
 
+  /**
+   * Initializes the table by binding columns to the Member properties
+   * and loading all members into the table.
+   */
   @FXML
   public void initialize()
   {
@@ -58,6 +67,9 @@ public class MemberViewController
     memberTable.getItems().setAll(memberList.getMemberList());
   }
 
+  /**
+   * Deletes the selected member from the table and saves the updated list.
+   */
   @FXML
   public void handleDelete()
   {
@@ -70,6 +82,10 @@ public class MemberViewController
     memberTable.getItems().remove(selected);
   }
 
+  /**
+   * Opens a dialog for adding a new member.
+   * After the dialog closes, the table is refreshed with updated data.
+   */
   @FXML
   public void handleAdd()
   {
@@ -98,6 +114,9 @@ public class MemberViewController
     }
   }
 
+  /**
+   * Saves the current state of the table back into the member list.
+   */
   @FXML
   public void handleSave()
   {
@@ -110,8 +129,8 @@ public class MemberViewController
   }
 
   /**
-   * Converts personal points of the selected member into community points.
-   * Confirmation dialog is shown before applying the conversion.
+   * Converts the selected member's personal points
+   * into community points after confirmation.
    */
   @FXML
   public void handleConvert()
@@ -150,10 +169,9 @@ public class MemberViewController
 
     if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK)
       return;
+
     int personal = selected.getPoints();
-
     Community.getInstance().addCommunityPoints(personal);
-
     selected.setPoints(0);
 
     GreenThumbManager.saveMembers(GreenThumbManager.getAllMembers());
@@ -164,24 +182,18 @@ public class MemberViewController
     Alert info = new Alert(Alert.AlertType.INFORMATION);
     info.setTitle("Conversion Complete");
     info.setHeaderText("Conversion Successful");
-    info.setContentText(
-        personal + " points were transferred into Community Points."
-    );
+    info.setContentText(personal + " points were transferred into Community Points.");
     info.showAndWait();
   }
 
-
   /**
-   * RESET POINTS — now works only for the selected member
-   * and shows confirmation dialog before applying changes.
+   * Resets the selected member's points to 0 after confirmation.
    */
   @FXML
   public void handleReset()
   {
-    // выбранный Member
     Member selected = memberTable.getSelectionModel().getSelectedItem();
 
-    // если не выбран
     if (selected == null)
     {
       Alert warn = new Alert(Alert.AlertType.WARNING);
@@ -192,29 +204,30 @@ public class MemberViewController
       return;
     }
 
-    // подтверждение (Emergency message)
     Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
     confirm.setTitle("Emergency Action");
-    confirm.setHeaderText("Reset points for: "
-        + selected.getFirstName() + " " + selected.getLastName());
+    confirm.setHeaderText("Reset points for: " +
+        selected.getFirstName() + " " + selected.getLastName());
     confirm.setContentText("Are you ABSOLUTELY sure you want to reset this member's points to 0?");
 
-    // пользователь нажал Cancel → выходим
     if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK)
       return;
 
-    // фактический сброс
     selected.setPoints(0);
 
-    // сохранение в вашу систему
     MemberList list = GreenThumbManager.getAllMembers();
     GreenThumbManager.saveMembers(list);
 
-    // обновление таблицы
     memberTable.refresh();
   }
 
-  // Navigation helper
+  /**
+   * Opens a new view by replacing the current scene with the one
+   * loaded from the given FXML file.
+   *
+   * @param fxmlPath path to the FXML file
+   * @param source button that triggered the navigation
+   */
   private void openView(String fxmlPath, Button source)
   {
     try

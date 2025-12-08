@@ -9,6 +9,15 @@ import model.Address;
 import model.Member;
 import model.MemberList;
 
+/**
+ * Controller for adding or editing a member.
+ *
+ * Handles input validation and saving changes to the member list.
+ *
+ * @author Artem Salatskyi
+ *
+ * @version 08.12.2025
+ */
 public class MemberAddController
 {
 
@@ -23,16 +32,31 @@ public class MemberAddController
   private MemberList list;
   private Member editingMember = null;
 
+  /**
+   * Sets the stage used for closing the window.
+   *
+   * @param stage the window stage
+   */
   public void setStage(Stage stage)
   {
     this.stage = stage;
   }
 
+  /**
+   * Sets the member list where the new or edited member will be stored.
+   *
+   * @param list the member list
+   */
   public void setList(MemberList list)
   {
     this.list = list;
   }
 
+  /**
+   * Loads an existing member into the text fields for editing.
+   *
+   * @param m the member to edit
+   */
   public void editMember(Member m)
   {
     this.editingMember = m;
@@ -45,12 +69,21 @@ public class MemberAddController
     houseNumberField.setText(String.valueOf(m.getAddressHouse()));
   }
 
+  /**
+   * Closes the window without saving changes.
+   */
   @FXML
   private void handleCancel()
   {
     stage.close();
   }
 
+  /**
+   * Validates the input and either creates a new member
+   * or updates an existing one.
+   *
+   * Shows an error message if the input is invalid.
+   */
   @FXML
   private void handleConfirm()
   {
@@ -111,6 +144,11 @@ public class MemberAddController
     stage.close();
   }
 
+  /**
+   * Displays an error alert with the given message.
+   *
+   * @param msg the error message
+   */
   private void showError(String msg)
   {
     Alert alert = new Alert(Alert.AlertType.ERROR);

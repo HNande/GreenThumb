@@ -11,7 +11,17 @@ import utils.ControllerHelper;
 
 import java.time.LocalDate;
 
-public class TaskRecordingDialogController {
+/**
+ * Controller for the task recording dialog.
+ *
+ * Handles selecting a member, picking a date, applying boost,
+ * and recording tasks into the system.
+ *
+ * @author Nandor Hock
+ * @version 08.12.2025
+ */
+public class TaskRecordingDialogController
+{
 
   @FXML private DatePicker datePicker;
   @FXML private Button cancelButton;
@@ -27,13 +37,18 @@ public class TaskRecordingDialogController {
   private final MemberList memberList = GreenThumbManager.getAllMembers();
   private final RecordedTaskList recordedTaskList = GreenThumbManager.getAllRecordedTasks();
   private static int index;
-  private TaskList taskList= GreenThumbManager.getAllTasks();
+  private TaskList taskList = GreenThumbManager.getAllTasks();
   private boolean boost;
   private int day;
   private int month;
   private int year;
 
-  public void initialize(){
+  /**
+   * Initializes the dialog, sets up the table and date picker,
+   * and configures the boost toggle button style.
+   */
+  public void initialize()
+  {
     memberFirstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
     memberLastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
     memberPointAmountCol.setCellValueFactory(new PropertyValueFactory<>("points"));
@@ -49,52 +64,86 @@ public class TaskRecordingDialogController {
         boostButton.setStyle("-fx-base: #cccccc;");  // Gray when not selected
       }
     });
-
   }
+
+  /**
+   * Sets the stage of this dialog for later closing.
+   *
+   * @param stage the window stage
+   */
   public void setStage(Stage stage){
     this.stage = stage;
   }
+
   /**
-   * Sets the Arraylist index of the selected task from the TaskView.
+   * Sets the index of the selected task from the TaskView.
    *
-   * @param i is the index inside the ArrayList
+   * @param i index in the TaskList
    */
   public static void setTaskIndex(int i){
     TaskRecordingDialogController.index = i;
   }
 
+  /**
+   * Records the selected task for the selected member.
+   * Validates member selection and date before saving.
+   *
+   * @param actionEvent the event triggered by pressing the record button
+   */
   public void handleRecord(ActionEvent actionEvent) {
     Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
-    if(selectedMember ==null){
+    if(selectedMember == null){
       ControllerHelper.showErrorMessage("Member Selection error", "Please select a Member before recording");
       return;
     }
     if(day != 0) {
-        ControllerHelper.showErrorMessage("Date Pick Error", "Please pick a date before recording");
-        return;
+      ControllerHelper.showErrorMessage("Date Pick Error", "Please pick a date before recording");
+      return;
     }
-    //This records the task inside the list based on the index value, and adds the returning Recorded Task object to the RecordedTask List
+
+    // Record the task and add it to the recorded task list
     recordedTaskList.add(taskList.getElementByIndex(index).recordTask(selectedMember, day, month, year, boost));
     taskList.getElementByIndex(index).addToTotalCount();
+
     GreenThumbManager.saveRecordedTasks(recordedTaskList);
     GreenThumbManager.saveMembers(memberList);
     GreenThumbManager.saveTasks(taskList);
+
     day = 0;
     month = 0;
     year = 0;
     boost = false;
+
     stage.close();
   }
+
+  /**
+   * Toggles the boost flag when the boost button is pressed.
+   *
+   * @param actionEvent the event triggered by pressing the boost button
+   */
   public void toggleBoost(ActionEvent actionEvent) {
     boost = boostButton.isSelected();
   }
+
+  /**
+   * Handles the date picker selection and stores the chosen date.
+   *
+   * @param actionEvent the event triggered by selecting a date
+   */
   public void handleDatePicker(ActionEvent actionEvent){
     LocalDate localDate = datePicker.getValue();
-    int day = localDate.getDayOfMonth();
-    int month = localDate.getMonthValue();
-    int year = localDate.getYear();
-    System.out.println("Day: " +day+" Month: "+month+" Year: "+year);
+    day = localDate.getDayOfMonth();
+    month = localDate.getMonthValue();
+    year = localDate.getYear();
+    System.out.println("Day: " + day + " Month: " + month + " Year: " + year);
   }
+
+  /**
+   * Cancels task recording and closes the dialog.
+   *
+   * @param actionEvent the event triggered by pressing the cancel button
+   */
   public void cancelTaskRecord(ActionEvent actionEvent) {
     stage.close();
   }

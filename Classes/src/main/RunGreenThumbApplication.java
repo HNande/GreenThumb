@@ -40,7 +40,6 @@ public class RunGreenThumbApplication extends Application
              67, "Green Street");
 
      newMember.setPoints(100);
-    //Couple of examples
     allMembers.add(new Member());
     allMembers.add(newMember);
     allTradeOffers.add(new TradeOffer("balls", "Dummy balls text",69 ,newMember));
