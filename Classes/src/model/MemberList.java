@@ -21,6 +21,12 @@ public class MemberList implements Serializable
   public MemberList()
   {
   }
+  public void updateTimeForMembers(long time){
+    for (Member member : memberList) {
+      member.timePassed(time);
+    }
+
+  }
 
   /**
    * Returns a copy of the list of all members.

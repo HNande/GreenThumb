@@ -1,6 +1,8 @@
 package utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import model.TradeOfferList;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.*;
@@ -14,13 +16,10 @@ public class MyFileHandler {
       return obj;
     }catch(FileNotFoundException e){
       System.out.println("File not found, or cannot be opened");
-      System.exit(1);
     }catch(IOException e){
       System.out.println("IO Error reading from file");
-      System.exit(1);
     }catch(ClassNotFoundException e){
       System.out.println("Class not found");
-      System.exit(1);
     }
     return null;
 
@@ -31,10 +30,8 @@ public class MyFileHandler {
       write.writeObject(object);
     }catch (FileNotFoundException e){
       System.out.println("File not found, or cannot be opened");
-      System.exit(1);
     }catch(IOException e){
       System.out.println("IO Error writing to file");
-      System.exit(1);
     }
     System.out.println("Writing successful");
   }
@@ -51,7 +48,4 @@ public static void writeToJsonFile(String fileName, Object object){
   }
 
 }
-
-
-
 }

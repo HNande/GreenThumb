@@ -2,6 +2,7 @@ package model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 /**
  * The class holds information related to dates, containing day, month and year.
@@ -63,6 +64,13 @@ public class Date implements Serializable
   public Date today()
   {
     return new Date(day,month,year);
+  }
+  public long timePeriod(LocalDate newDate){
+    LocalDate oldDate = LocalDate.of(year, month, day);
+    return ChronoUnit.DAYS.between(oldDate, newDate);
+
+
+
   }
 
   /**

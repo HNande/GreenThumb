@@ -251,9 +251,9 @@ public class Member implements Serializable
    *
    * @param time the amount of time to add
    */
-  public void timePassed(int time)
+  public void timePassed(long time)
   {
-    lastRecordTime +=time;
+    lastRecordTime += (int) time;
   }
 
   /**
