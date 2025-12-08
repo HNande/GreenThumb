@@ -1,0 +1,22 @@
+{
+  "taskList": [
+    {
+      "name": "Watching paint dry",
+      "pointAmount": 420,
+      "taskType": 2,
+      "totalCount": 0
+    },
+    {
+      "name": "Eating KFC",
+      "pointAmount": 600,
+      "taskType": 1,
+      "totalCount": 0
+    },
+    {
+      "name": "Doing it sexy style",
+      "pointAmount": 420,
+      "taskType": 2,
+      "totalCount": 0
+    }
+  ]
+}
