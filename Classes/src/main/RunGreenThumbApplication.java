@@ -39,6 +39,7 @@ public class RunGreenThumbApplication extends Application
       allTasks.add(new Task("Helping the elderly", 40,2));
       allTasks.add(new Task("Eating veggies", 30,1));
       GreenThumbManager.saveTasks(allTasks);
+      System.out.println("Tasklist Created");
     }
     MemberList allMembers = GreenThumbManager.getAllMembers();
     if(allMembers == null){

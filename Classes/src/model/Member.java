@@ -301,8 +301,6 @@ public class Member implements Serializable
       }
       else
       {
-          Member member = (Member) obj;
-
           return firstName.equals(obj.getFirstName()) && lastName.equals(
                   obj.getLastName()) && phoneNumber.equals(obj.getPhoneNumber())
                   && email.equals(obj.getEmail()) && points == obj.getPoints()

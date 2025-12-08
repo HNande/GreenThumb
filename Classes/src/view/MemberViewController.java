@@ -41,13 +41,7 @@ public class MemberViewController
   @FXML private Button resetButton;
   @FXML private Button convertButton;
 
-  @FXML private Button task;
-  @FXML private Button recorderTasks;
-  @FXML private Button tradeOffers;
-  @FXML private Button communit;
-  @FXML private Button members;
-
-  @FXML private Button taskButton;
+  private MemberList memberList;
 
   /**
    * Initializes the table by binding columns to the Member properties
@@ -56,37 +50,34 @@ public class MemberViewController
   @FXML
   public void initialize()
   {
+    memberList = GreenThumbManager.getAllMembers();
+    memberTable.getItems().clear();
     firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
     lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
     phoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
     email.setCellValueFactory(new PropertyValueFactory<>("email"));
     points.setCellValueFactory(new PropertyValueFactory<>("points"));
     address.setCellValueFactory(new PropertyValueFactory<>("address"));
-
-    MemberList memberList = GreenThumbManager.getAllMembers();
     memberTable.getItems().setAll(memberList.getMemberList());
   }
 
   /**
    * Deletes the selected member from the table and saves the updated list.
    */
-  @FXML
   public void handleDelete()
   {
     Member selected = memberTable.getSelectionModel().getSelectedItem();
     if (selected == null) return;
-
-    MemberList list = GreenThumbManager.getAllMembers();
-    list.remove(selected);
-    GreenThumbManager.saveMembers(list);
     memberTable.getItems().remove(selected);
+    memberList.getMemberList().remove(selected);
+    GreenThumbManager.saveMembers(memberList);
+    memberTable.refresh();
   }
 
   /**
    * Opens a dialog for adding a new member.
    * After the dialog closes, the table is refreshed with updated data.
    */
-  @FXML
   public void handleAdd()
   {
     try
@@ -104,8 +95,7 @@ public class MemberViewController
       dialog.setScene(scene);
       dialog.showAndWait();
 
-      MemberList list = GreenThumbManager.getAllMembers();
-      memberTable.getItems().setAll(list.getMemberList());
+      memberTable.getItems().setAll(memberList.getMemberList());
 
     }
     catch (Exception e)
@@ -117,7 +107,6 @@ public class MemberViewController
   /**
    * Saves the current state of the table back into the member list.
    */
-  @FXML
   public void handleSave()
   {
     MemberList list = new MemberList();
@@ -132,7 +121,6 @@ public class MemberViewController
    * Converts the selected member's personal points
    * into community points after confirmation.
    */
-  @FXML
   public void handleConvert()
   {
     Member selected = memberTable.getSelectionModel().getSelectedItem();
@@ -173,8 +161,7 @@ public class MemberViewController
     int personal = selected.getPoints();
     Community.getInstance().addCommunityPoints(personal);
     selected.setPoints(0);
-
-    GreenThumbManager.saveMembers(GreenThumbManager.getAllMembers());
+    GreenThumbManager.saveMembers(memberList);
     GreenThumbManager.saveCommunity(Community.getInstance());
 
     memberTable.refresh();
@@ -189,7 +176,6 @@ public class MemberViewController
   /**
    * Resets the selected member's points to 0 after confirmation.
    */
-  @FXML
   public void handleReset()
   {
     Member selected = memberTable.getSelectionModel().getSelectedItem();
@@ -214,9 +200,7 @@ public class MemberViewController
       return;
 
     selected.setPoints(0);
-
-    MemberList list = GreenThumbManager.getAllMembers();
-    GreenThumbManager.saveMembers(list);
+    GreenThumbManager.saveMembers(memberList);
 
     memberTable.refresh();
   }
