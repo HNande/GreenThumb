@@ -13,6 +13,7 @@ import manager.GreenThumbManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import model.TradeOffer;
 import utils.ControllerHelper;
 
 import java.io.IOException;
@@ -34,7 +35,7 @@ public class TaskViewController {
   @FXML private TableColumn<Task, Integer> taskPointCol;
   @FXML private TableColumn<Task, Integer> taskTypeCol;
   @FXML private TableColumn<Task, Integer> taskTotalCol;
-  private TaskList taskList = GreenThumbManager.getAllTasks();
+  private TaskList taskList;
   private String name;
   private boolean validTaskName;
   private int pointAmount;
@@ -45,6 +46,7 @@ public class TaskViewController {
    *
    */
   @FXML public void initialize() {
+    taskList = GreenThumbManager.getAllTasks();
     //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/cell/PropertyValueFactory.html
     taskNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
     taskPointCol.setCellValueFactory(new PropertyValueFactory<>("pointAmount"));
@@ -78,14 +80,22 @@ public class TaskViewController {
     });
     taskPointCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     taskPointCol.setOnEditCommit(event -> {
-      Integer input = event.getNewValue();
+      Integer newValue = event.getNewValue();
+      Integer oldValue = event.getOldValue();
       Task task = event.getRowValue();
-      if (ControllerHelper.isValidInteger(input)) {
+
+      if (newValue == null) {
+        ControllerHelper.showErrorMessage("Points Empty", "Points must not be empty");
         taskTable.refresh();
         return;
       }
-      task.setPointAmount(input);
+      if (!ControllerHelper.isValidInteger(newValue)) {
+        taskTable.refresh();
+        return;
+      }
+      task.setPointAmount(newValue);
       GreenThumbManager.saveTasks(taskList);
+      taskTable.refresh();
     });
     taskTypeCol.setCellFactory(column -> new TableCell<>() {
       public void updateItem(Integer item, boolean empty) {
