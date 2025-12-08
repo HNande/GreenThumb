@@ -59,7 +59,6 @@ public class MemberViewController
     address.setCellValueFactory(new PropertyValueFactory<>("address"));
 
     MemberList memberList = GreenThumbManager.getAllMembers();
-    // Надёжно заполняем таблицу (чтобы не дублировать данные)
     memberTable.getItems().setAll(memberList.getMemberList());
   }
 
@@ -92,7 +91,6 @@ public class MemberViewController
       dialog.setScene(scene);
       dialog.showAndWait();
 
-      // refresh
       MemberList list = GreenThumbManager.getAllMembers();
       memberTable.getItems().setAll(list.getMemberList());
 

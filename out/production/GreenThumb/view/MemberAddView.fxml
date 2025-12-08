@@ -9,7 +9,7 @@
         <padding>
             <Insets top="20" right="20" bottom="20" left="20"/>
         </padding>
-        <Label text="Add / Edit Member" style="-fx-font-size: 18px;"/>
+        <Label text="Add" style="-fx-font-size: 18px;"/>
         <TextField fx:id="firstNameField" promptText="First name"/>
         <TextField fx:id="lastNameField" promptText="Last name"/>
         <TextField fx:id="phoneField" promptText="Phone number"/>
