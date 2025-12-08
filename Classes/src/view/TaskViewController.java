@@ -1,8 +1,9 @@
 package view;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
@@ -10,11 +11,9 @@ import model.TaskList;
 import model.Task;
 import manager.GreenThumbManager;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.control.Button;
+import model.TradeOffer;
 import utils.ControllerHelper;
 
 import java.io.IOException;
@@ -25,6 +24,10 @@ import static utils.ControllerHelper.*;
  * @version 04.12.2025
  */
 public class TaskViewController {
+  @FXML public Button record;
+  @FXML public TextField taskNameField;
+  @FXML public TextField taskPointField;
+  @FXML public TextField taskTypeField;
   @FXML private Button add;
   @FXML private Button deleteButton;
   @FXML private TableView<Task> taskTable;
@@ -32,11 +35,18 @@ public class TaskViewController {
   @FXML private TableColumn<Task, Integer> taskPointCol;
   @FXML private TableColumn<Task, Integer> taskTypeCol;
   @FXML private TableColumn<Task, Integer> taskTotalCol;
-  private TaskList taskList = GreenThumbManager.getAllTasks();
+  private TaskList taskList;
+  private String name;
+  private boolean validTaskName;
+  private int pointAmount;
+  private boolean validPointAmount;
+  private  int taskType;
+  private  boolean validTaskType;
   /**
    *
    */
   @FXML public void initialize() {
+    taskList = GreenThumbManager.getAllTasks();
     //https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/cell/PropertyValueFactory.html
     taskNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
     taskPointCol.setCellValueFactory(new PropertyValueFactory<>("pointAmount"));
@@ -52,6 +62,7 @@ public class TaskViewController {
       String input = event.getNewValue();
       Task task = event.getRowValue();
       if (isNullOrEmpty(input)) {
+        showErrorMessage("Empty value error", "Description cannot be empty.");
         taskTable.refresh();
         return;
       }
@@ -69,14 +80,22 @@ public class TaskViewController {
     });
     taskPointCol.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     taskPointCol.setOnEditCommit(event -> {
-      Integer input = event.getNewValue();
+      Integer newValue = event.getNewValue();
+      Integer oldValue = event.getOldValue();
       Task task = event.getRowValue();
-      if (ControllerHelper.isValidInteger(input)) {
+
+      if (newValue == null) {
+        ControllerHelper.showErrorMessage("Points Empty", "Points must not be empty");
         taskTable.refresh();
         return;
       }
-      task.setPointAmount(input);
+      if (!ControllerHelper.isValidInteger(newValue)) {
+        taskTable.refresh();
+        return;
+      }
+      task.setPointAmount(newValue);
       GreenThumbManager.saveTasks(taskList);
+      taskTable.refresh();
     });
     taskTypeCol.setCellFactory(column -> new TableCell<>() {
       public void updateItem(Integer item, boolean empty) {
@@ -111,52 +130,16 @@ public class TaskViewController {
     });
   }
 
-  public void handleTasks() {
-
-  }
-  public void handleRecordedTasks() {
-
-  }
-
-  public void handleTradeOffers() {
-    try {
-      System.out.println(getClass().getResource("TradeOfferView.fxml"));
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TradeOfferView.fxml"));
-      AnchorPane root = loader.load();
-      TradeOfferViewController controller = loader.getController();
-      Stage stage = new Stage();
-      stage.setTitle("Trade Offer View");
-      stage.setScene(new Scene(root));
-      stage.show();
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-    }
-
-  }
-
-  public void handleCommunity() {
-
-  }
-
-  public void handleMembers() {
-
-  }
-
   public void handleRecord() {
-    Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
+     int index = taskTable.getSelectionModel().getSelectedIndex();
 
-    if (selectedTask != null) {
+    if (index >= 0 ) {
       try {
-        for (int i = 0; i < taskList.getTaskList().size(); i++) {
-          if (taskList.getElementByIndex(i) == selectedTask) {
-            TaskRecordingDialogController.setTaskIndex(i);
-          }
-        }
+            TaskRecordingDialogController.setTaskIndex(index);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskRecordingDialog.fxml"));
         AnchorPane root = loader.load();
         TaskRecordingDialogController controller = loader.getController();
-        System.out.println("Controller passed");
         Stage stage = new Stage();
         stage.setTitle("Task recording dialog");
         stage.setScene(new Scene(root));
@@ -169,6 +152,8 @@ public class TaskViewController {
       catch (IOException e) {
         e.printStackTrace();
       }
+    }else{
+      showWarningMessage("No Member selected","Please select a member before recording.");
     }
   }
 
@@ -186,29 +171,73 @@ public class TaskViewController {
         taskTable.getItems().clear();
         taskTable.getItems().addAll(taskList.getTaskList());
 
-        showWarningMessage("Delete successful", "Object has been deleted successfully");
+        showWarningMessage("Delete successful", "Task has been deleted successfully");
       }
     }
   }
 
   public void handleAdd() {
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskAddingDialog.fxml"));
-      AnchorPane root = loader.load();
-      TaskAddingDialogController controller = loader.getController();
-      System.out.println("Controller passed");
-      Stage stage = new Stage();
-      stage.setTitle("Task recording dialog");
-      stage.setScene(new Scene(root));
-      controller.setStage(stage);
-      stage.showAndWait();
-      taskList = GreenThumbManager.getAllTasks();
+    if(validPointAmount && validTaskName && validTaskType){
+      taskList.add(new Task(name,pointAmount,taskType));
+      GreenThumbManager.saveTasks(taskList);
+      System.out.println("Task successfully saved: "+name);
+      taskNameField.clear();
+      taskTypeField.clear();
+      taskPointField.clear();
+      validPointAmount = false;
+      validTaskName = false;
+      validTaskType = false;
+    }else{
+      ControllerHelper.showErrorMessage("Missing or Invalid Input Error","Please fill in all fields with correct data before confirming.");
+    }
       taskTable.getItems().clear();
       taskTable.getItems().addAll(taskList.getTaskList());
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-    }
+  }
 
+  public void handleTaskName(ActionEvent actionEvent) {
+    if(taskNameField.getText().trim().length() > 32 || taskNameField.getText().trim().length() < 4 ){
+      ControllerHelper.showErrorMessage("Name length Error","Name must be more than 4 characters, and less than 32 characters including spaces. ");
+      taskNameField.clear();
+      return;
+    }
+    if(ControllerHelper.isNullOrEmpty(taskNameField.getText())){
+      ControllerHelper.showErrorMessage("Name Empty or Null Error","Name must not be empty. ");
+      taskNameField.clear();
+      return;
+    }
+    name = taskNameField.getText().trim();
+    System.out.println(name);
+    validTaskName = true;
+  }
+
+  public void handleTaskPointAmount(ActionEvent actionEvent) {
+    try {
+      if (Integer.parseInt(taskPointField.getText()) < 0) {
+        ControllerHelper.showErrorMessage("Point Format error","Point amount must be a positive.");
+        taskPointField.clear();
+        return;
+      }
+    } catch (NumberFormatException e) {
+      ControllerHelper.showErrorMessage("Point Format Error","Point amount must be a valid number without decimal points..");
+      taskPointField.clear();
+      return;
+    }
+    pointAmount = Integer.parseInt(taskPointField.getText());
+    System.out.println(pointAmount);
+    validPointAmount = true;
+  }
+
+  public void handleTaskType(ActionEvent actionEvent) {
+    try {
+      if (Integer.parseInt(taskTypeField.getText()) == 1 || Integer.parseInt(taskTypeField.getText()) == 2) {
+        taskType = Integer.parseInt(taskTypeField.getText());
+        validTaskType = true;
+      } else {
+        ControllerHelper.showErrorMessage("Task Type Format error", "Task Type must be a valid number, 1 or 2.");
+      }
+    }catch (NumberFormatException e){
+      ControllerHelper.showErrorMessage("Task Type Format error", "Task Type must be a number");
+      taskTypeField.clear();
+    }
   }
 }

@@ -1,41 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="700.0"
-            xmlns="http://javafx.com/javafx/17.0.12"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="view.TaskViewController">
-    <ToolBar layoutY="8.0" prefHeight="18.0" prefWidth="400.0">
-        <Button fx:id="tasks" mnemonicParsing="false"
-                onAction="#handleTasks" text="Tasks"/>
-        <Button fx:id="recordedTasks" mnemonicParsing="false"
-                onAction="#handleRecordedTasks" text="Recorded Tasks"/>
-        <Button fx:id="tradeOffers" mnemonicParsing="false"
-                onAction="#handleTradeOffers" text="Trade Offers"/>
-        <Button fx:id="community" mnemonicParsing="false"
-                onAction="#handleCommunity" text="Community"/>
-        <Button fx:id="members" mnemonicParsing="false"
-                onAction="#handleMembers" text="Members"/>
-    </ToolBar>
-    <Button fx:id="deleteButton" alignment="TOP_RIGHT" layoutX="471.0"
-            layoutY="13.0" mnemonicParsing="false" onAction="#handleDelete"
-            text="Delete"/>
-    <Button fx:id="add" alignment="TOP_RIGHT" layoutX="528.0" layoutY="13.0"
-            mnemonicParsing="false" onAction="#handleAdd" text="Add"/>
-    <Button fx:id="record" alignment="TOP_RIGHT" layoutX="410.0" layoutY="13.0"
-            mnemonicParsing="false" onAction="#handleRecord" text="Record"/>
-    <TableView fx:id="taskTable" layoutX="14.0" layoutY="51.0"
-               prefHeight="334.0" prefWidth="663.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskViewController">
+    <TableView fx:id="taskTable" layoutY="65.0" prefHeight="334.0" prefWidth="580.0">
       <columns>
-          <TableColumn fx:id="taskNameCol" prefWidth="200" text="Task Name"/>
-          <TableColumn fx:id="taskPointCol" prefWidth="125"
-                       text="Point Amount"/>
-          <TableColumn fx:id="taskTypecol" prefWidth="200.0"
-                       text="Task Type"/>
-          <TableColumn fx:id="taskTotalcol" prefWidth="145.0"
-                       text="Total Count"/>
+          <TableColumn fx:id="taskNameCol" prefWidth="200" text="Task Name" />
+          <TableColumn fx:id="taskPointCol" prefWidth="125" text="Point Amount" />
+          <TableColumn fx:id="taskTypeCol" prefWidth="148.0" text="Task Type" />
+          <TableColumn fx:id="taskTotalCol" prefWidth="103.5999755859375" text="Total Count" />
       </columns>
     </TableView>
+   <ButtonBar layoutX="341.0" layoutY="15.0" prefHeight="40.0" prefWidth="200.0">
+      <buttons>
+          <Button fx:id="record" alignment="CENTER" contentDisplay="CENTER" minWidth="54.0" mnemonicParsing="false" onAction="#handleRecord" prefHeight="26.0" prefWidth="229.0" text="Record" />
+          <Button fx:id="deleteButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleDelete" text="Delete" textFill="RED" />
+      </buttons>
+   </ButtonBar>
+    <VBox layoutX="585.0" layoutY="73.0" prefHeight="317.0" prefWidth="240.0">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="240.0" text="Please provide the task name:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </Label>
+        <TextField fx:id="taskNameField" onAction="#handleTaskName" promptText="Between 4-32 characters">
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
+            <cursor>
+                <Cursor fx:constant="TEXT" />
+            </cursor>
+        </TextField>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="240.0" text="Please provide the point amount:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </Label>
+        <TextField fx:id="taskPointField" onAction="#handleTaskPointAmount" promptText="Whole Number">
+            <VBox.margin>
+                <Insets bottom="20.0" />
+            </VBox.margin>
+            <cursor>
+                <Cursor fx:constant="TEXT" />
+            </cursor>
+        </TextField>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="74.0" prefHeight="18.0" prefWidth="240.0" text="Please provide the task type:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </Label>
+        <TextField fx:id="taskTypeField" onAction="#handleTaskType" promptText="1 for Community, 2 for Individual">
+            <cursor>
+                <Cursor fx:constant="TEXT" />
+            </cursor></TextField>
+       <Button fx:id="add" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAdd" prefHeight="83.0" prefWidth="235.0" text="Add">
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+      </Button>
+    </VBox>
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="574.0" layoutY="25.0" prefHeight="20.0" prefWidth="251.0" text="Here you can register new tasks Bob!">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Label>
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="25.0" prefHeight="20.0" prefWidth="301.0" text="Here you can see all available tasks!">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Label>
 </AnchorPane>

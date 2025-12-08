@@ -13,7 +13,7 @@ import model.Task;
 /**
  *
  *
- * @author Artem Salatskyi
+ * @author Nandor Hock
  *
  * @version 03.12.2025
  */
@@ -25,11 +25,12 @@ public class RecordedTaskViewController
   @FXML private TableColumn<RecordedTask, Integer> taskTypeCol;
   @FXML private TableColumn<RecordedTask, String> taskOwnerCol;
   @FXML private TableColumn<RecordedTask, Date> timeOfRecordCol;
-  private RecordedTaskList recordedTaskList = GreenThumbManager.getAllRecordedTasks();
+  private RecordedTaskList recordedTaskList;
 
   @FXML
   public void initialize()
   {
+    recordedTaskList = GreenThumbManager.getAllRecordedTasks();
     taskNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
     pointAmountCol.setCellValueFactory(new PropertyValueFactory<>("pointAmount"));
     taskTypeCol.setCellValueFactory(new PropertyValueFactory<>("taskType"));

@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.TradeOfferViewController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TradeOfferViewController">
 
+    <ComboBox fx:id="proposerCombo" layoutX="14.0" layoutY="13.0" managed="false" prefWidth="150.0" visible="false" />
+    <ComboBox fx:id="payerCombo" layoutX="175.0" layoutY="13.0" managed="false" prefWidth="150.0" visible="false" />
+
+    <Button fx:id="deleteButton" alignment="TOP_RIGHT" layoutX="415.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleEvents" text="Delete" />
+
+    <Button fx:id="addButton" alignment="TOP_RIGHT" layoutX="480.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleAddButtonAction" text="Add" />
+
+    <Button fx:id="executeButton" alignment="TOP_RIGHT" layoutX="533.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleEvents" text="Execute" />
+
+    <TableView fx:id="tradeOfferTable" layoutY="58.0" prefHeight="334.0" prefWidth="663.0">
+        <columns>
+            <TableColumn fx:id="name" prefWidth="200.0" text="Trade Offer Name" />
+            <TableColumn fx:id="cost" prefWidth="125.0" text="Cost" />
+            <TableColumn fx:id="description" prefWidth="200.0" text="Description" />
+            <TableColumn fx:id="proposer" prefWidth="145.0" text="Proposer" />
+        </columns>
+    </TableView>
 </AnchorPane>

@@ -8,7 +8,7 @@ import java.io.*;
 public class MyFileHandler {
   public static Object readFromBinaryFile(String fileName){
     try{
-      ObjectInputStream read = new ObjectInputStream(new FileInputStream(fileName));
+      ObjectInputStream read = new ObjectInputStream(new FileInputStream("data/"+fileName));
       Object obj = read.readObject();
       read.close();
       return obj;
@@ -27,7 +27,7 @@ public class MyFileHandler {
   }
   public static void writeToBinaryFile(String fileName,Object object){
     try{
-      ObjectOutputStream write = new ObjectOutputStream(new FileOutputStream(fileName));
+      ObjectOutputStream write = new ObjectOutputStream(new FileOutputStream("data/"+fileName));
       write.writeObject(object);
     }catch (FileNotFoundException e){
       System.out.println("File not found, or cannot be opened");
@@ -42,7 +42,7 @@ public static void writeToJsonFile(String fileName, Object object){
   try {
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     String json = gson.toJson(object);
-    FileWriter writer = new FileWriter(fileName);
+    FileWriter writer = new FileWriter("webpage/json/"+fileName+".json");
     writer.write(json);
     writer.close();
   } catch (IOException e) {

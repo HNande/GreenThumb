@@ -50,6 +50,7 @@ public class RunGreenThumbApplication extends Application
     allTasks.add(new Task("Eating KFC", 600,1));
     allTasks.add(new Task("Doing it sexy style", 420,2));
     allRecordedTasks.add(new Task("Doing it sexy style", 420,2).recordTask(new Member(),4,12,2025,false));
+    System.out.println("balls");
     GreenThumbManager.saveRecordedTasks(allRecordedTasks);
     GreenThumbManager.saveTasks(allTasks);
     GreenThumbManager.saveTradeOffers(allTradeOffers);
@@ -68,11 +69,10 @@ public class RunGreenThumbApplication extends Application
   public void start(Stage primaryStage) throws IOException {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
     Scene scene = new Scene(loader.load());
-    primaryStage.setTitle("Green Thumb ");
+    primaryStage.setTitle("Green Thumb Application ");
     primaryStage.setScene(scene);
     primaryStage.setOnCloseRequest(event -> {
-      System.out.println("Application is closing...");
-      GreenThumbManager.saveFileToJson(GreenThumbManager.getAllTasks());
+      System.out.println("Application closing");
       GreenThumbManager.saveFileToJson(GreenThumbManager.getCommunity());
       GreenThumbManager.saveFileToJson(GreenThumbManager.getAllRecordedTasks());
       GreenThumbManager.saveFileToJson(GreenThumbManager.getAllTradeOffers());

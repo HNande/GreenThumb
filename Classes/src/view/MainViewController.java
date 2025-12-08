@@ -23,7 +23,6 @@ public class MainViewController {
       membersTab.setContent(loadTabContent("/view/MemberView.fxml"));
     } catch (IOException e) {
       System.out.println("Error loading tabs: " + e.getMessage());
-      e.printStackTrace();
     }
 
   }

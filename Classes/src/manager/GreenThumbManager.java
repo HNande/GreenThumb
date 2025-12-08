@@ -19,7 +19,6 @@ public class GreenThumbManager
   private static final String communityFile = "communityFile";
   private static final String communityJsonFile = "communityJsonFile";
   private static final String taskFile = "taskFile";
-  private static final String taskJsonFile = "taskJsonFile";
   private static final String recordedTaskFile = "recordedTaskFile";
   private static final String recordedTaskJsonFile = "recordedTaskJsonFile";
 
@@ -130,9 +129,6 @@ public class GreenThumbManager
    */
   public static void saveCommunity(Community community) {
       MyFileHandler.writeToBinaryFile(communityFile, community);
-  }
-  public static void saveFileToJson(TaskList taskList) {
-    MyFileHandler.writeToJsonFile(taskJsonFile,taskList);
   }
   public static void saveFileToJson(RecordedTaskList recordedTaskList) {
     MyFileHandler.writeToJsonFile(recordedTaskJsonFile,recordedTaskList);

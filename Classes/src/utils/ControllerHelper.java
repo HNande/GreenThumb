@@ -30,7 +30,6 @@ public class ControllerHelper {
    * @param input to be checked
    */
   public static boolean isNullOrEmpty(String input) {
-    showErrorMessage("Empty value error message", "Edited value cannot be empty.");
     return input == null || input.trim().isEmpty();
   }
   /**
@@ -43,11 +42,11 @@ public class ControllerHelper {
   public static boolean isValidInteger(int input) {
     try {
       if (input < 0) {
-        showErrorMessage("Point Format error","Point amount must be a positive.");
+        ControllerHelper.showErrorMessage("Invalid Input", "Number must be a  non-negative number.");
         return false;
       }
     } catch (NumberFormatException e) {
-      showErrorMessage("Point Format Error","Point amount must be a valid number without decimal points..");
+      ControllerHelper.showErrorMessage("Invalid Input", "Number must be a whole number.");
       return false;
     }
     return true;
