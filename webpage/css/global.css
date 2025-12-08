@@ -7,15 +7,15 @@
   --text-highlighted-color: #27b16a;
   --text-highlighted2-color: #0fa055;
 }
-
+#table{
+  margin: 0;
+}
 * {
   box-sizing: border-box;
   font-family: var(--text-font);
   color: var(--text-primary-color);
 }
-#tasks{
-  text-decoration: none;
-}
+
 body {
   margin: 0;
   background-color: var(--bg-layout-color);

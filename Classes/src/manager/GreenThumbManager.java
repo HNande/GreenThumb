@@ -13,15 +13,15 @@ import utils.MyFileHandler;
  */
 public class GreenThumbManager
 {
-  private static final String tradeOfferFile = "/src/data/tradeOfferFile";
-  private static final String tradeOfferJsonFile = "/webpage/json/tradeOfferjsonFile";
-  private static final String memberFile = "/src/data/memberFile";
-  private static final String communityFile = "/src/data/communityFile";
-  private static final String communityJsonFile = "/webpage/json/communityJsonFile";
-  private static final String taskFile = "/src/data/taskFile";
-  private static final String taskJsonFile = "/webpage/json/taskJsonFile";
-  private static final String recordedTaskFile = "/src/data/recordedTaskFile";
-  private static final String recordedTaskJsonFile = "/webpage/json/recordedTaskJsonFile";
+  private static final String tradeOfferFile = "tradeOfferFile";
+  private static final String tradeOfferJsonFile = "tradeOfferjsonFile";
+  private static final String memberFile = "memberFile";
+  private static final String communityFile = "communityFile";
+  private static final String communityJsonFile = "communityJsonFile";
+  private static final String taskFile = "taskFile";
+  private static final String taskJsonFile = "taskJsonFile";
+  private static final String recordedTaskFile = "recordedTaskFile";
+  private static final String recordedTaskJsonFile = "recordedTaskJsonFile";
 
   /**
    * Creates a new GreenThumbManager.

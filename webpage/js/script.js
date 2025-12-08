@@ -1,35 +1,35 @@
-const tasks = document.getElementsByClassName("block")
+const tasks = document.getElementById("table")
 
-fetch('./json/taskJsonFile')
+fetch('../json/taskJsonFile.json')
 .then(response => response.json())
 .then(data=>{
     for (let i = 0; i < data.taskList.length; i++) {
     let row = document.createElement("tr");
     
     let nameCell = document.createElement("td");
-    nameCell.innerHTML = fetchedTasks.taskList[i].name;
+    nameCell.innerHTML = data.taskList[i].name;
     row.appendChild(nameCell);
 
     let pointCell = document.createElement("td");
-    pointCell.innerHTML = fetchedTasks.taskList[i].pointAmount;
+    pointCell.innerHTML = data.taskList[i].pointAmount;
     row.appendChild(pointCell);
 
     let typeCell = document.createElement("td");
-    const taskType = fetchedTasks.taskList[i].taskType
+    const taskType = data.taskList[i].taskType
     switch(taskType) {
         case 1:
             typeCell.innerHTML = "Community";
-            row.appendChild(listElement);
+            row.appendChild(typeCell);
             break;
         case 2:
             typeCell.innerHTML = "Individual";
-            row.appendChild(listElement);
+            row.appendChild(typeCell);
             break;
         default:
             break;
         } 
     let totalCell = document.createElement("td");
-    totalCell.innerHTML = fetchedTasks.taskList[i].totalCount;
+    totalCell.innerHTML = data.taskList[i].totalCount;
     row.appendChild(totalCell);
 
     tasks.appendChild(row);
