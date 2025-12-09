@@ -24,7 +24,6 @@
                 </padding>
                 <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDelete" text="Delete" />
                 <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAdd" text="Register" />
-                <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSave" text="Save/Apply" />
                 <Button fx:id="convertButton" mnemonicParsing="false" onAction="#handleConvert" text="Convert" />
                 <Button fx:id="resetButton" mnemonicParsing="false" onAction="#handleReset" text="Reset" />
             </HBox>
