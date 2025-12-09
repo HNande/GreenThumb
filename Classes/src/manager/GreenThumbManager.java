@@ -122,6 +122,11 @@ public class GreenThumbManager
     return  (Community) MyFileHandler.readFromBinaryFile(communityFile);
   }
 
+  /**
+   * Returns the date data stored in the binary file.
+   *
+   * @return the saved Date object
+   */
   public static Date getDate()
   {
     return  (Date) MyFileHandler.readFromBinaryFile(dateFile);
@@ -134,15 +139,39 @@ public class GreenThumbManager
   public static void saveCommunity(Community community) {
       MyFileHandler.writeToBinaryFile(communityFile, community);
   }
+
+  /**
+   * Saves the date data to a binary file.
+   *
+   * @param date the date object to save
+   */
   public static void saveDate(Date date) {
     MyFileHandler.writeToBinaryFile(dateFile, date);
   }
+
+  /**
+   * Saves the recorded task list to a JSON file.
+   *
+   * @param recordedTaskList the list of recorded tasks to save as JSON
+   */
   public static void saveFileToJson(RecordedTaskList recordedTaskList) {
     MyFileHandler.writeToJsonFile(recordedTaskJsonFile,recordedTaskList);
   }
+
+  /**
+   * Saves the community data to a JSON file.
+   *
+   * @param community the community object to save as JSON
+   */
   public static void saveFileToJson(Community community) {
     MyFileHandler.writeToJsonFile(communityJsonFile,community);
   }
+
+  /**
+   * Saves the trade offer list to a JSON file.
+   *
+   * @param tradeOfferList the list of trade offers to save as JSON
+   */
   public static void saveFileToJson(TradeOfferList tradeOfferList) {
     MyFileHandler.writeToJsonFile(tradeOfferJsonFile,tradeOfferList);
   }

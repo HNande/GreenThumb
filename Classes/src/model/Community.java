@@ -35,7 +35,6 @@ public class Community implements Serializable
    */
   public static Community getInstance()
   {
-    // Ленивая инициализация
     if (instance == null)
     {
       instance = new Community();
@@ -53,7 +52,6 @@ public class Community implements Serializable
   {
     if (loadedCommunity != null)
     {
-      // Заменяем текущий Singleton загруженным экземпляром
       instance = loadedCommunity;
     }
   }

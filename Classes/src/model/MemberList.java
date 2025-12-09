@@ -22,12 +22,19 @@ public class MemberList implements Serializable
   public MemberList()
   {
   }
-  public void updateTimeForMembers(long time){
-    for (Member member : memberList) {
+
+  /**
+   * Adds the given time value to every member in the list.
+   *
+   * @param time the time to add to each member
+   */
+  public void updateTimeForMembers(long time) {
+    for (Member member : memberList)
+    {
       member.timePassed(time);
     }
-
   }
+
 
   /**
    * Returns a reference to the list of all members.

@@ -40,7 +40,6 @@ public class MemberViewController
 
   @FXML private Button deleteButton;
   @FXML private Button addButton;
-  @FXML private Button saveButton;
   @FXML private Button resetButton;
   @FXML private Button convertButton;
 
@@ -97,7 +96,6 @@ public class MemberViewController
     phoneNumber.setOnEditCommit(event -> {
       Member member = event.getRowValue();
       String newValue = event.getNewValue();
-      // Валидация номера телефона (по желанию)
       member.setPhoneNumber(newValue);
       GreenThumbManager.saveMembers(memberList);
     });
@@ -106,7 +104,6 @@ public class MemberViewController
     email.setOnEditCommit(event -> {
       Member member = event.getRowValue();
       String newValue = event.getNewValue();
-      // Валидация Email (по желанию)
       member.setEmail(newValue);
       GreenThumbManager.saveMembers(memberList);
     });
@@ -188,19 +185,6 @@ public class MemberViewController
     {
       e.printStackTrace();
     }
-  }
-
-  /**
-   * Saves the current state of the table back into the member list.
-   */
-  public void handleSave()
-  {
-    MemberList list = new MemberList();
-    for (Member m : memberTable.getItems())
-    {
-      list.add(m);
-    }
-    GreenThumbManager.saveMembers(list);
   }
 
   /**

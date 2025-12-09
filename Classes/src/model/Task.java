@@ -15,7 +15,7 @@ public class Task implements Serializable
 
   private String name;
   private int pointAmount;
-  private int taskType; // 1 == COMMUNITY, 2 == INDIVIDUAL
+  private int taskType;
   private int totalCount;
 
   /**

@@ -132,6 +132,12 @@ public class Date implements Serializable
   {
     return year;
   }
+
+  /**
+   * Returns text version of Date info.
+   *
+   * @return text version of Date info.
+   */
   public String toString(){
     String temp = " %d/%d/%d";
     return String.format(temp,getDay(),getMonth(),getYear());

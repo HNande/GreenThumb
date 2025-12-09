@@ -11,7 +11,6 @@ import model.MemberList;
 
 /**
  * Controller for adding or editing a member.
- *
  * Handles input validation and saving changes to the member list.
  *
  * @author Artem Salatskyi
@@ -100,20 +99,20 @@ public class MemberAddController
       return;
     }
 
-    if (!email.contains("@") || email.length() < 5)
+    if (!email.matches("^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$"))
     {
-      showError("Invalid email format.");
+      showError("Invalid email format. Please use a valid address (e.g., user@example.com).");
       return;
     }
 
-    if (!phone.matches("[0-9 +()-]{7,20}"))
+    if (!phone.matches("^(?:\\+?)([0-9 \\-()]{7,20})$"))
     {
-      showError("Invalid phone number.");
+      showError("Invalid phone number. Please use a format with 7-20 digits (e.g., +1234567890).");
       return;
     }
+
 
     int houseNumber;
-
     try
     {
       houseNumber = Integer.parseInt(houseStr);
