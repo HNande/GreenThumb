@@ -18,7 +18,7 @@
    <ButtonBar layoutX="341.0" layoutY="15.0" prefHeight="40.0" prefWidth="200.0">
       <buttons>
           <Button fx:id="record" alignment="CENTER" contentDisplay="CENTER" minWidth="54.0" mnemonicParsing="false" onAction="#handleRecord" prefHeight="26.0" prefWidth="229.0" text="Record" />
-          <Button fx:id="deleteButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleDelete" text="Delete" textFill="RED" />
+          <Button fx:id="deleteButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleDelete" text="Remove" textFill="RED" />
       </buttons>
    </ButtonBar>
     <VBox layoutX="585.0" layoutY="73.0" prefHeight="317.0" prefWidth="240.0">
@@ -30,7 +30,7 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </Label>
-        <TextField fx:id="taskNameField" onAction="#handleTaskName" promptText="Between 4-32 characters">
+        <TextField fx:id="taskNameField" promptText="Between 4-32 characters">
             <VBox.margin>
                 <Insets bottom="20.0" />
             </VBox.margin>
@@ -46,7 +46,7 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </Label>
-        <TextField fx:id="taskPointField" onAction="#handleTaskPointAmount" promptText="Whole Number">
+        <TextField fx:id="taskPointField" promptText="Whole Number">
             <VBox.margin>
                 <Insets bottom="20.0" />
             </VBox.margin>
@@ -62,17 +62,17 @@
             <Insets bottom="10.0" />
          </VBox.margin>
       </Label>
-        <TextField fx:id="taskTypeField" onAction="#handleTaskType" promptText="1 for Community, 2 for Individual">
+        <TextField fx:id="taskTypeField" promptText="1 for Community, 2 for Individual">
             <cursor>
                 <Cursor fx:constant="TEXT" />
             </cursor></TextField>
-       <Button fx:id="add" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAdd" prefHeight="83.0" prefWidth="235.0" text="Add">
+       <Button fx:id="add" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAdd" prefHeight="83.0" prefWidth="235.0" text="Register">
          <VBox.margin>
             <Insets top="30.0" />
          </VBox.margin>
       </Button>
     </VBox>
-   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="574.0" layoutY="25.0" prefHeight="20.0" prefWidth="251.0" text="Here you can register new tasks Bob!">
+   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="574.0" layoutY="25.0" prefHeight="20.0" prefWidth="251.0" text="Here you can register new tasks !">
       <font>
          <Font name="System Bold" size="14.0" />
       </font>

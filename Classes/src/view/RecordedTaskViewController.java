@@ -44,4 +44,15 @@ public class RecordedTaskViewController
 
     recordedTaskTable.getItems().addAll(recordedTaskList.getRecordedTaskList());
   }
+  public void refreshView()
+  {
+    recordedTaskList = GreenThumbManager.getAllRecordedTasks();
+    recordedTaskTable.getItems().setAll(recordedTaskList.getRecordedTaskList());
+    if (!recordedTaskTable.getColumns().isEmpty())
+    {
+      recordedTaskTable.getColumns().getFirst().setVisible(false);
+      recordedTaskTable.getColumns().getFirst().setVisible(true);
+    }
+    recordedTaskTable.refresh();
+  }
 }

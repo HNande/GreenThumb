@@ -31,8 +31,7 @@ public class Member implements Serializable
    * @param houseNumber where member live
    * @param street where placed members house
    */
-  public Member(String firstName, String lastName, String phoneNumber, String email, int houseNumber, String street)
-  {
+  public Member(String firstName, String lastName, String phoneNumber, String email, int houseNumber, String street) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.phoneNumber = phoneNumber;

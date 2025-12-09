@@ -33,25 +33,6 @@ public class ControllerHelper {
     return input == null || input.trim().isEmpty();
   }
   /**
-   * Returns whether parameter is negative, or if not an integer.
-   *
-   * @return boolean
-   *
-   * @param input to be checked
-   */
-  public static boolean isValidInteger(int input) {
-    try {
-      if (input < 0) {
-        ControllerHelper.showErrorMessage("Invalid Input", "Number must be a  non-negative number.");
-        return false;
-      }
-    } catch (NumberFormatException e) {
-      ControllerHelper.showErrorMessage("Invalid Input", "Number must be a whole number.");
-      return false;
-    }
-    return true;
-  }
-  /**
    * Returns whether parameter is a valid Task Type.
    *
    * @return boolean
@@ -79,9 +60,9 @@ public class ControllerHelper {
    * @param string the String that should be checked in the Arraylist
    */
   public static boolean taskNameAlreadyExists(ArrayList<Task> list, String string){
+    String str = string.trim();
     for(int i = 0; i != list.size();i++){
-      if (list.get(i).getName().equals(string.trim())){
-        showErrorMessage("Name already exists", "Edited value cannot already exist in list.");
+      if (list.get(i).getName().equals(str)){
         return true;
       }
     }
