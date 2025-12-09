@@ -21,13 +21,12 @@ import static utils.ControllerHelper.*;
 
 /**
  * Controller for managing the Task view.
- *
  * Handles displaying tasks, adding, deleting, editing, and recording tasks.
  * Supports inline table editing and input validation.
  *
  * @author Nandor Hock
  *
- * @version 04.12.2025
+ * @version 09.12.2025
  */
 public class TaskViewController
 {
@@ -103,10 +102,16 @@ public class TaskViewController
         taskTable.refresh();
         return;
       }
-      if (!ControllerHelper.isValidInteger(newValue))
-      {
+      try {
+        if (newValue < 0) {
+          ControllerHelper.showErrorMessage("Invalid Input", "Number must be a  non-negative number.");
+          taskTable.refresh();
+          return ;
+        }
+      } catch (NumberFormatException e) {
+        ControllerHelper.showErrorMessage("Invalid Input", "Number must be a whole number.");
         taskTable.refresh();
-        return;
+        return ;
       }
       task.setPointAmount(newValue);
       GreenThumbManager.saveTasks(taskList);
@@ -297,5 +302,16 @@ public class TaskViewController
       ControllerHelper.showErrorMessage("Task Type Format error", "Task Type must be a number");
       taskTypeField.clear();
     }
+  }
+  public void refreshView()
+  {
+    taskList = GreenThumbManager.getAllTasks();
+    taskTable.getItems().setAll(taskList.getTaskList());
+    if (!taskTable.getColumns().isEmpty())
+    {
+      taskTable.getColumns().getFirst().setVisible(false);
+      taskTable.getColumns().getFirst().setVisible(true);
+    }
+    taskTable.refresh();
   }
 }

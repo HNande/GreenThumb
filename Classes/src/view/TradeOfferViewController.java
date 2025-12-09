@@ -283,4 +283,15 @@ public class TradeOfferViewController
       }
     }
   }
+  public void refreshView()
+  {
+    tradeOfferList = GreenThumbManager.getAllTradeOffers();
+    tradeOfferTable.getItems().setAll(tradeOfferList.getTradeOfferList());
+    if (!tradeOfferTable.getColumns().isEmpty())
+    {
+      tradeOfferTable.getColumns().getFirst().setVisible(false);
+      tradeOfferTable.getColumns().getFirst().setVisible(true);
+    }
+    tradeOfferTable.refresh();
+  }
 }

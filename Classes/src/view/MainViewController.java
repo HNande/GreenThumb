@@ -23,8 +23,11 @@ public class MainViewController
   @FXML private Tab communityTab;
   @FXML private Tab membersTab;
 
-  // Новое поле для хранения контроллера вкладки "Участники"
   private MemberViewController memberViewController;
+  private CommunityViewController communityViewController;
+  private TaskViewController taskViewController;
+  private RecordedTaskViewController recordedTaskViewController;
+  private TradeOfferViewController tradeOfferViewController;
 
   /**
    * Initializes the main view and loads FXML content for all tabs.
@@ -33,49 +36,108 @@ public class MainViewController
   {
     try
     {
-      tasksTab.setContent(loadTabContent("/view/TaskView.fxml", null));
-      taskRecordsTab.setContent(loadTabContent("/view/RecordedTaskView.fxml", null));
-      tradeOfferTab.setContent(loadTabContent("/view/TradeOfferView.fxml", null));
-      communityTab.setContent(loadTabContent("/view/CommunityView.fxml", null));
-      membersTab.setContent(loadMemberTabContent("/view/MemberView.fxml"));
+      tasksTab.setContent(loadTaskTabContent());
+      tasksTab.selectedProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue && taskViewController != null) {
+          taskViewController.refreshView();
+        }
+      });
+      taskRecordsTab.setContent(loadRecordedTabContent());
+      taskRecordsTab.selectedProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue && recordedTaskViewController != null) {
+          recordedTaskViewController.refreshView();
+        }
+      });
+      tradeOfferTab.setContent(loadTradeOfferTabContent());
+      tradeOfferTab.selectedProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue && tradeOfferViewController != null) {
+          tradeOfferViewController.refreshView();
+        }
+      });
+      communityTab.setContent(loadCommunityTabContent());
+      /*
+      communityTab.selectedProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue && communityViewController != null) {
+          communityViewController.refreshView();
+        }
+      });
+      */
+      membersTab.setContent(loadMemberTabContent());
       membersTab.selectedProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue && memberViewController != null) {
           memberViewController.refreshView();
         }
       });
-
     }
     catch (IOException e)
     {
       System.out.println("Error loading tabs: " + e.getMessage());
     }
   }
-
   /**
-   * Загружает FXML для вкладки Участников и сохраняет его контроллер.
+   * Loads FXML for the Members tab and saves its controller.
    *
-   * @param fxmlFile путь к FXML файлу
-   * @return AnchorPane root загруженного UI
-   * @throws IOException если файл не может быть загружен
+   * @return AnchorPane root of the loaded UI
+   * @throws IOException if the file cannot be loaded
    */
-  private AnchorPane loadMemberTabContent(String fxmlFile) throws IOException
+  private AnchorPane loadMemberTabContent() throws IOException
   {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MemberView.fxml"));
     AnchorPane root = loader.load();
     memberViewController = loader.getController();
     return root;
   }
-
   /**
-   * Loads the FXML file and returns its root pane. (Обычный метод для остальных вкладок)
+   * Loads FXML for the Tasks tab and saves its controller.
    *
-   * @param fxmlFile path to the FXML file
    * @return AnchorPane root of the loaded UI
    * @throws IOException if the file cannot be loaded
    */
-  private AnchorPane loadTabContent(String fxmlFile, Object unused) throws IOException
+  private AnchorPane loadTaskTabContent() throws IOException
   {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-    return loader.load();
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TaskView.fxml"));
+    AnchorPane root = loader.load();
+    taskViewController = loader.getController();
+    return root;
   }
+  /**
+   * Loads FXML for the Recorded Tasks tab and saves its controller.
+   *
+   * @return AnchorPane root of the loaded UI
+   * @throws IOException if the file cannot be loaded
+   */
+  private AnchorPane loadRecordedTabContent() throws IOException
+  {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/RecordedTaskView.fxml"));
+    AnchorPane root = loader.load();
+    recordedTaskViewController = loader.getController();
+    return root;
+  }
+  /**
+   * Loads FXML for the Trade Offers tab and saves its controller.
+   *
+   * @return AnchorPane root of the loaded UI
+   * @throws IOException if the file cannot be loaded
+   */
+  private AnchorPane loadTradeOfferTabContent() throws IOException
+  {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TradeOfferView.fxml"));
+    AnchorPane root = loader.load();
+    tradeOfferViewController = loader.getController();
+    return root;
+  }
+  /**
+   * Loads FXML for the Community tab and saves its controller.
+   *
+   * @return AnchorPane root of the loaded UI
+   * @throws IOException if the file cannot be loaded
+   */
+  private AnchorPane loadCommunityTabContent() throws IOException
+  {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CommunityView.fxml"));
+    AnchorPane root = loader.load();
+    communityViewController = loader.getController();
+    return root;
+  }
+
 }

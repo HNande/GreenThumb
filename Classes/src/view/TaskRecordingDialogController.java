@@ -55,7 +55,11 @@ public class TaskRecordingDialogController
     memberTimeSinceLastRecord.setCellValueFactory(new PropertyValueFactory<>("lastRecordTime"));
     memberTable.getItems().addAll(memberList.getMemberList());
     datePicker.setValue(LocalDate.now());
-    System.out.println("Table set");
+    LocalDate localDate = datePicker.getValue();
+    day = localDate.getDayOfMonth();
+    month = localDate.getMonthValue();
+    year = localDate.getYear();
+    System.out.println("Day: " + day + " Month: " + month + " Year: " + year);
 
     boostButton.selectedProperty().addListener((obs, previousSelection, currentSelection) -> {
       if (currentSelection) {
@@ -94,10 +98,6 @@ public class TaskRecordingDialogController
     Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
     if(selectedMember == null){
       ControllerHelper.showErrorMessage("Member Selection error", "Please select a Member before recording");
-      return;
-    }
-    if(day != 0) {
-      ControllerHelper.showErrorMessage("Date Pick Error", "Please pick a date before recording");
       return;
     }
 
