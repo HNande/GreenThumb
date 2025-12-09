@@ -5,12 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import manager.GreenThumbManager;
 import model.Address;
 import model.Community;
 import model.Member;
 import model.MemberList;
+import utils.ControllerHelper;
 
 import java.io.IOException;
 
@@ -46,19 +49,80 @@ public class MemberViewController
   /**
    * Initializes the table by binding columns to the Member properties
    * and loading all members into the table.
+   * Также настраивает встроенное редактирование ячеек (inline editing).
    */
   @FXML
   public void initialize()
   {
     memberList = GreenThumbManager.getAllMembers();
-    memberTable.getItems().clear();
+
     firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
     lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
     phoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
     email.setCellValueFactory(new PropertyValueFactory<>("email"));
     points.setCellValueFactory(new PropertyValueFactory<>("points"));
     address.setCellValueFactory(new PropertyValueFactory<>("address"));
+
     memberTable.getItems().setAll(memberList.getMemberList());
+
+    memberTable.setEditable(true);
+
+    firstName.setCellFactory(TextFieldTableCell.forTableColumn());
+    firstName.setOnEditCommit(event -> {
+      Member member = event.getRowValue();
+      String newValue = event.getNewValue();
+      if (newValue != null && !newValue.trim().isEmpty()) {
+        member.setFirstName(newValue.trim());
+        GreenThumbManager.saveMembers(memberList);
+      } else {
+        ControllerHelper.showErrorMessage("Input Error", "First name cannot be empty.");
+        memberTable.refresh();
+      }
+    });
+
+    lastName.setCellFactory(TextFieldTableCell.forTableColumn());
+    lastName.setOnEditCommit(event -> {
+      Member member = event.getRowValue();
+      String newValue = event.getNewValue();
+      if (newValue != null && !newValue.trim().isEmpty()) {
+        member.setLastName(newValue.trim());
+        GreenThumbManager.saveMembers(memberList);
+      } else {
+        ControllerHelper.showErrorMessage("Input Error", "Last name cannot be empty.");
+        memberTable.refresh();
+      }
+    });
+
+    phoneNumber.setCellFactory(TextFieldTableCell.forTableColumn());
+    phoneNumber.setOnEditCommit(event -> {
+      Member member = event.getRowValue();
+      String newValue = event.getNewValue();
+      // Валидация номера телефона (по желанию)
+      member.setPhoneNumber(newValue);
+      GreenThumbManager.saveMembers(memberList);
+    });
+
+    email.setCellFactory(TextFieldTableCell.forTableColumn());
+    email.setOnEditCommit(event -> {
+      Member member = event.getRowValue();
+      String newValue = event.getNewValue();
+      // Валидация Email (по желанию)
+      member.setEmail(newValue);
+      GreenThumbManager.saveMembers(memberList);
+    });
+
+    points.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+    points.setOnEditCommit(event -> {
+      Member member = event.getRowValue();
+      Integer newValue = event.getNewValue();
+      if (newValue != null && newValue >= 0) {
+        member.setPoints(newValue);
+        GreenThumbManager.saveMembers(memberList);
+      } else {
+        ControllerHelper.showErrorMessage("Input Error", "Points must be a non-negative integer.");
+        memberTable.refresh();
+      }
+    });
   }
 
   /**
@@ -78,7 +142,6 @@ public class MemberViewController
       return;
     }
 
-    // ДОБАВЛЕНО: Диалог подтверждения удаления
     Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
     confirm.setTitle("Confirm Deletion");
     confirm.setHeaderText("Are you sure you want to delete this member?");
@@ -90,7 +153,6 @@ public class MemberViewController
     if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK)
       return;
 
-    // Фактическое удаление:
     memberTable.getItems().remove(selected);
     memberList.getMemberList().remove(selected);
     GreenThumbManager.saveMembers(memberList);
@@ -114,13 +176,11 @@ public class MemberViewController
       dialog.initOwner(addButton.getScene().getWindow());
       ctrl.setStage(dialog);
 
-      // ИСПРАВЛЕНИЕ СИНХРОНИЗАЦИИ: Передаем локальный memberList
       ctrl.setList(this.memberList);
 
       dialog.setScene(scene);
       dialog.showAndWait();
 
-      // Обновляем таблицу, используя уже измененный локальный список.
       memberTable.getItems().setAll(memberList.getMemberList());
 
     }
@@ -190,10 +250,8 @@ public class MemberViewController
     GreenThumbManager.saveMembers(memberList);
     GreenThumbManager.saveCommunity(Community.getInstance());
 
-    // ИСПРАВЛЕНИЕ ОБНОВЛЕНИЯ ОЧКОВ: Принудительное обновление
     memberTable.getColumns().get(0).setVisible(false);
     memberTable.getColumns().get(0).setVisible(true);
-    // memberTable.refresh(); // Не требуется, т.к. принудительное обновление более надежно
 
     Alert info = new Alert(Alert.AlertType.INFORMATION);
     info.setTitle("Conversion Complete");
@@ -231,10 +289,8 @@ public class MemberViewController
     selected.setPoints(0);
     GreenThumbManager.saveMembers(memberList);
 
-    // ИСПРАВЛЕНИЕ ОБНОВЛЕНИЯ ОЧКОВ: Принудительное обновление
     memberTable.getColumns().get(0).setVisible(false);
     memberTable.getColumns().get(0).setVisible(true);
-    // memberTable.refresh(); // Не требуется, т.к. принудительное обновление более надежно
   }
 
   /**

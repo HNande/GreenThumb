@@ -68,7 +68,6 @@ public class RunGreenThumbApplication extends Application
       GreenThumbManager.saveDate(oldDate);
     }
 
-    // Сохраняем правильный, рабочий экземпляр Community
     GreenThumbManager.saveCommunity(community);
 
     launch(args);
