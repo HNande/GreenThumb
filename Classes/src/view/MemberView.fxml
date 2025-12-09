@@ -23,7 +23,7 @@
                     <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                 </padding>
                 <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDelete" text="Delete" />
-                <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAdd" text="Register" />
+                <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAdd" text="Add" />
                 <Button fx:id="convertButton" mnemonicParsing="false" onAction="#handleConvert" text="Convert" />
                 <Button fx:id="resetButton" mnemonicParsing="false" onAction="#handleReset" text="Reset" />
             </HBox>
