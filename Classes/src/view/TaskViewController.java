@@ -44,12 +44,6 @@ public class TaskViewController
   @FXML private TableColumn<Task, Integer> taskTotalCol;
 
   private TaskList taskList;
-  private String name;
-  private boolean validTaskName;
-  private int pointAmount;
-  private boolean validPointAmount;
-  private int taskType;
-  private boolean validTaskType;
 
   /**
    * Initializes the table and sets up editable columns.
@@ -83,8 +77,8 @@ public class TaskViewController
         taskTable.refresh();
         return;
       }
-      if (taskNameAlreadyExists(taskList.getTaskList(), input))
-      {
+      if (taskNameAlreadyExists(taskList.getTaskList(), input)) {
+        ControllerHelper.showErrorMessage("Name already exists", "Task name must unique.");
         taskTable.refresh();
         return;
       }
@@ -215,94 +209,62 @@ public class TaskViewController
    */
   public void handleAdd()
   {
-    if (validPointAmount && validTaskName && validTaskType)
-    {
-      taskList.add(new Task(name, pointAmount, taskType));
-      GreenThumbManager.saveTasks(taskList);
-      taskNameField.clear();
-      taskTypeField.clear();
-      taskPointField.clear();
-      validPointAmount = false;
-      validTaskName = false;
-      validTaskType = false;
-    }
-    else
-    {
-      ControllerHelper.showErrorMessage("Missing or Invalid Input Error", "Please fill in all fields with correct data before confirming.");
-    }
-    taskTable.getItems().clear();
-    taskTable.getItems().addAll(taskList.getTaskList());
-  }
+    String name = taskNameField.getText().trim();
+    int taskType = Integer.parseInt(taskTypeField.getText());
 
-  /**
-   * Validates and sets the task name from input field.
-   */
-  public void handleTaskName(ActionEvent actionEvent)
-  {
-    if (taskNameField.getText().trim().length() > 32 || taskNameField.getText().trim().length() < 4)
-    {
-      ControllerHelper.showErrorMessage("Name length Error", "Name must be more than 4 characters, and less than 32 characters including spaces.");
-      taskNameField.clear();
-      return;
-    }
-    if (ControllerHelper.isNullOrEmpty(taskNameField.getText()))
-    {
+    if (ControllerHelper.isNullOrEmpty(name)) {
       ControllerHelper.showErrorMessage("Name Empty or Null Error", "Name must not be empty.");
       taskNameField.clear();
       return;
     }
-    name = taskNameField.getText().trim();
-    validTaskName = true;
-  }
-
-  /**
-   * Validates and sets the task point amount from input field.
-   */
-  public void handleTaskPointAmount(ActionEvent actionEvent)
-  {
-    try
-    {
-      if (Integer.parseInt(taskPointField.getText()) < 0)
-      {
-        ControllerHelper.showErrorMessage("Point Format error", "Point amount must be a positive.");
+    if (name.length() > 32 || name.length() < 4) {
+      ControllerHelper.showErrorMessage("Name length Error", "Name must be more than 4 characters, and less than 32 characters including spaces.");
+      taskNameField.clear();
+      return;
+    }
+    if (ControllerHelper.taskNameAlreadyExists(taskList.getTaskList(), name)){
+      ControllerHelper.showErrorMessage("Name already exists", "Task name must unique.");
+      taskNameField.clear();
+      return;
+    }
+    try {
+      if (Integer.parseInt(taskPointField.getText()) < 0) {
+        ControllerHelper.showErrorMessage("Point Value error", "Point amount must be a positive.");
         taskPointField.clear();
         return;
       }
     }
-    catch (NumberFormatException e)
-    {
-      ControllerHelper.showErrorMessage("Point Format Error", "Point amount must be a valid number without decimal points.");
+    catch (NumberFormatException e) {
+      ControllerHelper.showErrorMessage("Point Value Error", "Point amount must be a valid number without decimal points.");
       taskPointField.clear();
       return;
     }
-    pointAmount = Integer.parseInt(taskPointField.getText());
-    validPointAmount = true;
-  }
-
-  /**
-   * Validates and sets the task type from input field.
-   */
-  public void handleTaskType(ActionEvent actionEvent)
-  {
-    try
-    {
+    int pointAmount = Integer.parseInt(taskPointField.getText());
+    try {
       int value = Integer.parseInt(taskTypeField.getText());
-      if (value == 1 || value == 2)
-      {
+      if (value == 1 || value == 2) {
         taskType = value;
-        validTaskType = true;
-      }
-      else
-      {
+      } else {
         ControllerHelper.showErrorMessage("Task Type Format error", "Task Type must be a valid number, 1 or 2.");
+        taskTypeField.clear();
+        return;
       }
     }
-    catch (NumberFormatException e)
-    {
+    catch (NumberFormatException e) {
       ControllerHelper.showErrorMessage("Task Type Format error", "Task Type must be a number");
       taskTypeField.clear();
+      return;
     }
+
+    taskList.add(new Task(name, pointAmount, taskType));
+    GreenThumbManager.saveTasks(taskList);
+    taskNameField.clear();
+    taskTypeField.clear();
+    taskPointField.clear();
+    taskTable.getItems().clear();
+    taskTable.getItems().addAll(taskList.getTaskList());
   }
+
   public void refreshView()
   {
     taskList = GreenThumbManager.getAllTasks();
