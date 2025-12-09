@@ -67,13 +67,13 @@ public class TaskViewController
       Task task = event.getRowValue();
       if (isNullOrEmpty(input))
       {
-        showErrorMessage("Empty value error", "Description cannot be empty.");
+        showErrorMessage("Empty value error", "Task Name cannot be empty.");
         taskTable.refresh();
         return;
       }
       if (input.trim().length() < 4 || input.trim().length() > 32)
       {
-        showErrorMessage("Name outside of bounds", "Edited value cannot be less than 4, or more than 32 characters.");
+        showErrorMessage("Name outside of bounds", "Task Name  cannot be less than 4, or more than 32 characters.");
         taskTable.refresh();
         return;
       }
@@ -98,12 +98,12 @@ public class TaskViewController
       }
       try {
         if (newValue < 0) {
-          ControllerHelper.showErrorMessage("Invalid Input", "Number must be a  non-negative number.");
+          ControllerHelper.showErrorMessage("Points Invalid", "Points must be a whole number.");
           taskTable.refresh();
           return ;
         }
       } catch (NumberFormatException e) {
-        ControllerHelper.showErrorMessage("Invalid Input", "Number must be a whole number.");
+        ControllerHelper.showErrorMessage("Points Invalid", "Number must be a whole number.");
         taskTable.refresh();
         return ;
       }
@@ -210,7 +210,8 @@ public class TaskViewController
   public void handleAdd()
   {
     String name = taskNameField.getText().trim();
-    int taskType = Integer.parseInt(taskTypeField.getText());
+    int taskType;
+    int pointAmount;
 
     if (ControllerHelper.isNullOrEmpty(name)) {
       ControllerHelper.showErrorMessage("Name Empty or Null Error", "Name must not be empty.");
@@ -223,7 +224,7 @@ public class TaskViewController
       return;
     }
     if (ControllerHelper.taskNameAlreadyExists(taskList.getTaskList(), name)){
-      ControllerHelper.showErrorMessage("Name already exists", "Task name must unique.");
+      ControllerHelper.showErrorMessage("Name already exists", "Task name must not already exists.");
       taskNameField.clear();
       return;
     }
@@ -235,11 +236,11 @@ public class TaskViewController
       }
     }
     catch (NumberFormatException e) {
-      ControllerHelper.showErrorMessage("Point Value Error", "Point amount must be a valid number without decimal points.");
+      ControllerHelper.showErrorMessage("Point Value Error", "Point amount must be a not be empty, or with decimal points.");
       taskPointField.clear();
       return;
     }
-    int pointAmount = Integer.parseInt(taskPointField.getText());
+    pointAmount = Integer.parseInt(taskPointField.getText());
     try {
       int value = Integer.parseInt(taskTypeField.getText());
       if (value == 1 || value == 2) {
