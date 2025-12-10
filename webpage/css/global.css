@@ -7,9 +7,22 @@
   --text-highlighted-color: #27b16a;
   --text-highlighted2-color: #0fa055;
 }
-#table{
+#recordedTaskTable{
   margin: 0;
 }
+#tradeOfferTable{
+  margin: 0;
+}
+#communityDesc{
+  margin: 0;
+}
+#communityPoints{
+  margin: 0;
+}
+#communityThreshold{
+  margin: 0;
+}
+
 * {
   box-sizing: border-box;
   font-family: var(--text-font);
