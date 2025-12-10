@@ -11,6 +11,15 @@ h2 {
   padding: 20px;
 }
 
+#fullProgress{
+  width: 100%;
+  background-color: grey;
+}
+#progressBar{
+  width: 1%;
+  height: 45px;
+  background-color: green;
+}
 .content {
   display: flex;
   padding: 5%;
