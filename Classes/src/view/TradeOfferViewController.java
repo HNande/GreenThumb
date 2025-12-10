@@ -24,7 +24,7 @@ import static utils.ControllerHelper.*;
  * Allows inline editing of trade offer attributes in the table.
  * Handles opening dialogs for adding or executing offers.
  *
- * @author Nandor Hock
+ * @author Sofia Golban
  *
  * @version 08.12.2025
  */
@@ -60,9 +60,17 @@ public class TradeOfferViewController
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
     cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
     description.setCellValueFactory(new PropertyValueFactory<>("description"));
-    proposer.setCellValueFactory(cellData -> new SimpleStringProperty(
-        cellData.getValue().getProposer().getFirstName() + " "
-            + cellData.getValue().getProposer().getLastName()));
+    proposer.setCellValueFactory(cellData -> {
+      TradeOffer tradeOffer = cellData.getValue();
+      Member proposerMember = tradeOffer.getProposer();
+
+      if (proposerMember != null) {
+        String fullName = proposerMember.getFirstName() + " " + proposerMember.getLastName();
+        return new SimpleStringProperty(fullName);
+      } else {
+        return new SimpleStringProperty("[Proposer Missing]");
+      }
+    });
 
     tradeOfferTable.setEditable(true);
     tradeOfferTable.getItems().addAll(tradeOfferList.getTradeOfferList());

@@ -17,43 +17,34 @@ import utils.ControllerHelper;
 
 import static utils.ControllerHelper.*;
 
-/**
- * Controller for adding new trade offers.
- *
- * Handles user input, validates fields, and creates a new TradeOffer.
- * Also manages selecting a proposer from the member table.
- *
- * @author Sofia Golban
- *
- * @version 08.12.2025
- */
-public class TradeOfferAddController
-{
+public class TradeOfferAddController {
 
-  @FXML private Button confirmButton;
-  @FXML private Button cancelButton;
-  @FXML private TextField nameField;
-  @FXML private TextField costField;
-  @FXML private TextField descriptionField;
+  @FXML
+  private Button confirmButton;
+  @FXML
+  private Button cancelButton;
+  @FXML
+  private TextField nameField;
+  @FXML
+  private TextField costField;
+  @FXML
+  private TextField descriptionField;
 
-  @FXML private TableView<Member> memberTable;
-  @FXML private TableColumn<Member, String> firstNameColumn;
-  @FXML private TableColumn<Member, String> lastNameColumn;
+  @FXML
+  private TableView<Member> memberTable;
+  @FXML
+  private TableColumn<Member, String> firstNameColumn;
+  @FXML
+  private TableColumn<Member, String> lastNameColumn;
 
   private TradeOfferList tradeOfferList;
   private MemberList memberList;
   private Stage stage;
-
-  private boolean validName = false;
-  private boolean validCost = false;
-  private boolean validDescription = false;
-
   /**
    * Initializes the member table columns.
    */
   @FXML
-  public void initialize()
-  {
+  public void initialize() {
     firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
     lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 
@@ -62,29 +53,14 @@ public class TradeOfferAddController
     });
   }
 
-  /**
-   * Sets the stage for this dialog.
-   *
-   * @param stage the Stage object to be set
-   */
-  public void setStage(Stage stage)
-  {
+  public void setStage(Stage stage) {
     this.stage = stage;
   }
 
-  /**
-   * Sets the trade offer and member lists to be used in this dialog.
-   * Fills the member table with the members.
-   *
-   * @param tradeOfferList the list of trade offers
-   * @param memberList the list of members
-   */
-  public void setLists(TradeOfferList tradeOfferList, MemberList memberList)
-  {
+  public void setLists(TradeOfferList tradeOfferList, MemberList memberList) {
     this.tradeOfferList = tradeOfferList;
     this.memberList = memberList;
-    if (memberList != null)
-    {
+    if (memberList != null) {
       memberTable.getItems().setAll(memberList.getMemberList());
     }
   }
@@ -96,73 +72,84 @@ public class TradeOfferAddController
    * @param actionEvent the ActionEvent triggered by clicking confirm
    */
   @FXML
-  public void handleConfirm(ActionEvent actionEvent)
-  {
+  public void handleConfirm(ActionEvent actionEvent) {
 
     Member selectedProposer = memberTable.getSelectionModel().getSelectedItem();
-
     String nameInput = nameField.getText().trim();
     String descriptionInput = descriptionField.getText().trim();
     String costInput = costField.getText().trim();
 
-    StringBuilder consolidatedError = new StringBuilder();
-    int emptyCount = 0;
+    boolean isValid = true;
 
-    if (isNullOrEmpty(nameInput))
-    {
-      consolidatedError.append("The Name field is empty.\n");
-      emptyCount++;
+    StringBuilder emptyErrors = new StringBuilder();
+
+    if (isNullOrEmpty(nameInput)) {
+      emptyErrors.append("- Name field is empty.\n");
+      isValid = false;
     }
-    if (isNullOrEmpty(descriptionInput))
-    {
-      consolidatedError.append("The Description field is empty.\n");
-      emptyCount++;
+    if (isNullOrEmpty(descriptionInput)) {
+      emptyErrors.append("- Description field is empty.\n");
+      isValid = false;
     }
-    if (isNullOrEmpty(costInput))
-    {
-      consolidatedError.append("The Cost field is empty.\n");
-      emptyCount++;
+    if (isNullOrEmpty(costInput)) {
+      emptyErrors.append("- Cost field is empty.\n");
+      isValid = false;
     }
-    if (selectedProposer == null)
-    {
-      consolidatedError.append("Please select a Proposer from the table.\n");
+    if (selectedProposer == null) {
+      emptyErrors.append("- Please select a Proposer from the table.\n");
+      isValid = false;
     }
 
-    if (emptyCount >= 2 || selectedProposer == null)
-    {
-      ControllerHelper.showErrorMessage(
-          "Missing Required Fields",
-          "Please fill in the missing information:\n" + consolidatedError.toString()
-      );
+    if (!emptyErrors.isEmpty()) {
+      showErrorMessage("Required Fields Missing", emptyErrors.toString());
       return;
     }
 
-    if (validName && validCost && validDescription && selectedProposer != null)
-    {
-      try
-      {
-        String name = nameInput;
-        int cost = Integer.parseInt(costInput);
-        String description = descriptionInput;
+    if (nameInput.length() < 4 || nameInput.length() > 64) {
+      showErrorMessage("Incorrect Name Length",
+          "Name must be between 4 and 64 characters.");
+      isValid = false;
+    }
+    if (descriptionInput.length() > 500) {
+      showErrorMessage("Incorrect Description Length",
+          "Description cannot be more than 500 characters.");
+      isValid = false;
+    }
 
-        TradeOffer tradeOffer = new TradeOffer(name, description, cost, selectedProposer);
+    int cost = -1;
+
+    if (isValid) {
+      try {
+        cost = Integer.parseInt(costInput);
+
+        if (cost < 0) {
+          showErrorMessage(
+              "Incorrect Cost Value",
+              "Cost must be a non-negative whole number."
+          );
+          isValid = false;
+        }
+
+      } catch (NumberFormatException e) {
+        showErrorMessage(
+            "Incorrect Cost Format",
+            "Please enter a valid whole number for cost."
+        );
+        isValid = false;
+      }
+    }
+
+    if (isValid) {
+      try {
+        TradeOffer tradeOffer = new TradeOffer(nameInput, descriptionInput, cost, selectedProposer);
         tradeOfferList.add(tradeOffer);
         GreenThumbManager.saveTradeOffers(tradeOfferList);
 
         handleCancel(null);
-      }
-      catch (Exception e)
-      {
+      } catch (Exception e) {
         ControllerHelper.showErrorMessage("Creation Error", "An unexpected error occurred during trade offer creation.");
         e.printStackTrace();
       }
-    }
-    else
-    {
-      ControllerHelper.showErrorMessage(
-          "Missing or Invalid Input Error",
-          "Please check all fields for correct data and ensure a proposer is selected."
-      );
     }
   }
 
@@ -173,8 +160,7 @@ public class TradeOfferAddController
    * @param actionEvent the ActionEvent triggered by clicking cancel
    */
   @FXML
-  public void handleCancel(ActionEvent actionEvent)
-  {
+  public void handleCancel(ActionEvent actionEvent) {
     nameField.clear();
     costField.clear();
     descriptionField.clear();
