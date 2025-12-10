@@ -31,9 +31,8 @@ public class RunGreenThumbApplication extends Application
    */
   public static void main(String[] args)
   {
-    Community community = GreenThumbManager.getCommunity();
-    Community.setInstance(community);
-    community = Community.getInstance();
+    Community.setInstance(GreenThumbManager.getCommunity());
+    System.out.println(Community.getInstance().getCommunityPoints());
     TaskList allTasks = GreenThumbManager.getAllTasks();
     if(allTasks == null){
       allTasks = new TaskList();
@@ -68,7 +67,6 @@ public class RunGreenThumbApplication extends Application
       GreenThumbManager.saveDate(oldDate);
     }
 
-    GreenThumbManager.saveCommunity(community);
 
     launch(args);
   }
@@ -87,6 +85,7 @@ public class RunGreenThumbApplication extends Application
     primaryStage.setScene(scene);
     primaryStage.setOnCloseRequest(event -> {
       System.out.println("Application closing");
+      GreenThumbManager.saveCommunity(Community.getInstance());
       GreenThumbManager.saveFileToJson(Community.getInstance());
       GreenThumbManager.saveFileToJson(GreenThumbManager.getAllRecordedTasks());
       GreenThumbManager.saveFileToJson(GreenThumbManager.getAllTradeOffers());

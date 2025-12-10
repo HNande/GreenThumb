@@ -55,13 +55,13 @@ public class MainViewController
         }
       });
       communityTab.setContent(loadCommunityTabContent());
-      /*
+
       communityTab.selectedProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue && communityViewController != null) {
           communityViewController.refreshView();
         }
       });
-      */
+
       membersTab.setContent(loadMemberTabContent());
       membersTab.selectedProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue && memberViewController != null) {

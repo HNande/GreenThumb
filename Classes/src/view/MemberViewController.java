@@ -232,7 +232,6 @@ public class MemberViewController
     Community.getInstance().addCommunityPoints(personal);
     selected.setPoints(0);
     GreenThumbManager.saveMembers(memberList);
-    GreenThumbManager.saveCommunity(Community.getInstance());
 
     memberTable.getColumns().get(0).setVisible(false);
     memberTable.getColumns().get(0).setVisible(true);

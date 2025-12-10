@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 public class Community implements Serializable
 { 
-  private static Community instance = null;
+  private static Community instance;
 
   private int rewardThreshold;
   private String rewardDescription;
@@ -132,7 +132,7 @@ public class Community implements Serializable
    *
    * @return true if communityPoints >= rewardThreshold, otherwise false
    */
-  public boolean isAboveThresold()
+  public boolean isAboveThreshold()
   {
     return communityPoints >= rewardThreshold;
   }
