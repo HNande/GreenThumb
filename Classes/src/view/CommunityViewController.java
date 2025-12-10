@@ -1,13 +1,11 @@
 package view;
 
+import javafx.scene.control.*;
 import model.Community;
 import utils.ControllerHelper;
 import utils.ControllerHelper.*;
 import manager.GreenThumbManager;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
 import javafx.application.Application;
 
 import java.awt.event.ActionEvent;
@@ -27,12 +25,11 @@ public class CommunityViewController
 {
 
   @FXML private Button reset;
-  @FXML private Button save; // is this needed?
+  @FXML private Button save;
   @FXML private TextField communityPointsField;
   @FXML private TextField rewardThresholdField;
   @FXML private TextField rewardDescriptionField;
-
-  private Community community = GreenThumbManager.getCommunity();
+  @FXML private ProgressBar progressBar;
 
   /**
    * Initializes the controller after its root element has been completely loaded.
@@ -44,8 +41,10 @@ public class CommunityViewController
   public void initialize()
   {
     communityPointsField.setText(String.valueOf(Community.getInstance().getCommunityPoints()));
-    rewardThresholdField.setText(String.valueOf(Community.getInstance().getRewardThreshold()));
-    rewardDescriptionField.setText(Community.getInstance().getRewardDescription());
+    rewardThresholdField.setText(String.valueOf((Community.getInstance().getRewardThreshold())));
+    rewardDescriptionField.setText((Community.getInstance().getRewardDescription()));
+    double progress = (float) Community.getInstance().getCommunityPoints()/Community.getInstance().getRewardThreshold();
+    progressBar.setProgress(progress);
   }
 
   /**
@@ -56,18 +55,70 @@ public class CommunityViewController
    *
    * @param actionEvent the event triggered by pressing the reset button
    */
-  public void handleReset(ActionEvent actionEvent)
+  public void handleReset(javafx.event.ActionEvent actionEvent)
   {
     if (ControllerHelper.showConfirmationMessage(
         "Reset Confirmation",
-        "Are you sure you want to reset Community?"))
-    {
-      communityPointsField.setText("0");
-      rewardThresholdField.setText("0");
+        "Are you sure you want to reset reward threshold and description??")) {
+      rewardThresholdField.clear();
       rewardDescriptionField.clear();
-
-      Community.getInstance().setCommunityPoints(0);
+      double progress = (float) Community.getInstance().getCommunityPoints()/Community.getInstance().getRewardThreshold();
+      progressBar.setProgress(progress);
+      Community.getInstance().setRewardThreshold(0);
+      Community.getInstance().setRewardDescription("");
     }
+  }
+  public void handleSave(javafx.event.ActionEvent actionEvent){
+    try{
+      int points = Integer.parseInt(communityPointsField.getText().trim());
+      if(points < 0){
+        ControllerHelper.showErrorMessage("Point value input error", "Please enter whole number.");
+        communityPointsField.clear();
+        communityPointsField.setText(String.valueOf((Community.getInstance().getCommunityPoints())));
+        return;
+      }
+      Community.getInstance().setCommunityPoints(points);
+    }
+    catch(NumberFormatException e) {
+      ControllerHelper.showErrorMessage("Point value input error", "Please enter a valid number.");
+      communityPointsField.clear();
+      communityPointsField.setText(String.valueOf((Community.getInstance().getCommunityPoints())));
+    }
+
+    try{
+    int points = Integer.parseInt(rewardThresholdField.getText().trim());
+    if(points < 0){
+      ControllerHelper.showErrorMessage("Point value input error", "Please enter whole number.");
+      rewardThresholdField.clear();
+      rewardThresholdField.setText(String.valueOf((Community.getInstance().getRewardThreshold())));
+      return;
+    }
+    Community.getInstance().setRewardThreshold(points);
+  }
+    catch(NumberFormatException e) {
+  ControllerHelper.showErrorMessage("Point value input error", "Please enter a valid number.");
+  rewardThresholdField.clear();
+  rewardThresholdField.setText(String.valueOf((Community.getInstance().getRewardThreshold())));
+  }
+    if(rewardDescriptionField.getText().trim().length() > 67 ){
+      ControllerHelper.showErrorMessage("Keep it short bromazon rainforest",
+          "Please adhere to a charactercount of less than 67, including spaces.");
+      rewardDescriptionField.clear();
+      rewardDescriptionField.setText((Community.getInstance().getRewardDescription()));
+      return;
+    }
+    Community.getInstance().setRewardDescription(rewardDescriptionField.getText().trim());
+    double progress = (float) Community.getInstance().getCommunityPoints()/Community.getInstance().getRewardThreshold();
+    progressBar.setProgress(progress);
+  }
+
+  public void refreshView()
+  {
+    communityPointsField.setText(String.valueOf((Community.getInstance().getCommunityPoints())));
+    rewardThresholdField.setText(String.valueOf((Community.getInstance().getRewardThreshold())));
+    rewardDescriptionField.setText((Community.getInstance().getRewardDescription()));
+    double progress = (float) Community.getInstance().getCommunityPoints()/Community.getInstance().getRewardThreshold();
+    progressBar.setProgress(progress);
   }
 
 }
