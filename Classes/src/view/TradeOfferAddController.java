@@ -49,7 +49,6 @@ public class TradeOfferAddController {
     lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
 
     memberTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-      // Listener can be used later if needed
     });
   }
 

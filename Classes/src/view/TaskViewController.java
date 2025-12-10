@@ -266,6 +266,11 @@ public class TaskViewController
     taskTable.getItems().addAll(taskList.getTaskList());
   }
 
+  /**
+   * Refreshes the task table by reloading the latest task data
+   * from storage and updating all visible table rows.
+   * Also forces column refresh to ensure correct rendering.
+   */
   public void refreshView()
   {
     taskList = GreenThumbManager.getAllTasks();

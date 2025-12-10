@@ -19,7 +19,7 @@ import static utils.ControllerHelper.*;
  * and executes the trade offer when confirmed.
  *
  * @author Sofia Golban
- * @version 08.12.2025
+ * @version 09.12.2025
  */
 public class TradeOfferExecuteController
 {
@@ -42,6 +42,9 @@ public class TradeOfferExecuteController
   private Member selectedProposer = null;
 
   private Member originalProposer = null;
+
+  // --- НОВОЕ ПОЛЕ: Флаг для определения, был ли обмен выполнен ---
+  private boolean tradeExecuted = false;
 
   /**
    * Initializes the member table and disables the execute button.
@@ -93,6 +96,16 @@ public class TradeOfferExecuteController
   }
 
   /**
+   * Returns true if the trade was successfully executed.
+   *
+   * @return true if trade was executed
+   */
+  public boolean isTradeExecuted()
+  {
+    return tradeExecuted;
+  }
+
+  /**
    * Updates the payer and proposer labels according to the current selection.
    */
   private void updateStatusLabels()
@@ -116,6 +129,8 @@ public class TradeOfferExecuteController
     {
       proposerStatusLabel.setText("Receiver: (Not Selected)");
     }
+    // Используем memberTable.refresh(), чтобы обновить значения баллов
+    // в таблице, если они изменились в результате выбора.
     memberTable.refresh();
   }
 
@@ -233,6 +248,9 @@ public class TradeOfferExecuteController
     {
       selectedOffer.executeTradeOffer(selectedPayer, selectedProposer);
       GreenThumbManager.saveMembers(memberList);
+
+      this.tradeExecuted = true;
+
       dialogStage.close();
     }
   }

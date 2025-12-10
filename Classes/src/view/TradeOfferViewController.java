@@ -26,7 +26,7 @@ import static utils.ControllerHelper.*;
  *
  * @author Sofia Golban
  *
- * @version 08.12.2025
+ * @version 10.12.2025
  */
 public class TradeOfferViewController
 {
@@ -49,7 +49,20 @@ public class TradeOfferViewController
 
   private Stage stage;
   private TradeOfferList tradeOfferList = GreenThumbManager.getAllTradeOffers();
-  private final MemberList memberList = GreenThumbManager.getAllMembers();
+
+  // УДАЛЕНА ИНИЦИАЛИЗАЦИЯ memberList, так как она будет происходить в handleEvents
+  // private final MemberList memberList = GreenThumbManager.getAllMembers();
+
+  // Добавляем ссылку на MemberViewController для обновления его таблицы (из предыдущего обсуждения)
+  private MemberViewController memberViewController;
+
+  /**
+   * Sets the reference to the MemberViewController for data refresh after trade execution.
+   * @param memberViewController the MemberViewController instance
+   */
+  public void setMemberViewController(MemberViewController memberViewController) {
+    this.memberViewController = memberViewController;
+  }
 
   /**
    * Initializes the table columns, sets up inline editing, and populates the table.
@@ -199,12 +212,14 @@ public class TradeOfferViewController
 
       TradeOfferAddController dialogController = loader.getController();
 
+      MemberList currentMemberList = GreenThumbManager.getAllMembers();
+
       Stage dialogStage = new Stage();
       dialogStage.setTitle("Add New Trade Offer");
       dialogStage.initOwner(stage);
       dialogStage.initModality(Modality.WINDOW_MODAL);
       dialogController.setStage(dialogStage);
-      dialogController.setLists(tradeOfferList, memberList);
+      dialogController.setLists(tradeOfferList, currentMemberList);
 
       dialogStage.setScene(scene);
       dialogStage.showAndWait();
@@ -275,12 +290,22 @@ public class TradeOfferViewController
         dialogStage.initModality(Modality.WINDOW_MODAL);
         dialogStage.setScene(scene);
         dialogController.setDialogStage(dialogStage);
+        MemberList currentMemberList = GreenThumbManager.getAllMembers();
 
-        dialogController.setTradeData(selectedTradeOffer, memberList);
-
+        dialogController.setTradeData(selectedTradeOffer, currentMemberList);
         dialogStage.showAndWait();
 
-        tradeOfferTable.refresh();
+        if (dialogController.isTradeExecuted())
+        {
+          this.refreshView();
+
+          if (memberViewController != null) {
+            memberViewController.refreshView();
+          } else {
+            showWarningMessage("Refresh Warning",
+                "MemberViewController reference is missing. Member points may not be visually updated.");
+          }
+        }
 
       }
       catch (IOException ex)
@@ -291,6 +316,12 @@ public class TradeOfferViewController
       }
     }
   }
+
+  /**
+   * Refreshes all data displayed in the TradeOffer table.
+   * Reloads trade offers from storage, updates the table items,
+   * and forces column refresh to fix display glitches.
+   */
   public void refreshView()
   {
     tradeOfferList = GreenThumbManager.getAllTradeOffers();
