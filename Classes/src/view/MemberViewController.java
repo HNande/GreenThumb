@@ -37,6 +37,7 @@ public class MemberViewController
   @FXML private TableColumn<Member, String> email;
   @FXML private TableColumn<Member, Integer> points;
   @FXML private TableColumn<Member, Address> address;
+  @FXML private TableColumn<Member, Number> lastRecordTimeColumn; // <-- НОВАЯ КОЛОНКА
 
   @FXML private Button deleteButton;
   @FXML private Button addButton;
@@ -61,6 +62,8 @@ public class MemberViewController
     email.setCellValueFactory(new PropertyValueFactory<>("email"));
     points.setCellValueFactory(new PropertyValueFactory<>("points"));
     address.setCellValueFactory(new PropertyValueFactory<>("address"));
+
+    lastRecordTimeColumn.setCellValueFactory(new PropertyValueFactory<>("lastRecordTime"));
 
     memberTable.getItems().setAll(memberList.getMemberList());
 
@@ -310,8 +313,8 @@ public class MemberViewController
     memberTable.getItems().setAll(memberList.getMemberList());
     if (memberTable.getColumns().size() > 0)
     {
-      memberTable.getColumns().get(0).setVisible(false);
-      memberTable.getColumns().get(0).setVisible(true);
+      memberTable.getColumns().get(memberTable.getColumns().size() - 1).setVisible(false);
+      memberTable.getColumns().get(memberTable.getColumns().size() - 1).setVisible(true);
     }
     memberTable.refresh();
   }
