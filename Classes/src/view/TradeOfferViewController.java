@@ -126,10 +126,10 @@ public class TradeOfferViewController
         showErrorMessage("Empty value error", "Name cannot be empty.");
         tradeOffer.setName(oldValue);
       }
-      else if (newValue.trim().length() < 4 || newValue.trim().length() > 64)
+      else if (newValue.trim().length() < 4 || newValue.trim().length() > 32)
       {
         showErrorMessage("Name length error",
-            "Name must be between 4 and 64 characters.");
+            "Name must be between 4 and 32 characters.");
         tradeOffer.setName(oldValue);
       }
       else
@@ -173,10 +173,10 @@ public class TradeOfferViewController
         showErrorMessage("Empty value error", "Description cannot be empty.");
         tradeOffer.setDescription(oldValue);
       }
-      else if (newValue.trim().length() > 500)
+      else if (newValue.trim().length() > 60)
       {
         showErrorMessage("Description length error",
-            "Description cannot be more than 500 characters.");
+            "Description cannot be more than 60 characters.");
         tradeOffer.setDescription(oldValue);
       }
       else

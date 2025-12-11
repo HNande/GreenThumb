@@ -104,14 +104,14 @@ public class TradeOfferAddController {
       return;
     }
 
-    if (nameInput.length() < 4 || nameInput.length() > 64) {
+    if (nameInput.trim().length() < 4 || nameInput.trim().length() > 64) {
       showErrorMessage("Incorrect Name Length",
-          "Name must be between 4 and 64 characters.");
+          "Name must be between 4 and 32 characters.");
       isValid = false;
     }
-    if (descriptionInput.length() > 500) {
+    if (descriptionInput.trim().length() > 60) {
       showErrorMessage("Incorrect Description Length",
-          "Description cannot be more than 500 characters.");
+          "Description cannot be more than 60 characters.");
       isValid = false;
     }
 

@@ -7,7 +7,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TaskViewController">
-    <TableView fx:id="taskTable" layoutY="65.0" prefHeight="334.0" prefWidth="580.0">
+    <TableView fx:id="taskTable" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="334.0" prefWidth="580.0">
       <columns>
           <TableColumn fx:id="taskNameCol" prefWidth="200" text="Task Name" />
           <TableColumn fx:id="taskPointCol" prefWidth="125" text="Point Amount" />
