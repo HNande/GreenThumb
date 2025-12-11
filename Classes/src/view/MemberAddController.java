@@ -8,6 +8,9 @@ import manager.GreenThumbManager;
 import model.Address;
 import model.Member;
 import model.MemberList;
+import utils.ControllerHelper;
+
+import java.util.ArrayList;
 
 /**
  * Controller for adding or editing a member.
@@ -111,6 +114,18 @@ public class MemberAddController
       return;
     }
 
+    if (street.isEmpty())
+    {
+      showError("Street field cannot be empty.");
+      return;
+    }
+
+    if (!street.matches(".*[a-zA-Z].*"))
+    {
+      showError("Invalid street name. It must contain letters (e.g., Main Street).");
+      return;
+    }
+
 
     int houseNumber;
     try
@@ -127,11 +142,52 @@ public class MemberAddController
 
     if (editingMember == null)
     {
+
+      if (ControllerHelper.memberNameAlreadyExists(
+          (ArrayList<Member>) list.getMemberList(), first, last))
+      {
+        showError("A member with this first name and last name already exists.");
+        return;
+      }
+
+      if (ControllerHelper.memberEmailAlreadyExists(list, email))
+      {
+        showError("A member with this email address already exists.");
+        return;
+      }
+
+      if (ControllerHelper.memberPhoneAlreadyExists(list, phone))
+      {
+        showError("A member with this phone number already exists.");
+        return;
+      }
+
       Member newMember = new Member(first, last, phone, email, houseNumber, street);
       list.add(newMember);
     }
     else
     {
+
+      if (!email.equals(editingMember.getEmail())) {
+        for (int i = 0; i < list.getMemberList().size(); i++) {
+          Member m = list.getMemberList().get(i);
+          if (!m.equals(editingMember) && m.getEmail().equals(email)) {
+            showError("A different member already has this email address.");
+            return;
+          }
+        }
+      }
+
+      if (!phone.equals(editingMember.getPhoneNumber())) {
+        for (int i = 0; i < list.getMemberList().size(); i++) {
+          Member m = list.getMemberList().get(i);
+          if (!m.equals(editingMember) && m.getPhoneNumber().equals(phone)) {
+            showError("A different member already has this phone number.");
+            return;
+          }
+        }
+      }
+
       editingMember.setFirstName(first);
       editingMember.setLastName(last);
       editingMember.setPhoneNumber(phone);
