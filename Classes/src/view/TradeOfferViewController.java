@@ -126,10 +126,10 @@ public class TradeOfferViewController
         showErrorMessage("Empty value error", "Name cannot be empty.");
         tradeOffer.setName(oldValue);
       }
-      else if (newValue.trim().length() < 4 || newValue.trim().length() > 32)
+      else if (newValue.trim().length() < 4 || newValue.trim().length() > 30)
       {
         showErrorMessage("Name length error",
-            "Name must be between 4 and 32 characters.");
+            "Name must be between 4 and 30 characters.");
         tradeOffer.setName(oldValue);
       }
       else

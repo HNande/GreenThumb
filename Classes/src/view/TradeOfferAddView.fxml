@@ -13,9 +13,9 @@
             fx:controller="view.TradeOfferAddController"
             prefHeight="400.0" prefWidth="450.0"> <VBox spacing="10" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
-    <TextField fx:id="nameField" promptText="Trade Offer Name 4-32 characters"/>
+    <TextField fx:id="nameField" promptText="Trade Offer Name 4-30 characters"/>
     <TextField fx:id="costField" promptText="Cost (Whole Number)" />
-    <TextField fx:id="descriptionField" promptText="Description 60 characters max" />
+    <TextField fx:id="descriptionField" promptText="Description 60 characters maximum" />
 
     <Label text="Select Proposer:"/>
     <TableView fx:id="memberTable" prefHeight="150.0">
