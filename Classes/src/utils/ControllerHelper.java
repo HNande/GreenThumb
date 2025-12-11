@@ -8,6 +8,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Member;
+import model.MemberList;
 import model.Task;
 import model.TradeOffer;
 import view.TaskRecordingDialogController;
@@ -99,6 +100,44 @@ public class ControllerHelper {
     }
     return false;
   }
+
+  /**
+   * Returns whether in the list the phone number already exists.
+   *
+   * @return boolean
+   *
+   * @param list the MemberList to be checked
+   * @param phoneNumber the phone number String that should be checked in the list
+   */
+  public static boolean memberPhoneAlreadyExists(MemberList list, String phoneNumber)
+  {
+    String phone = phoneNumber.trim();
+    for(int i = 0; i < list.getMemberList().size(); i++)
+    {
+      if (list.getMemberList().get(i).getPhoneNumber().equals(phone))
+        return true;
+    }
+    return false;
+  }
+
+  /**
+   * Returns whether the email address already exists in the list.
+   *
+   * @return boolean
+   *
+   * @param list the MemberList to be checked
+   * @param email the email String that should be checked in the list
+   */
+  public static boolean memberEmailAlreadyExists(MemberList list, String email)
+  {
+    String mail = email.trim();
+
+    for(int i = 0; i < list.getMemberList().size(); i++)
+    {
+      if (list.getMemberList().get(i).getEmail().equalsIgnoreCase(mail)) return true;
+    }
+    return false;
+  }
   /**
    * Shows an alert message of type ERROR.
    *
@@ -142,4 +181,5 @@ public class ControllerHelper {
     alert.setContentText(message);
     alert.showAndWait();
   }
+
 }
