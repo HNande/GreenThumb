@@ -118,12 +118,12 @@ public class TradeOffer implements Serializable
    * Points are transferred depending on the proposer.
    *
    * @param payer member who pays points
-   * @param reciever member who receives points
+   * @param receiver member who receives points
    */
-  public void executeTradeOffer(Member payer, Member reciever)
+  public void executeTradeOffer(Member payer, Member receiver)
   {
       payer.removePoints(cost);
-      reciever.addPoints(cost);
+      receiver.addPoints(cost);
   }
 
   /**
@@ -131,8 +131,7 @@ public class TradeOffer implements Serializable
    *
    * @return string with trade offer details
    */
-  public String toString()
-  {
+  public String toString() {
     return "Trade offer: " + name + "\n Description: " + description
         + "\n Cost: " + cost;
   }

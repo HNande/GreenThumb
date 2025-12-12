@@ -21,8 +21,7 @@ public class Community implements Serializable
   /**
    * Creates a new Community object without parameters
    */
-  private Community()
-  {
+  private Community() {
     rewardThreshold = 0;
     rewardDescription = "";
     communityPoints = 0;
@@ -33,8 +32,7 @@ public class Community implements Serializable
    *
    * @return the shared Community instance
    */
-  public static Community getInstance()
-  {
+  public static Community getInstance() {
     if (instance == null)
     {
       instance = new Community();

@@ -14,9 +14,9 @@ public class RecordedTask implements Serializable
 {
 
   private final String name;
-  private final int pointAmount;
   private final int taskType;
   private final String taskOwner = "Anonymous";
+  private final int pointAmount;
   private final Date timeOfRecord;
 
   /**

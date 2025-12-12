@@ -56,6 +56,7 @@ public class Task implements Serializable
       Community.getInstance().addCommunityPoints(pointAmount);
 
     }
+    totalCount++;
     recordMember.setLastRecordTime(0);
     return new RecordedTask(name, taskType, pointAmount, day, month, year);
   }
@@ -138,13 +139,6 @@ public class Task implements Serializable
   public int getTotalCount()
   {
     return totalCount;
-  }
-  /**
-   * Increments the total count by 1.
-   *
-   */
-  public void addToTotalCount(){
-    totalCount++;
   }
 
   /**

@@ -13,20 +13,17 @@ import java.time.LocalDate;
 
 /**
  * The main class to run the GreenThumb application.
- * It demonstrates creating trade offers, adding them to a list,
- * and saving/loading them using GreenThumbManager.
  *
  * @author Nandor Hock
  *
- * @version 09.12.2025
+ * @version 11.12.2025
  */
 public class RunGreenThumbApplication extends Application
 {
 
   /**
    * The entry point of the application.
-   * Demonstrates example usage of TradeOffer and TradeOfferList.
-   *
+   *It includes initial loading of necessary data files.
    * @param args ...
    */
   public static void main(String[] args)
@@ -46,17 +43,20 @@ public class RunGreenThumbApplication extends Application
       allMembers = new MemberList();
       allMembers.add(new Member());
       GreenThumbManager.saveMembers(allMembers);
+      System.out.println("MemberList Created");
     }
     TradeOfferList allTradeOffers = GreenThumbManager.getAllTradeOffers();
     if(allTradeOffers == null){
       allTradeOffers = new TradeOfferList();
-      allTradeOffers.add(new TradeOffer("Buying carrots", "In need of 500 carrots for my carrot pie project",500 ,new Member()));
+      allTradeOffers.add(new TradeOffer("Buying carrots", "In need of 500 carrots for my carrot pie mega project",500 ,new Member()));
       GreenThumbManager.saveTradeOffers(allTradeOffers);
+      System.out.println("TradeOfferList Created");
     }
     RecordedTaskList allRecordedTasks = GreenThumbManager.getAllRecordedTasks();
     if(allRecordedTasks == null){
       allRecordedTasks = new RecordedTaskList();
       GreenThumbManager.saveRecordedTasks(allRecordedTasks);
+      System.out.println("RecordedTaskList Created");
     }
     Date oldDate = GreenThumbManager.getDate();
     if(oldDate != null ){

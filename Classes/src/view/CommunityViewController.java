@@ -88,7 +88,7 @@ public class CommunityViewController
     try{
     int points = Integer.parseInt(rewardThresholdField.getText().trim());
     if(points < 0){
-      ControllerHelper.showErrorMessage("Point value input error", "Please enter whole number.");
+      ControllerHelper.showErrorMessage("Threshold value input error", "Please enter whole number.");
       rewardThresholdField.clear();
       rewardThresholdField.setText(String.valueOf((Community.getInstance().getRewardThreshold())));
       return;
@@ -96,13 +96,13 @@ public class CommunityViewController
     Community.getInstance().setRewardThreshold(points);
   }
     catch(NumberFormatException e) {
-  ControllerHelper.showErrorMessage("Point value input error", "Please enter a valid number.");
+  ControllerHelper.showErrorMessage("Threshold value input error", "Please enter a valid number.");
   rewardThresholdField.clear();
   rewardThresholdField.setText(String.valueOf((Community.getInstance().getRewardThreshold())));
   }
     if(rewardDescriptionField.getText().trim().length() > 67 ){
       ControllerHelper.showErrorMessage("Keep it short bromazon rainforest",
-          "Please adhere to a charactercount of less than 67, including spaces.");
+          "Please adhere to a character count of less than 67, including spaces.");
       rewardDescriptionField.clear();
       rewardDescriptionField.setText((Community.getInstance().getRewardDescription()));
       return;

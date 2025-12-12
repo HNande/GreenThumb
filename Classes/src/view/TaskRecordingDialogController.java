@@ -103,7 +103,6 @@ public class TaskRecordingDialogController
 
     // Record the task and add it to the recorded task list
     recordedTaskList.add(taskList.getElementByIndex(index).recordTask(selectedMember, day, month, year, boost));
-    taskList.getElementByIndex(index).addToTotalCount();
     GreenThumbManager.saveCommunity(Community.getInstance());
     GreenThumbManager.saveRecordedTasks(recordedTaskList);
     GreenThumbManager.saveMembers(memberList);

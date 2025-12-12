@@ -13,7 +13,6 @@ import java.util.List; // Используем List для лучшего абс
  */
 public class MemberList implements Serializable
 {
-
   private final ArrayList<Member> memberList = new ArrayList<>();
 
   /**
@@ -34,7 +33,6 @@ public class MemberList implements Serializable
       member.timePassed(time);
     }
   }
-
 
   /**
    * Returns a reference to the list of all members.
