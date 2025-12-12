@@ -1,6 +1,9 @@
 package view;
 
 import javafx.scene.control.*;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import model.Community;
 import utils.ControllerHelper;
 import utils.ControllerHelper.*;
@@ -28,8 +31,9 @@ public class CommunityViewController
   @FXML private Button save;
   @FXML private TextField communityPointsField;
   @FXML private TextField rewardThresholdField;
-  @FXML private TextField rewardDescriptionField;
+  @FXML private TextArea rewardDescriptionArea;
   @FXML private ProgressBar progressBar;
+  @FXML private Text progressTitle;
 
   /**
    * Initializes the controller after its root element has been completely loaded.
@@ -42,9 +46,19 @@ public class CommunityViewController
   {
     communityPointsField.setText(String.valueOf(Community.getInstance().getCommunityPoints()));
     rewardThresholdField.setText(String.valueOf((Community.getInstance().getRewardThreshold())));
-    rewardDescriptionField.setText((Community.getInstance().getRewardDescription()));
+    rewardDescriptionArea.setText((Community.getInstance().getRewardDescription()));
     double progress = (float) Community.getInstance().getCommunityPoints()/Community.getInstance().getRewardThreshold();
     progressBar.setProgress(progress);
+    if(progress >= 1){
+      progressTitle.setText("Progress reached!");
+      progressTitle.setFill(Paint.valueOf("green"));
+      progressTitle.setFont(Font.font("",20));
+    }
+    else {
+      progressTitle.setText("Progress to next reward");
+      progressTitle.setFill(Paint.valueOf("black"));
+      progressTitle.setFont(Font.font(16));
+    }
   }
 
   /**
@@ -61,7 +75,7 @@ public class CommunityViewController
         "Reset Confirmation",
         "Are you sure you want to reset reward threshold and description??")) {
       rewardThresholdField.clear();
-      rewardDescriptionField.clear();
+      rewardDescriptionArea.clear();
       double progress = (float) Community.getInstance().getCommunityPoints()/Community.getInstance().getRewardThreshold();
       progressBar.setProgress(progress);
       Community.getInstance().setRewardThreshold(0);
@@ -88,7 +102,7 @@ public class CommunityViewController
     try{
     int points = Integer.parseInt(rewardThresholdField.getText().trim());
     if(points < 0){
-      ControllerHelper.showErrorMessage("Threshold value input error", "Please enter whole number.");
+      ControllerHelper.showErrorMessage("Point value input error", "Please enter whole number.");
       rewardThresholdField.clear();
       rewardThresholdField.setText(String.valueOf((Community.getInstance().getRewardThreshold())));
       return;
@@ -96,29 +110,49 @@ public class CommunityViewController
     Community.getInstance().setRewardThreshold(points);
   }
     catch(NumberFormatException e) {
-  ControllerHelper.showErrorMessage("Threshold value input error", "Please enter a valid number.");
+  ControllerHelper.showErrorMessage("Point value input error", "Please enter a valid number.");
   rewardThresholdField.clear();
   rewardThresholdField.setText(String.valueOf((Community.getInstance().getRewardThreshold())));
   }
-    if(rewardDescriptionField.getText().trim().length() > 67 ){
+    if(rewardDescriptionArea.getText().trim().length() > 67 ){
       ControllerHelper.showErrorMessage("Keep it short bromazon rainforest",
-          "Please adhere to a character count of less than 67, including spaces.");
-      rewardDescriptionField.clear();
-      rewardDescriptionField.setText((Community.getInstance().getRewardDescription()));
+          "Please adhere to a charactercount of less than 67, including spaces.");
+      rewardDescriptionArea.clear();
+      rewardDescriptionArea.setText((Community.getInstance().getRewardDescription()));
       return;
     }
-    Community.getInstance().setRewardDescription(rewardDescriptionField.getText().trim());
+    Community.getInstance().setRewardDescription(rewardDescriptionArea.getText().trim());
     double progress = (float) Community.getInstance().getCommunityPoints()/Community.getInstance().getRewardThreshold();
     progressBar.setProgress(progress);
+    if(progress >= 1){
+      progressTitle.setText("Progress reached!");
+      progressTitle.setFill(Paint.valueOf("green"));
+      progressTitle.setFont(Font.font("",20));
+    }
+    else {
+      progressTitle.setText("Progress to next reward");
+      progressTitle.setFill(Paint.valueOf("black"));
+      progressTitle.setFont(Font.font(16));
+    }
   }
 
   public void refreshView()
   {
     communityPointsField.setText(String.valueOf((Community.getInstance().getCommunityPoints())));
     rewardThresholdField.setText(String.valueOf((Community.getInstance().getRewardThreshold())));
-    rewardDescriptionField.setText((Community.getInstance().getRewardDescription()));
+    rewardDescriptionArea.setText((Community.getInstance().getRewardDescription()));
     double progress = (float) Community.getInstance().getCommunityPoints()/Community.getInstance().getRewardThreshold();
     progressBar.setProgress(progress);
+    if(progress >= 1){
+      progressTitle.setText("Progress reached!");
+      progressTitle.setFill(Paint.valueOf("green"));
+      progressTitle.setFont(Font.font(20));
+    }
+    else {
+      progressTitle.setText("Progress to next reward");
+      progressTitle.setFill(Paint.valueOf("black"));
+      progressTitle.setFont(Font.font(16));
+    }
+  }
   }
 
-}

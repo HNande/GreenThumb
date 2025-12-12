@@ -37,6 +37,7 @@ public class MemberViewController
   @FXML private TableColumn<Member, String> email;
   @FXML private TableColumn<Member, Integer> points;
   @FXML private TableColumn<Member, Address> address;
+  @FXML private TableColumn<Member, Number> lastRecordTimeColumn;
 
   @FXML private Button deleteButton;
   @FXML private Button addButton;
@@ -44,6 +45,61 @@ public class MemberViewController
   @FXML private Button convertButton;
 
   private MemberList memberList;
+
+  /**
+   * Checks if an email already exists in the list, excluding the member being edited.
+   *
+   * @param memberToExclude The member currently being edited.
+   * @param email The email address to check.
+   * @return true if the email is found for a different member, false otherwise.
+   */
+  private boolean isEmailDuplicate(Member memberToExclude, String email) {
+    for (Member m : memberList.getMemberList()) {
+      if (!m.equals(memberToExclude) && m.getEmail().equals(email)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Checks if a phone number already exists in the list, excluding the member being edited.
+   *
+   * @param memberToExclude The member currently being edited.
+   * @param phone The phone number to check.
+   * @return true if the phone number is found for a different member, false otherwise.
+   */
+  private boolean isPhoneDuplicate(Member memberToExclude, String phone) {
+    for (Member m : memberList.getMemberList()) {
+      if (!m.equals(memberToExclude) && m.getPhoneNumber().equals(phone)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Checks if a member with the given first and last name already exists,
+   * excluding the member being edited (if provided).
+   *
+   * @param memberToExclude The member currently being edited (or null if checking a new combination).
+   * @param newFirstName The new first name.
+   * @param newLastName The new last name.
+   * @return true if the combination is found for a different member, false otherwise.
+   */
+  private boolean isNameCombinationDuplicate(Member memberToExclude, String newFirstName, String newLastName) {
+    for (Member m : memberList.getMemberList()) {
+      // Исключаем редактируемого участника, если он совпадает по ссылке
+      if (m.equals(memberToExclude)) {
+        continue;
+      }
+      if (m.getFirstName().equals(newFirstName) && m.getLastName().equals(newLastName)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 
   /**
    * Initializes the table by binding columns to the Member properties
@@ -61,6 +117,7 @@ public class MemberViewController
     email.setCellValueFactory(new PropertyValueFactory<>("email"));
     points.setCellValueFactory(new PropertyValueFactory<>("points"));
     address.setCellValueFactory(new PropertyValueFactory<>("address"));
+    lastRecordTimeColumn.setCellValueFactory(new PropertyValueFactory<>("lastRecordTime"));
 
     memberTable.getItems().setAll(memberList.getMemberList());
 
@@ -69,45 +126,94 @@ public class MemberViewController
     firstName.setCellFactory(TextFieldTableCell.forTableColumn());
     firstName.setOnEditCommit(event -> {
       Member member = event.getRowValue();
-      String newValue = event.getNewValue();
-      if (newValue != null && !newValue.trim().isEmpty()) {
-        member.setFirstName(newValue.trim());
-        GreenThumbManager.saveMembers(memberList);
-      } else {
+      String newFirstName = event.getNewValue().trim();
+      String currentLastName = member.getLastName(); // Используем текущую фамилию
+
+      if (newFirstName.isEmpty()) {
         ControllerHelper.showErrorMessage("Input Error", "First name cannot be empty.");
         memberTable.refresh();
+        return;
       }
+
+      if (isNameCombinationDuplicate(member, newFirstName, currentLastName)) {
+        ControllerHelper.showErrorMessage("Input Error",
+            "A member with the name '" + newFirstName + " " + currentLastName + "' already exists.");
+        memberTable.refresh();
+        return;
+      }
+
+      member.setFirstName(newFirstName);
+      GreenThumbManager.saveMembers(memberList);
     });
 
     lastName.setCellFactory(TextFieldTableCell.forTableColumn());
     lastName.setOnEditCommit(event -> {
       Member member = event.getRowValue();
-      String newValue = event.getNewValue();
-      if (newValue != null && !newValue.trim().isEmpty()) {
-        member.setLastName(newValue.trim());
-        GreenThumbManager.saveMembers(memberList);
-      } else {
+      String currentFirstName = member.getFirstName(); // Используем текущее имя
+      String newLastName = event.getNewValue().trim();
+
+      if (newLastName.isEmpty()) {
         ControllerHelper.showErrorMessage("Input Error", "Last name cannot be empty.");
         memberTable.refresh();
+        return;
       }
+
+      if (isNameCombinationDuplicate(member, currentFirstName, newLastName)) {
+        ControllerHelper.showErrorMessage("Input Error",
+            "A member with the name '" + currentFirstName + " " + newLastName + "' already exists.");
+        memberTable.refresh();
+        return;
+      }
+
+      member.setLastName(newLastName);
+      GreenThumbManager.saveMembers(memberList);
     });
 
+    final String PHONE_REGEX = "^(?:\\+?)([0-9 \\-()]{7,20})$";
     phoneNumber.setCellFactory(TextFieldTableCell.forTableColumn());
     phoneNumber.setOnEditCommit(event -> {
       Member member = event.getRowValue();
-      String newValue = event.getNewValue();
+      String newValue = event.getNewValue().trim();
+
+      if (!newValue.matches(PHONE_REGEX)) {
+        ControllerHelper.showErrorMessage("Input Error", "Invalid phone number. Please use a format with 7-20 digits.");
+        memberTable.refresh();
+        return;
+      }
+
+      if (isPhoneDuplicate(member, newValue)) {
+        ControllerHelper.showErrorMessage("Input Error", "A different member already has this phone number.");
+        memberTable.refresh();
+        return;
+      }
+
       member.setPhoneNumber(newValue);
       GreenThumbManager.saveMembers(memberList);
     });
 
+    final String EMAIL_REGEX = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
     email.setCellFactory(TextFieldTableCell.forTableColumn());
     email.setOnEditCommit(event -> {
       Member member = event.getRowValue();
-      String newValue = event.getNewValue();
+      String newValue = event.getNewValue().trim();
+
+      if (!newValue.matches(EMAIL_REGEX)) {
+        ControllerHelper.showErrorMessage("Input Error", "Invalid email format. Please use a valid address (e.g., user@example.com).");
+        memberTable.refresh();
+        return;
+      }
+
+      if (isEmailDuplicate(member, newValue)) {
+        ControllerHelper.showErrorMessage("Input Error", "A different member already has this email address.");
+        memberTable.refresh();
+        return;
+      }
+
       member.setEmail(newValue);
       GreenThumbManager.saveMembers(memberList);
     });
 
+    // 5. POINTS (Не отрицательное число)
     points.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     points.setOnEditCommit(event -> {
       Member member = event.getRowValue();
@@ -310,8 +416,8 @@ public class MemberViewController
     memberTable.getItems().setAll(memberList.getMemberList());
     if (memberTable.getColumns().size() > 0)
     {
-      memberTable.getColumns().get(0).setVisible(false);
-      memberTable.getColumns().get(0).setVisible(true);
+      memberTable.getColumns().get(memberTable.getColumns().size() - 1).setVisible(false);
+      memberTable.getColumns().get(memberTable.getColumns().size() - 1).setVisible(true);
     }
     memberTable.refresh();
   }
