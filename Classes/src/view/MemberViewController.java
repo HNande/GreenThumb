@@ -89,7 +89,6 @@ public class MemberViewController
    */
   private boolean isNameCombinationDuplicate(Member memberToExclude, String newFirstName, String newLastName) {
     for (Member m : memberList.getMemberList()) {
-      // Исключаем редактируемого участника, если он совпадает по ссылке
       if (m.equals(memberToExclude)) {
         continue;
       }
@@ -149,7 +148,7 @@ public class MemberViewController
     lastName.setCellFactory(TextFieldTableCell.forTableColumn());
     lastName.setOnEditCommit(event -> {
       Member member = event.getRowValue();
-      String currentFirstName = member.getFirstName(); // Используем текущее имя
+      String currentFirstName = member.getFirstName();
       String newLastName = event.getNewValue().trim();
 
       if (newLastName.isEmpty()) {
