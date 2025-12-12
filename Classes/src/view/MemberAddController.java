@@ -18,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author Artem Salatskyi
  *
- * @version 08.12.2025
+ * @version 09.12.2025 (Updated)
  */
 public class MemberAddController
 {
@@ -108,9 +108,10 @@ public class MemberAddController
       return;
     }
 
-    if (!phone.matches("^(?:\\+?)([0-9 \\-()]{7,20})$"))
+    final String PHONE_REGEX_DK = "^\\+45\\d{8}$";
+    if (!phone.matches(PHONE_REGEX_DK))
     {
-      showError("Invalid phone number. Please use a format with 7-20 digits (e.g., +1234567890).");
+      showError("Invalid phone number. It must be in the format +45XXXXXXXX without spaces (e.g., +4512345678).");
       return;
     }
 
@@ -131,6 +132,11 @@ public class MemberAddController
     try
     {
       houseNumber = Integer.parseInt(houseStr);
+      if (houseNumber <= 0)
+      {
+        showError("House number must be a positive integer.");
+        return;
+      }
     }
     catch (NumberFormatException e)
     {

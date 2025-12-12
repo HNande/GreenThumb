@@ -25,7 +25,7 @@ import java.io.IOException;
  *
  * @author Artem Salatskyi
  *
- * @version 09.12.2025
+ * @version 09.12.2025 (Updated)
  */
 public class MemberViewController
 {
@@ -126,7 +126,7 @@ public class MemberViewController
     firstName.setOnEditCommit(event -> {
       Member member = event.getRowValue();
       String newFirstName = event.getNewValue().trim();
-      String currentLastName = member.getLastName(); // Используем текущую фамилию
+      String currentLastName = member.getLastName();
 
       if (newFirstName.isEmpty()) {
         ControllerHelper.showErrorMessage("Input Error", "First name cannot be empty.");
@@ -168,14 +168,14 @@ public class MemberViewController
       GreenThumbManager.saveMembers(memberList);
     });
 
-    final String PHONE_REGEX = "^(?:\\+?)([0-9 \\-()]{7,20})$";
+    final String PHONE_REGEX_DK = "^\\+45\\d{8}$"; // <-- Обновленный REGEX
     phoneNumber.setCellFactory(TextFieldTableCell.forTableColumn());
     phoneNumber.setOnEditCommit(event -> {
       Member member = event.getRowValue();
       String newValue = event.getNewValue().trim();
 
-      if (!newValue.matches(PHONE_REGEX)) {
-        ControllerHelper.showErrorMessage("Input Error", "Invalid phone number. Please use a format with 7-20 digits.");
+      if (!newValue.matches(PHONE_REGEX_DK)) {
+        ControllerHelper.showErrorMessage("Input Error", "Invalid phone number. It must be in the format +45XXXXXXXX without spaces (e.g., +4512345678).");
         memberTable.refresh();
         return;
       }
@@ -212,7 +212,6 @@ public class MemberViewController
       GreenThumbManager.saveMembers(memberList);
     });
 
-    // 5. POINTS (Не отрицательное число)
     points.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
     points.setOnEditCommit(event -> {
       Member member = event.getRowValue();
