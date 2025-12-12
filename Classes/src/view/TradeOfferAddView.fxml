@@ -13,9 +13,9 @@
             fx:controller="view.TradeOfferAddController"
             prefHeight="400.0" prefWidth="450.0"> <VBox spacing="10" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 
-    <TextField fx:id="nameField" promptText="Trade Offer Name 4-30 characters"/>
-    <TextField fx:id="costField" promptText="Cost (Whole Number)" />
-    <TextField fx:id="descriptionField" promptText="Description 60 characters maximum" />
+    <TextField fx:id="nameField" promptText="Trade Offer Name"/>
+    <TextField fx:id="costField" promptText="Cost (Positive Integer)" />
+    <TextField fx:id="descriptionField" promptText="Description" />
 
     <Label text="Select Proposer:"/>
     <TableView fx:id="memberTable" prefHeight="150.0">
@@ -26,7 +26,7 @@
     </TableView>
 
     <HBox alignment="CENTER" spacing="10">
-        <Button fx:id="confirmButton" text="Register Trade Offer" onAction="#handleConfirm" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+        <Button fx:id="confirmButton" text="Add Trade Offer" onAction="#handleConfirm" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
         <Button fx:id="cancelButton" text="Cancel" onAction="#handleCancel" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
     </HBox>
 </VBox>

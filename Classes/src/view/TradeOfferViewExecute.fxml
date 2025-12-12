@@ -28,7 +28,7 @@
 
         <HBox spacing="10" alignment="CENTER">
             <Button text="Assign as Payer (Pays Cost)" onAction="#handleAssignPayer" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-            <Button text="Assign as Receiver (Proposer)" onAction="#handleAssignProposer" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+            <Button text="Assign as Receiver (Proposer)" onAction="#handleAssignReceiver" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
         </HBox>
 
         <Separator/>
