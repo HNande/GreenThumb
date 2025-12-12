@@ -53,11 +53,13 @@ public class CommunityViewController
       progressTitle.setText("Progress reached!");
       progressTitle.setFill(Paint.valueOf("green"));
       progressTitle.setFont(Font.font("",20));
+      progressBar.setStyle("-fx-accent: #2ecc71;");
     }
     else {
       progressTitle.setText("Progress to next reward");
       progressTitle.setFill(Paint.valueOf("black"));
       progressTitle.setFont(Font.font(16));
+      progressBar.setStyle("-fx-accent: #9b59b6;");
     }
   }
 
@@ -137,11 +139,13 @@ public class CommunityViewController
       progressTitle.setText("Progress reached!");
       progressTitle.setFill(Paint.valueOf("green"));
       progressTitle.setFont(Font.font("",20));
+      progressBar.setStyle("-fx-accent: #2ecc71;");
     }
     else {
       progressTitle.setText("Progress to next reward");
       progressTitle.setFill(Paint.valueOf("black"));
       progressTitle.setFont(Font.font(16));
+      progressBar.setStyle("-fx-accent: #9b59b6;");
     }
   }
 
@@ -162,11 +166,13 @@ public class CommunityViewController
       progressTitle.setText("Progress reached!");
       progressTitle.setFill(Paint.valueOf("green"));
       progressTitle.setFont(Font.font(20));
+      progressBar.setStyle("-fx-accent: #2ecc71;");
     }
     else {
       progressTitle.setText("Progress to next reward");
       progressTitle.setFill(Paint.valueOf("black"));
       progressTitle.setFont(Font.font(16));
+      progressBar.setStyle("-fx-accent: #9b59b6;");
     }
   }
   }

@@ -201,6 +201,8 @@ public class TaskViewController
         taskTable.getItems().addAll(taskList.getTaskList());
         showWarningMessage("Delete successful", "Task has been deleted successfully");
       }
+    }else{
+      showErrorMessage("Delete unsuccessful", "Please select a task to remove.");
     }
   }
 

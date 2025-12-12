@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MemberViewController">
-    <TableView fx:id="memberTable" layoutX="8.0" layoutY="58.0" prefHeight="334.0" prefWidth="814.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MemberViewController">
+    <TableView fx:id="memberTable" layoutX="8.0" layoutY="58.0" prefHeight="334.0" prefWidth="811.0">
         <columns>
             <TableColumn fx:id="firstName" prefWidth="108.00000190734863" text="First name" />
             <TableColumn fx:id="lastName" minWidth="0.0" prefWidth="114.39995574951172" text="Last name" />
-            <TableColumn fx:id="phoneNumber" prefWidth="135.20001220703125" text="Phone number" />
-            <TableColumn fx:id="email" prefWidth="140.79998779296875" text="Email" />
-            <TableColumn fx:id="points" minWidth="0.0" prefWidth="72.79995727539062" text="Points" />
-            <TableColumn fx:id="address" prefWidth="138.4000244140625" text="address" />
-            <TableColumn fx:id="lastRecordTimeColumn" prefWidth="108.0" text="Last Rec Time" />
+            <TableColumn fx:id="phoneNumber" prefWidth="125.0" text="Phone number" />
+            <TableColumn fx:id="email" prefWidth="120.0" text="Email" />
+            <TableColumn fx:id="points" minWidth="0.0" prefWidth="70.60000610351562" text="Points" />
+            <TableColumn fx:id="address" prefWidth="112.0" text="Address" />
+            <TableColumn fx:id="lastRecordTimeColumn" prefWidth="157.5999755859375" text="Last Recorded Time(Days)" />
         </columns>
     </TableView>
-    <HBox layoutX="524.0" layoutY="5.0" prefHeight="47.0" prefWidth="290.0" spacing="10.0">
+    <HBox layoutX="363.0" layoutY="5.0" prefHeight="47.0" prefWidth="451.0" spacing="10.0">
         <padding>
             <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
         </padding>
-        <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAdd" text="Register" />
-        <Button fx:id="convertButton" mnemonicParsing="false" onAction="#handleConvert" text="Convert" />
-        <Button fx:id="resetButton" mnemonicParsing="false" onAction="#handleReset" text="Reset" />
-        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDelete" text="Remove" textFill="RED" />
+        <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAdd" text="Register Member" />
+        <Button fx:id="convertButton" mnemonicParsing="false" onAction="#handleConvert" text="Convert Points" />
+        <Button fx:id="resetButton" mnemonicParsing="false" onAction="#handleReset" text="Reset Points" textFill="RED" />
+        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDelete" text="Remove Member" textFill="RED" />
     </HBox>
+   <Label layoutX="67.0" layoutY="19.0" prefHeight="20.0" prefWidth="242.0" text="Here you can see all members!">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Label>
 </AnchorPane>

@@ -6,19 +6,48 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.CommunityViewController">
    <children>
-      <TextField fx:id="communityPointsField" layoutX="327.0" layoutY="55.0" promptText="Total community points " />
-      <TextField fx:id="rewardThresholdField" layoutX="327.0" layoutY="100.0" promptText="Set threshold" />
-      <Text layoutX="209.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reward Threshold:" />
-      <Text layoutX="167.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Community Points:" />
-      <Text layoutX="199.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reward Description:" />
-      <Button fx:id="reset" layoutX="379.0" layoutY="315.0" mnemonicParsing="false" onAction="#handleReset" text="Reset" textFill="RED" />
-      <Button fx:id="save" layoutX="381.0" layoutY="240.0" mnemonicParsing="false" onAction="#handleSave" text="Save" textFill="#ff0090" />
-      <ProgressBar id="progressBar" fx:id="progressBar" layoutX="526.0" layoutY="171.0" prefHeight="18.0" prefWidth="288.0" progress="0.0" rotate="90.0" />
-      <Text fx:id="progressTitle" layoutX="586.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress to next reward" wrappingWidth="168.68359375">
+      <TextField fx:id="communityPointsField" layoutX="327.0" layoutY="55.0" prefHeight="27.0" prefWidth="185.0" promptText="Total community points ">
+         <font>
+            <Font size="13.0" />
+         </font></TextField>
+      <TextField fx:id="rewardThresholdField" layoutX="327.0" layoutY="100.0" prefHeight="27.0" prefWidth="185.0" promptText="Set threshold">
+         <font>
+            <Font size="13.0" />
+         </font></TextField>
+      <Text layoutX="204.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reward Threshold:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Text>
+      <Text layoutX="152.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Community Points:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Text>
+      <Text layoutX="196.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reward Description:">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Text>
+      <Button fx:id="reset" layoutX="391.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" prefWidth="55.0" text="Reset" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <Button fx:id="save" layoutX="391.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleSave" prefHeight="35.0" prefWidth="55.0" text="Save" textFill="#02b814dc">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
+      <ProgressBar id="progressBar" fx:id="progressBar" layoutX="520.0" layoutY="159.0" prefHeight="40.0" prefWidth="300.0" progress="0.0" rotate="90.0" />
+      <Text fx:id="progressTitle" layoutX="577.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress to next reward" textAlignment="CENTER" wrappingWidth="185.60000000000002">
          <font>
             <Font size="16.0" />
          </font>
       </Text>
-      <TextArea fx:id="rewardDescriptionArea" layoutX="326.0" layoutY="145.0" prefHeight="70.0" prefWidth="150.0" promptText="Set description (under 67 characters)" wrapText="true" />
+      <TextArea fx:id="rewardDescriptionArea" layoutX="326.0" layoutY="145.0" prefHeight="120.0" prefWidth="185.0" promptText="Set description (under 67 characters)" wrapText="true">
+         <font>
+            <Font size="13.0" />
+         </font></TextArea>
+      <Text layoutX="246.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Here you can set the community reward!">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
