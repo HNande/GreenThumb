@@ -18,6 +18,9 @@ import utils.ControllerHelper;
 import static utils.ControllerHelper.*;
 
 /**
+ * Controller for creating a new TradeOffer.
+ * Handles form input validation, proposer selection,
+ * and saving the final trade offer into the system.
  *
  * @author Sofia Golban
  *

@@ -15,6 +15,11 @@ import java.util.Optional;
 import static utils.ControllerHelper.*;
 
 /**
+ * Controller handling the execution of a TradeOffer.
+ * Manages payer/receiver assignment, validation, and final trade processing.
+ *
+ * Provides UI updates, constraint checks, and communicates results
+ * back to the calling view.
  *
  * @author Sofia Golban
  *
