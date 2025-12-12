@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-            prefHeight="400.0" prefWidth="700.0"
-            xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="view.TradeOfferViewController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TradeOfferViewController">
 
-    <VBox spacing="10.0"
-          AnchorPane.bottomAnchor="10.0"
-          AnchorPane.leftAnchor="10.0"
-          AnchorPane.rightAnchor="10.0"
-          AnchorPane.topAnchor="10.0">
+    <VBox spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
 
-        <HBox alignment="CENTER_RIGHT" prefHeight="40.0" spacing="10.0">
-
-            <Region HBox.hgrow="ALWAYS" />
-
-            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleEvents" text="Delete" />
-            <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAddButtonAction" text="Add" />
-            <Button fx:id="executeButton" mnemonicParsing="false" onAction="#handleEvents" text="Execute" />
-
+        <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="641.0" spacing="10.0">
+         <Label contentDisplay="CENTER" prefHeight="20.0" prefWidth="243.0" text="Here you can see all Trade Offers!">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </Label>
+            <Button fx:id="executeButton" mnemonicParsing="false" onAction="#handleEvents" prefHeight="26.0" prefWidth="127.0" text="Execute Trade Offer " />
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAddButtonAction" prefHeight="26.0" prefWidth="128.0" text="Register Trade Offer" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleEvents" prefHeight="26.0" prefWidth="131.0" text="Remove Trade Offer" textFill="RED" />
         </HBox>
 
         <TableView fx:id="tradeOfferTable" VBox.vgrow="ALWAYS">

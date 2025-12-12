@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.Label?>
-<AnchorPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="view.TradeOfferAddController"
-            prefHeight="400.0" prefWidth="450.0"> <VBox spacing="10" AnchorPane.topAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-    <TextField fx:id="nameField" promptText="Trade Offer Name"/>
-    <TextField fx:id="costField" promptText="Cost (Positive Integer)" />
-    <TextField fx:id="descriptionField" promptText="Description" />
+<AnchorPane prefHeight="386.0" prefWidth="307.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TradeOfferAddController"> <VBox layoutX="11.0" prefHeight="354.0" prefWidth="290.0" spacing="10" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="20.0">
 
-    <Label text="Select Proposer:"/>
-    <TableView fx:id="memberTable" prefHeight="150.0">
+    <TextField fx:id="nameField" promptText="Trade Offer Name 4-32 characters" />
+    <TextField fx:id="costField" promptText="Cost (Whole Number)" />
+    <TextField fx:id="descriptionField" promptText="Description 60 characters maximum" />
+
+    <Label text="Select Proposer:" />
+    <TableView fx:id="memberTable" prefHeight="172.0" prefWidth="262.0">
         <columns>
-            <TableColumn fx:id="firstNameColumn" text="First Name" prefWidth="100"/>
-            <TableColumn fx:id="lastNameColumn" text="Last Name" prefWidth="100"/>
+            <TableColumn fx:id="firstNameColumn" prefWidth="143.39995765686035" text="First Name" />
+            <TableColumn fx:id="lastNameColumn" prefWidth="131.79998779296875" text="Last Name" />
         </columns>
     </TableView>
 
     <HBox alignment="CENTER" spacing="10">
-        <Button fx:id="confirmButton" text="Add Trade Offer" onAction="#handleConfirm" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
-        <Button fx:id="cancelButton" text="Cancel" onAction="#handleCancel" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+        <Button fx:id="confirmButton" maxWidth="Infinity" onAction="#handleConfirm" text="Register Trade Offer" HBox.hgrow="ALWAYS" />
+        <Button fx:id="cancelButton" maxWidth="Infinity" onAction="#handleCancel" text="Cancel" textFill="RED" HBox.hgrow="ALWAYS" />
     </HBox>
 </VBox>
 </AnchorPane>
