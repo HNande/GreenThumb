@@ -23,7 +23,7 @@
         </padding>
         <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAdd" text="Register Member" />
         <Button fx:id="convertButton" mnemonicParsing="false" onAction="#handleConvert" text="Convert Points" />
-        <Button fx:id="resetButton" mnemonicParsing="false" onAction="#handleReset" text="Reset Points" />
+        <Button fx:id="resetButton" mnemonicParsing="false" onAction="#handleReset" text="Reset Points" textFill="RED" />
         <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDelete" text="Remove Member" textFill="RED" />
     </HBox>
    <Label layoutX="67.0" layoutY="19.0" prefHeight="20.0" prefWidth="242.0" text="Here you can see all members!">

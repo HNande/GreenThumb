@@ -17,7 +17,6 @@ public class Member implements Serializable
   private String phoneNumber;
   private String email;
   private int points;
-  private boolean boost;
   private Address address;
   private int lastRecordTime;
 

@@ -122,10 +122,10 @@ public class TradeOfferViewController
                 showErrorMessage("Empty value error", "Name cannot be empty.");
                 tradeOffer.setName(oldValue);
             }
-            else if (newValue.trim().length() < 4 || newValue.trim().length() > 30)
+            else if (newValue.trim().length() < 4 || newValue.trim().length() > 32)
             {
                 showErrorMessage("Name length error",
-                        "Name must be between 4 and 30 characters.");
+                        "Name must be between 4 and 32 characters.");
                 tradeOffer.setName(oldValue);
             }
             else
@@ -259,10 +259,13 @@ public class TradeOfferViewController
                 tradeOfferTable.getItems().addAll(tradeOfferList.getTradeOfferList());
 
                 showWarningMessage("Delete successful",
-                        "Object has been deleted successfully");
+                        "Trade Offer has been deleted successfully");
             }
+        }else {
+          showErrorMessage("Delete unsuccessful", "Please select a Trade Offer to remove.");
         }
-        else if (e.getSource() == executeButton)
+
+        if (e.getSource() == executeButton)
         {
             if (selectedTradeOffer == null)
             {
