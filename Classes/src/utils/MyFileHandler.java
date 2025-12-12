@@ -7,7 +7,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.*;
 
-public class MyFileHandler {
+/**
+ * Utility class providing helper methods for file operations.
+ * Supports reading/writing binary serialized objects and exporting JSON files.
+ *
+ * Handles both persistence and JSON export for project data.
+ *
+ * @author Nandor Hock
+ *
+ * @version 13.12.2025
+ */
+public class MyFileHandler
+{
+
+  /**
+   * Reads and returns an object from a binary file.
+   *
+   * @param fileName the name of the file inside the /data directory
+   * @return the deserialized object, or null if an error occurs
+   */
   public static Object readFromBinaryFile(String fileName){
     try{
       ObjectInputStream read = new ObjectInputStream(new FileInputStream("data/"+fileName));
@@ -24,6 +42,13 @@ public class MyFileHandler {
     return null;
 
   }
+
+  /**
+   * Writes a serializable object to a binary file.
+   *
+   * @param fileName the name of the file inside the /data directory
+   * @param object   the object to serialize and write
+   */
   public static void writeToBinaryFile(String fileName,Object object){
     try{
       ObjectOutputStream write = new ObjectOutputStream(new FileOutputStream("data/"+fileName));
@@ -35,17 +60,24 @@ public class MyFileHandler {
     }
     System.out.println("Writing successful");
   }
-public static void writeToJsonFile(String fileName, Object object){
-  try {
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    String json = gson.toJson(object);
-    FileWriter writer = new FileWriter("webpage/json/"+fileName+".json");
-    writer.write(json);
-    writer.close();
-  } catch (IOException e) {
-    System.out.println("Error saving tasks: " + e.getMessage());
-    e.printStackTrace();
-  }
 
-}
+  /**
+   * Saves the given object as a JSON file using Gson formatting.
+   *
+   * @param fileName the output file name (without extension)
+   * @param object   the object to convert into JSON
+   */
+  public static void writeToJsonFile(String fileName, Object object){
+    try {
+      Gson gson = new GsonBuilder().setPrettyPrinting().create();
+      String json = gson.toJson(object);
+      FileWriter writer = new FileWriter("webpage/json/"+fileName+".json");
+      writer.write(json);
+      writer.close();
+    } catch (IOException e) {
+      System.out.println("Error saving tasks: " + e.getMessage());
+      e.printStackTrace();
+    }
+
+  }
 }
