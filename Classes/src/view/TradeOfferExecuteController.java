@@ -10,259 +10,250 @@ import model.Member;
 import model.MemberList;
 import model.TradeOffer;
 
+import java.util.Optional;
+
 import static utils.ControllerHelper.*;
 
-/**
- * Controller for executing a trade offer between members.
- *
- * Handles selecting the payer and the proposer, validates constraints,
- * and executes the trade offer when confirmed.
- *
- * @author Sofia Golban
- * @version 09.12.2025
- */
 public class TradeOfferExecuteController
 {
+    @FXML private Label offerNameLabel;
+    @FXML private Label payerStatusLabel;
+    @FXML private Label proposerStatusLabel;
+    @FXML private Button executeTradeButton;
 
-  @FXML private Label offerNameLabel;
-  @FXML private Label payerStatusLabel;
-  @FXML private Label proposerStatusLabel;
-  @FXML private Button executeTradeButton;
+    @FXML private TableView<Member> memberTable;
+    @FXML private TableColumn<Member, String> firstNameColumn;
+    @FXML private TableColumn<Member, String> lastNameColumn;
+    @FXML private TableColumn<Member, Integer> pointsColumn;
 
-  @FXML private TableView<Member> memberTable;
-  @FXML private TableColumn<Member, String> firstNameColumn;
-  @FXML private TableColumn<Member, String> lastNameColumn;
-  @FXML private TableColumn<Member, Integer> pointsColumn;
+    private Stage dialogStage;
+    private TradeOffer selectedOffer;
+    private MemberList memberList;
 
-  private Stage dialogStage;
-  private TradeOffer selectedOffer;
-  private MemberList memberList;
+    private Member selectedPayer = null;
+    private Member selectedReceiver = null;
 
-  private Member selectedPayer = null;
-  private Member selectedProposer = null;
+    private Member originalProposer = null;
 
-  private Member originalProposer = null;
+    private boolean tradeExecuted = false;
 
-  // --- НОВОЕ ПОЛЕ: Флаг для определения, был ли обмен выполнен ---
-  private boolean tradeExecuted = false;
-
-  /**
-   * Initializes the member table and disables the execute button.
-   */
-  @FXML
-  public void initialize()
-  {
-    firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-    lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-    pointsColumn.setCellValueFactory(new PropertyValueFactory<>("points"));
-
-    executeTradeButton.setDisable(true);
-  }
-
-  /**
-   * Sets the stage of this dialog.
-   *
-   * @param dialogStage the Stage object
-   */
-  public void setDialogStage(Stage dialogStage)
-  {
-    this.dialogStage = dialogStage;
-  }
-
-  /**
-   * Sets the trade offer data and member list for this dialog.
-   * Initializes labels and table selection.
-   *
-   * @param offer the TradeOffer to execute
-   * @param list the MemberList containing members
-   */
-  public void setTradeData(TradeOffer offer, MemberList list)
-  {
-    this.selectedOffer = offer;
-    this.memberList = list;
-
-    this.originalProposer = offer.getProposer();
-
-    offerNameLabel.setText("Trade Offer: " + offer.getName() + " (Cost: " + offer.getCost() + " points)");
-
-    memberTable.getItems().setAll(list.getMemberList());
-
-    selectedProposer = this.originalProposer;
-
-    memberTable.getSelectionModel().select(selectedProposer);
-
-    updateStatusLabels();
-    checkAndEnableExecuteButton();
-  }
-
-  /**
-   * Returns true if the trade was successfully executed.
-   *
-   * @return true if trade was executed
-   */
-  public boolean isTradeExecuted()
-  {
-    return tradeExecuted;
-  }
-
-  /**
-   * Updates the payer and proposer labels according to the current selection.
-   */
-  private void updateStatusLabels()
-  {
-    if (selectedPayer != null)
+    @FXML
+    public void initialize()
     {
-      payerStatusLabel.setText(String.format("Payer: %s %s (Points: %d)",
-          selectedPayer.getFirstName(), selectedPayer.getLastName(), selectedPayer.getPoints()));
-    }
-    else
-    {
-      payerStatusLabel.setText("Payer: (Not Selected)");
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        pointsColumn.setCellValueFactory(new PropertyValueFactory<>("points"));
+
+        executeTradeButton.setDisable(true);
     }
 
-    if (selectedProposer != null)
+    public void setDialogStage(Stage dialogStage)
     {
-      proposerStatusLabel.setText(String.format("Receiver: %s %s (Points: %d)",
-          selectedProposer.getFirstName(), selectedProposer.getLastName(), selectedProposer.getPoints()));
-    }
-    else
-    {
-      proposerStatusLabel.setText("Receiver: (Not Selected)");
-    }
-    // Используем memberTable.refresh(), чтобы обновить значения баллов
-    // в таблице, если они изменились в результате выбора.
-    memberTable.refresh();
-  }
-
-  /**
-   * Enables or disables the execute button based on the current selection.
-   */
-  private void checkAndEnableExecuteButton()
-  {
-    executeTradeButton.setDisable(selectedPayer == null || selectedProposer == null);
-  }
-
-  /**
-   * Assigns the selected member as the payer.
-   * Checks constraints and updates labels accordingly.
-   *
-   * @param event the ActionEvent triggered by button click
-   */
-  @FXML
-  private void handleAssignPayer(ActionEvent event)
-  {
-    Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
-    if (selectedMember == null)
-    {
-      showErrorMessage("No Member Selected", "Please select a member from the table first.");
-      return;
+        this.dialogStage = dialogStage;
     }
 
-    if (selectedMember.equals(selectedProposer))
+    public void setTradeData(TradeOffer offer, MemberList list)
     {
-      showErrorMessage("Invalid Assignment", "This member is already selected as the Receiver/Proposer.");
-      return;
+        this.selectedOffer = offer;
+
+        this.memberList = GreenThumbManager.getAllMembers();
+
+        Member proposerFromOffer = offer.getProposer();
+
+        this.originalProposer = this.memberList.getMemberList().stream()
+                .filter(m -> m.equals(proposerFromOffer))
+                .findFirst()
+                .orElse(proposerFromOffer);
+
+        offer.setProposer(this.originalProposer);
+
+        this.selectedReceiver = originalProposer;
+        this.selectedPayer = null;
+
+        offerNameLabel.setText("Trade Offer: " + offer.getName() +
+                " (Cost: " + offer.getCost() + " points)");
+
+        memberTable.getItems().setAll(memberList.getMemberList());
+        memberTable.getSelectionModel().select(originalProposer);
+
+        updateStatusLabels();
+        updateExecuteButton();
     }
 
-    if (!selectedMember.equals(originalProposer) && selectedProposer != null && !selectedProposer.equals(originalProposer))
+    public boolean isTradeExecuted()
     {
-      showErrorMessage("Constraint Violation",
-          String.format("The Original Proposer (%s %s) must be either the Payer or the Receiver.",
-              originalProposer.getFirstName(), originalProposer.getLastName()));
-      return;
+        return tradeExecuted;
     }
 
-    selectedPayer = selectedMember;
-    updateStatusLabels();
-    checkAndEnableExecuteButton();
-  }
+    private Member getCanonicalMember(Member m) {
+        if (m == null) {
+            return null;
+        }
 
-  /**
-   * Assigns the selected member as the proposer (receiver).
-   * Checks constraints and updates labels accordingly.
-   *
-   * @param event the ActionEvent triggered by button click
-   */
-  @FXML
-  private void handleAssignProposer(ActionEvent event)
-  {
-    Member selectedMember = memberTable.getSelectionModel().getSelectedItem();
-    if (selectedMember == null)
-    {
-      showErrorMessage("No Member Selected", "Please select a member from the table first.");
-      return;
+        Optional<Member> canonicalMember = this.memberList.getMemberList().stream()
+                .filter(member -> member.equals(m))
+                .findFirst();
+
+        return canonicalMember.orElse(m);
     }
 
-    if (selectedMember.equals(selectedPayer))
+    private void updateStatusLabels()
     {
-      showErrorMessage("Invalid Assignment", "This member is already selected as the Payer.");
-      return;
+        payerStatusLabel.setText(
+                (selectedPayer == null)
+                        ? "Payer: (Not Selected)"
+                        : String.format("Payer: %s %s (Points: %d)",
+                        selectedPayer.getFirstName(),
+                        selectedPayer.getLastName(),
+                        selectedPayer.getPoints())
+        );
+
+        proposerStatusLabel.setText(
+                (selectedReceiver == null)
+                        ? "Receiver: (Not Selected)"
+                        : String.format("Receiver: %s %s (Points: %d)",
+                        selectedReceiver.getFirstName(),
+                        selectedReceiver.getLastName(),
+                        selectedReceiver.getPoints())
+        );
     }
 
-    if (!selectedMember.equals(originalProposer) && selectedPayer != null && !selectedPayer.equals(originalProposer))
+    private void updateExecuteButton()
     {
-      showErrorMessage("Constraint Violation",
-          String.format("The Original Proposer (%s %s) must be either the Payer or the Receiver.",
-              originalProposer.getFirstName(), originalProposer.getLastName()));
-      return;
+        executeTradeButton.setDisable(selectedPayer == null || selectedReceiver == null);
     }
 
-    selectedProposer = selectedMember;
-    updateStatusLabels();
-    checkAndEnableExecuteButton();
-  }
-
-  /**
-   * Executes the trade between the selected payer and proposer.
-   * Validates points and confirms the action with the user.
-   *
-   * @param event the ActionEvent triggered by button click
-   */
-  @FXML
-  private void handleExecuteTrade(ActionEvent event)
-  {
-    if (selectedPayer == null || selectedProposer == null)
+    private boolean violatesRule(Member payerCandidate, Member receiverCandidate)
     {
-      showErrorMessage("Invalid Selection", "Please select both a Payer and a Receiver.");
-      return;
+        return !(originalProposer.equals(payerCandidate) ||
+                originalProposer.equals(receiverCandidate));
     }
 
-    if (selectedPayer.equals(selectedProposer))
+    @FXML
+    private void handleAssignPayer(ActionEvent event)
     {
-      showErrorMessage("Internal Error", "The Payer and the Receiver cannot be the same member.");
-      return;
+        Member m = memberTable.getSelectionModel().getSelectedItem();
+        if (m == null)
+        {
+            showErrorMessage("No Member Selected", "Please select a member first.");
+            return;
+        }
+
+        Member canonicalM = getCanonicalMember(m);
+
+        Member newPayer = canonicalM;
+        Member newReceiver = selectedReceiver;
+
+        if (selectedReceiver != null && canonicalM.equals(selectedReceiver))
+        {
+            newReceiver = selectedPayer;
+
+            newReceiver = getCanonicalMember(newReceiver);
+        }
+
+        if (violatesRule(newPayer, newReceiver))
+        {
+            showErrorMessage("Constraint Violation",
+                    String.format("The Original Proposer (%s %s) must be either the Payer or the Receiver.",
+                            originalProposer.getFirstName(), originalProposer.getLastName()));
+            return;
+        }
+
+        if (newPayer != null && newReceiver != null && newPayer.equals(newReceiver)) {
+            showErrorMessage("Invalid Assignment", "Payer and Receiver cannot be the same person.");
+            return;
+        }
+
+        selectedPayer = getCanonicalMember(newPayer);
+        selectedReceiver = getCanonicalMember(newReceiver);
+
+        updateStatusLabels();
+        updateExecuteButton();
     }
 
-    if (selectedPayer.getPoints() < selectedOffer.getCost())
+    @FXML
+    private void handleAssignReceiver(ActionEvent event)
     {
-      showErrorMessage("Points Missing",
-          String.format("The Payer (%s %s) only has %d points, but the trade costs %d.",
-              selectedPayer.getFirstName(), selectedPayer.getLastName(), selectedPayer.getPoints(), selectedOffer.getCost()));
-      return;
+        Member m = memberTable.getSelectionModel().getSelectedItem();
+        if (m == null)
+        {
+            showErrorMessage("No Member Selected", "Please select a member first.");
+            return;
+        }
+
+        Member canonicalM = getCanonicalMember(m);
+
+        Member newReceiver = canonicalM;
+        Member newPayer = selectedPayer;
+
+        if (selectedPayer != null && canonicalM.equals(selectedPayer))
+        {
+            newPayer = selectedReceiver;
+
+            newPayer = getCanonicalMember(newPayer);
+        }
+
+        if (violatesRule(newPayer, newReceiver))
+        {
+            showErrorMessage("Constraint Violation",
+                    String.format("The Original Proposer (%s %s) must be either the Payer or the Receiver.",
+                            originalProposer.getFirstName(), originalProposer.getLastName()));
+            return;
+        }
+
+        if (newPayer != null && newReceiver != null && newPayer.equals(newReceiver)) {
+            showErrorMessage("Invalid Assignment", "Payer and Receiver cannot be the same person.");
+            return;
+        }
+
+        selectedReceiver = getCanonicalMember(newReceiver);
+        selectedPayer = getCanonicalMember(newPayer);
+
+        updateStatusLabels();
+        updateExecuteButton();
     }
 
-    if (showConfirmationMessage("Confirm Execution",
-        String.format("Confirm %s %s will pay %d points to %s %s for '%s'?",
-            selectedPayer.getFirstName(), selectedPayer.getLastName(), selectedOffer.getCost(),
-            selectedProposer.getFirstName(), selectedProposer.getLastName(), selectedOffer.getName())))
+    @FXML
+    private void handleExecuteTrade(ActionEvent event)
     {
-      selectedOffer.executeTradeOffer(selectedPayer, selectedProposer);
-      GreenThumbManager.saveMembers(memberList);
+        if (selectedPayer == null || selectedReceiver == null)
+        {
+            showErrorMessage("Invalid Selection", "You must assign both Payer and Receiver.");
+            return;
+        }
 
-      this.tradeExecuted = true;
+        if (selectedPayer.equals(selectedReceiver))
+        {
+            showErrorMessage("Invalid Pair", "Payer and Receiver cannot be the same person.");
+            return;
+        }
 
-      dialogStage.close();
+        if (selectedPayer.getPoints() < selectedOffer.getCost())
+        {
+            showErrorMessage("Not Enough Points",
+                    String.format("The payer (%s %s) only has %d points.",
+                            selectedPayer.getFirstName(), selectedPayer.getLastName(),
+                            selectedPayer.getPoints()));
+            return;
+        }
+
+        if (showConfirmationMessage("Confirm Trade",
+                String.format("Confirm %s %s will pay %d points to %s %s?",
+                        selectedPayer.getFirstName(), selectedPayer.getLastName(),
+                        selectedOffer.getCost(),
+                        selectedReceiver.getFirstName(), selectedReceiver.getLastName())))
+        {
+            selectedOffer.executeTradeOffer(selectedPayer, selectedReceiver);
+            GreenThumbManager.saveMembers(memberList);
+
+            tradeExecuted = true;
+            dialogStage.close();
+        }
     }
-  }
 
-  /**
-   * Cancels the trade execution and closes the dialog.
-   *
-   * @param event the ActionEvent triggered by button click
-   */
-  @FXML
-  private void handleCancel(ActionEvent event)
-  {
-    dialogStage.close();
-  }
+    @FXML
+    private void handleCancel(ActionEvent event)
+    {
+        dialogStage.close();
+    }
 }

@@ -9,14 +9,18 @@ import java.io.Serializable;
  *
  * @version 02.12.2025
  */
-public class Member implements Serializable {
+public class Member implements Serializable
+{
+
   private String firstName;
   private String lastName;
   private String phoneNumber;
   private String email;
   private int points;
-  private int lastRecordTime;
+  private boolean boost;
   private Address address;
+  private int lastRecordTime;
+
   /**
    * Create new Member object with Member personal info
    *
@@ -41,7 +45,8 @@ public class Member implements Serializable {
    * Create a new Member object with placeholders instead of information
    */
   //Default constructor for testing purposes
-  public Member() {
+  public Member()
+  {
     firstName = "Bob";
     lastName = "Green";
     phoneNumber = "+45694200";
@@ -155,7 +160,8 @@ public class Member implements Serializable {
    *
    * @param houseNumber of the member
    */
-  public void setAddressHouse(int houseNumber) {
+  public void setAddressHouse(int houseNumber)
+  {
     address.setHouseNumber(houseNumber);
   }
 
@@ -190,7 +196,7 @@ public class Member implements Serializable {
   }
 
   /**
-   * Returns the number of days passed since the last record.
+   * Returns the number of time units passed since the last record was updated.
    *
    * @return the time since the last record
    */
@@ -230,6 +236,16 @@ public class Member implements Serializable {
   }
 
   /**
+   * Converts all member points into community points,
+   * after conversion, the member's points are reset to zero.
+   */
+  public void convertPoints()
+  {
+    Community.getInstance().addCommunityPoints(points);
+    points = 0;
+  }
+
+  /**
    * Increases the last record time value by the given amount.
    *
    * @param time the amount of time to add
@@ -244,7 +260,8 @@ public class Member implements Serializable {
    *
    * @param pointAmount the number of points to add
    */
-  public void addPoints(int pointAmount) {
+  public void addPoints(int pointAmount)
+  {
     points += pointAmount;
   }
 
@@ -259,12 +276,23 @@ public class Member implements Serializable {
   }
 
   /**
+   * Checks whether this member is eligible for a points reset.
+   * A member is eligible if they have at least 100 points.
+   *
+   * @return true if points >= 100, false otherwise
+   */
+  public boolean isEligibleForReset()
+  {
+    return points >= 100;  //This value is magical
+  }
+
+  /**
    * Compares two Member objects for equality based on all fields.
    *
    * @param obj the Member to compare with
    * @return true if all fields match, false otherwise
    */
-  public boolean equals(Member obj)
+  public boolean equals(Object obj)
   {
       if (obj == null || getClass() != obj.getClass())
       {
@@ -272,10 +300,11 @@ public class Member implements Serializable {
       }
       else
       {
-          return firstName.equals(obj.getFirstName()) && lastName.equals(
-                  obj.getLastName()) && phoneNumber.equals(obj.getPhoneNumber())
-                  && email.equals(obj.getEmail()) && points == obj.getPoints()
-                  && lastRecordTime == obj.getLastRecordTime();
+          Member other = (Member) obj;
+
+          return firstName.equals(other.firstName) && lastName.equals(
+                  other.lastName) && phoneNumber.equals(other.phoneNumber)
+                  && email.equals(other.email);
       }
   }
 
