@@ -14,6 +14,12 @@ import java.util.Optional;
 
 import static utils.ControllerHelper.*;
 
+/**
+ *
+ * @author Sofia Golban
+ *
+ * @version 12.12.2025
+ */
 public class TradeOfferExecuteController
 {
     @FXML private Label offerNameLabel;
@@ -37,6 +43,10 @@ public class TradeOfferExecuteController
 
     private boolean tradeExecuted = false;
 
+  /**
+   * Initializes the table columns and disables execution
+   * until payer and receiver are selected.
+   */
     @FXML
     public void initialize()
     {
@@ -47,11 +57,23 @@ public class TradeOfferExecuteController
         executeTradeButton.setDisable(true);
     }
 
+  /**
+   * Sets the dialog window used for this controller.
+   *
+   * @param dialogStage the assigned dialog stage
+   */
     public void setDialogStage(Stage dialogStage)
     {
         this.dialogStage = dialogStage;
     }
 
+  /**
+   * Loads the selected trade offer and all members, resolves the proposer,
+   * sets initial payer/receiver, and updates table and labels.
+   *
+   * @param offer the trade offer being executed
+   * @param list  the provided member list (not used)
+   */
     public void setTradeData(TradeOffer offer, MemberList list)
     {
         this.selectedOffer = offer;
@@ -80,11 +102,22 @@ public class TradeOfferExecuteController
         updateExecuteButton();
     }
 
+  /**
+   * Returns whether the trade was successfully completed.
+   *
+   * @return true if trade was executed
+   */
     public boolean isTradeExecuted()
     {
         return tradeExecuted;
     }
 
+  /**
+   * Returns the canonical stored instance of a member for equality consistency.
+   *
+   * @param m the member to resolve
+   * @return canonical member instance or same object
+   */
     private Member getCanonicalMember(Member m) {
         if (m == null) {
             return null;
@@ -97,6 +130,9 @@ public class TradeOfferExecuteController
         return canonicalMember.orElse(m);
     }
 
+  /**
+   * Updates the display labels for payer and receiver.
+   */
     private void updateStatusLabels()
     {
         payerStatusLabel.setText(
@@ -118,17 +154,33 @@ public class TradeOfferExecuteController
         );
     }
 
+  /**
+   * Enables or disables the Execute button based on selection state.
+   */
     private void updateExecuteButton()
     {
         executeTradeButton.setDisable(selectedPayer == null || selectedReceiver == null);
     }
 
+  /**
+   * Checks whether payer/receiver assignment breaks the rule
+   * that the original proposer must be one of them.
+   *
+   * @param payerCandidate    potential payer
+   * @param receiverCandidate potential receiver
+   * @return true if the constraint is violated
+   */
     private boolean violatesRule(Member payerCandidate, Member receiverCandidate)
     {
         return !(originalProposer.equals(payerCandidate) ||
                 originalProposer.equals(receiverCandidate));
     }
 
+  /**
+   * Assigns the selected member as the Payer, enforcing all rules.
+   *
+   * @param event the button click event
+   */
     @FXML
     private void handleAssignPayer(ActionEvent event)
     {
@@ -171,6 +223,11 @@ public class TradeOfferExecuteController
         updateExecuteButton();
     }
 
+  /**
+   * Assigns the selected member as the Receiver, enforcing all rules.
+   *
+   * @param event the button click event
+   */
     @FXML
     private void handleAssignReceiver(ActionEvent event)
     {
@@ -213,6 +270,12 @@ public class TradeOfferExecuteController
         updateExecuteButton();
     }
 
+  /**
+   * Validates payer/receiver, checks point availability,
+   * asks for confirmation, and executes the trade.
+   *
+   * @param event the execution button event
+   */
     @FXML
     private void handleExecuteTrade(ActionEvent event)
     {
@@ -251,6 +314,11 @@ public class TradeOfferExecuteController
         }
     }
 
+  /**
+   * Closes the dialog without executing the trade.
+   *
+   * @param event the cancel button event
+   */
     @FXML
     private void handleCancel(ActionEvent event)
     {

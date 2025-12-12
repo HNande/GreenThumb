@@ -82,6 +82,15 @@ public class CommunityViewController
       Community.getInstance().setRewardDescription("");
     }
   }
+
+  /**
+   * Saves updated community values from the GUI.
+   *
+   * Validates input fields and updates points, threshold,
+   * and description. Also refreshes the progress bar.
+   *
+   * @param actionEvent the save button event
+   */
   public void handleSave(javafx.event.ActionEvent actionEvent){
     try{
       int points = Integer.parseInt(communityPointsField.getText().trim());
@@ -136,6 +145,12 @@ public class CommunityViewController
     }
   }
 
+  /**
+   * Refreshes all GUI fields with the newest data from Community.
+   *
+   * Updates points, threshold, description, progress bar,
+   * and progress title styling.
+   */
   public void refreshView()
   {
     communityPointsField.setText(String.valueOf((Community.getInstance().getCommunityPoints())));

@@ -17,6 +17,12 @@ import utils.ControllerHelper;
 
 import static utils.ControllerHelper.*;
 
+/**
+ *
+ * @author Sofia Golban
+ *
+ * @version 12.12.2025
+ */
 public class TradeOfferAddController {
 
     @FXML
@@ -41,6 +47,9 @@ public class TradeOfferAddController {
     private MemberList memberList;
     private Stage stage;
 
+  /**
+   * Initializes table columns and prepares the proposer selection table.
+   */
     @FXML
     public void initialize() {
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -50,10 +59,21 @@ public class TradeOfferAddController {
         });
     }
 
+  /**
+   * Sets the dialog window for this controller.
+   *
+   * @param stage the window used for this dialog
+   */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+  /**
+   * Loads trade offer and member lists, and fills the proposer table.
+   *
+   * @param tradeOfferList the list to add a new offer into
+   * @param memberList     the list of members available as proposers
+   */
     public void setLists(TradeOfferList tradeOfferList, MemberList memberList) {
         this.tradeOfferList = tradeOfferList;
         this.memberList = memberList;
@@ -62,6 +82,13 @@ public class TradeOfferAddController {
         }
     }
 
+  /**
+   * Validates user input and creates a new TradeOffer if all fields are correct.
+   *
+   * Shows error messages for empty fields, invalid lengths, or incorrect cost format.
+   *
+   * @param actionEvent the confirm button event
+   */
     @FXML
     public void handleConfirm(ActionEvent actionEvent) {
 
@@ -144,6 +171,11 @@ public class TradeOfferAddController {
         }
     }
 
+  /**
+   * Cancels the creation process, clears fields, and closes the dialog.
+   *
+   * @param actionEvent the cancel button event
+   */
     @FXML
     public void handleCancel(ActionEvent actionEvent) {
         nameField.clear();

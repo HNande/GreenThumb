@@ -44,6 +44,13 @@ public class RecordedTaskViewController
 
     recordedTaskTable.getItems().addAll(recordedTaskList.getRecordedTaskList());
   }
+
+  /**
+   * Refreshes the recorded task table with the latest data.
+   *
+   * Reloads all recorded tasks from storage, repopulates the table,
+   * and forces column refresh to ensure updated values are displayed.
+   */
   public void refreshView()
   {
     recordedTaskList = GreenThumbManager.getAllRecordedTasks();
