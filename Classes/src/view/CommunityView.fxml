@@ -14,17 +14,17 @@
          <font>
             <Font size="13.0" />
          </font></TextField>
-      <Text layoutX="208.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reward Threshold:">
+      <Text layoutX="204.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reward Threshold:">
          <font>
-            <Font size="13.0" />
+            <Font name="System Bold" size="13.0" />
          </font></Text>
-      <Text layoutX="167.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Community Points:">
+      <Text layoutX="152.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Community Points:">
          <font>
-            <Font size="13.0" />
+            <Font name="System Bold" size="13.0" />
          </font></Text>
-      <Text layoutX="204.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reward Description:">
+      <Text layoutX="196.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reward Description:">
          <font>
-            <Font size="13.0" />
+            <Font name="System Bold" size="13.0" />
          </font></Text>
       <Button fx:id="reset" layoutX="391.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" prefWidth="55.0" text="Reset" textFill="RED">
          <font>
@@ -35,7 +35,7 @@
             <Font size="14.0" />
          </font></Button>
       <ProgressBar id="progressBar" fx:id="progressBar" layoutX="520.0" layoutY="159.0" prefHeight="40.0" prefWidth="300.0" progress="0.0" rotate="90.0" />
-      <Text fx:id="progressTitle" layoutX="586.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress to next reward" wrappingWidth="168.68359375">
+      <Text fx:id="progressTitle" layoutX="577.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress to next reward" textAlignment="CENTER" wrappingWidth="185.60000000000002">
          <font>
             <Font size="16.0" />
          </font>
@@ -44,9 +44,9 @@
          <font>
             <Font size="13.0" />
          </font></TextArea>
-      <Text layoutX="258.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Here you can set the community reward!">
+      <Text layoutX="246.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Here you can set the community reward!">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Text>
    </children>
