@@ -4,8 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="355.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TradeOfferExecuteController">
-    <VBox alignment="CENTER" spacing="15" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+<AnchorPane prefHeight="452.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TradeOfferExecuteController">
+    <VBox alignment="CENTER" layoutX="16.0" layoutY="13.0" prefHeight="426.0" prefWidth="323.0" spacing="15" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="13.0">
 
         <Label fx:id="offerNameLabel" text="Trade Offer: [Selected Offer Name]" />
         <Separator />
@@ -17,17 +17,17 @@
         <Separator />
 
         <Label text="Select Member from the Table and Assign Role:" />
-        <TableView fx:id="memberTable" VBox.vgrow="ALWAYS">
+        <TableView fx:id="memberTable" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="168.0" prefWidth="319.0" VBox.vgrow="ALWAYS">
             <columns>
-                <TableColumn fx:id="firstNameColumn" prefWidth="100" text="First Name" />
-                <TableColumn fx:id="lastNameColumn" prefWidth="100" text="Last Name" />
-                <TableColumn fx:id="pointsColumn" prefWidth="110.199951171875" text="Points" />
+                <TableColumn fx:id="firstNameColumn" prefWidth="100" resizable="false" text="First Name" />
+                <TableColumn fx:id="lastNameColumn" prefWidth="109.99999237060547" resizable="false" text="Last Name" />
+                <TableColumn fx:id="pointsColumn" prefWidth="89.40003967285156" resizable="false" text="Points" />
             </columns>
         </TableView>
 
         <HBox alignment="CENTER" spacing="10">
-            <Button maxWidth="Infinity" onAction="#handleAssignPayer" text="Assign as Payer (Pays Cost)" HBox.hgrow="ALWAYS" />
-            <Button maxWidth="Infinity" onAction="#handleAssignReceiver" text="Assign as Receiver (Proposer)" HBox.hgrow="ALWAYS" />
+            <Button maxWidth="Infinity" onAction="#handleAssignPayer" text="Assign as Payer " HBox.hgrow="ALWAYS" />
+            <Button maxWidth="Infinity" onAction="#handleAssignReceiver" text="Assign as Receiver " HBox.hgrow="ALWAYS" />
         </HBox>
 
         <Separator />
