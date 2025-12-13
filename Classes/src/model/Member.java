@@ -235,16 +235,6 @@ public class Member implements Serializable
   }
 
   /**
-   * Converts all member points into community points,
-   * after conversion, the member's points are reset to zero.
-   */
-  public void convertPoints()
-  {
-    Community.getInstance().addCommunityPoints(points);
-    points = 0;
-  }
-
-  /**
    * Increases the last record time value by the given amount.
    *
    * @param time the amount of time to add
@@ -272,17 +262,6 @@ public class Member implements Serializable
   public void removePoints(int pointAmount)
   {
     points -= pointAmount;
-  }
-
-  /**
-   * Checks whether this member is eligible for a points reset.
-   * A member is eligible if they have at least 100 points.
-   *
-   * @return true if points >= 100, false otherwise
-   */
-  public boolean isEligibleForReset()
-  {
-    return points >= 100;  //This value is magical
   }
 
   /**
