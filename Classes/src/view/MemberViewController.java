@@ -273,7 +273,7 @@ public class MemberViewController
 
       MemberAddController ctrl = loader.getController();
       Stage dialog = new Stage();
-      dialog.setTitle("Add New Member");
+      dialog.setTitle("Registering New Member Dialog");
       dialog.initOwner(addButton.getScene().getWindow());
       ctrl.setStage(dialog);
 

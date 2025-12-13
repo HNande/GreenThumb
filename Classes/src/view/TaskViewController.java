@@ -181,7 +181,7 @@ public class TaskViewController
     }
     else
     {
-      showWarningMessage("No Member selected","Please select a member before recording.");
+      showWarningMessage("No Task selected","Please select a task before recording.");
     }
   }
 
