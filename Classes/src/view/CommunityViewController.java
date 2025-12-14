@@ -75,11 +75,13 @@ public class CommunityViewController
   {
     if (ControllerHelper.showConfirmationMessage(
         "Reset Confirmation",
-        "Are you sure you want to reset reward threshold and description??")) {
+        "Are you sure you want to reset the community points, as well as the reward threshold and description?")) {
+      communityPointsField.clear();
       rewardThresholdField.clear();
       rewardDescriptionArea.clear();
       double progress = (float) Community.getInstance().getCommunityPoints()/Community.getInstance().getRewardThreshold();
       progressBar.setProgress(progress);
+      Community.getInstance().setCommunityPoints(0);
       Community.getInstance().setRewardThreshold(0);
       Community.getInstance().setRewardDescription("");
     }
