@@ -7,8 +7,17 @@
   padding: 2%;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .main-content{
   text-align: center;
+}
+
+.figure{
+  padding: 0%;
+  border: 0cap;
 }
 
 .text {
