@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 import model.*;
 import manager.GreenThumbManager;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -85,9 +84,12 @@ public class RunGreenThumbApplication extends Application
     primaryStage.setScene(scene);
     primaryStage.setOnCloseRequest(event -> {
       System.out.println("Application closing");
+      RecordedTaskList RecordedTasks = GreenThumbManager.getAllRecordedTasks();
+      RecordedTasks.removeOutDated();
+      GreenThumbManager.saveRecordedTasks(RecordedTasks);
+      GreenThumbManager.saveFileToJson(RecordedTasks);
       GreenThumbManager.saveCommunity(Community.getInstance());
       GreenThumbManager.saveFileToJson(Community.getInstance());
-      GreenThumbManager.saveFileToJson(GreenThumbManager.getAllRecordedTasks());
       GreenThumbManager.saveFileToJson(GreenThumbManager.getAllTradeOffers());
       System.out.println("Files saved to Json");
     });

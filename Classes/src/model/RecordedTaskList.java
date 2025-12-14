@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -49,6 +50,16 @@ public class RecordedTaskList implements Serializable
   public void remove(RecordedTask recordedTask)
   {
     recordedTaskList.remove(recordedTask);
+  }
+  public void removeOutDated(){
+    LocalDate today = LocalDate.now();
+    for(int i = 0; i < recordedTaskList.size();i++){
+      if(recordedTaskList.get(i).getTimeOfRecord().timePeriod(today) >= 7){
+        recordedTaskList.remove(i);
+      }
+    }
+
+
   }
 
 }
