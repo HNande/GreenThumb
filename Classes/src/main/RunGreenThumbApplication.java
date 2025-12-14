@@ -65,8 +65,6 @@ public class RunGreenThumbApplication extends Application
       oldDate = new Date();
       GreenThumbManager.saveDate(oldDate);
     }
-
-
     launch(args);
   }
 
@@ -87,8 +85,8 @@ public class RunGreenThumbApplication extends Application
       RecordedTaskList RecordedTasks = GreenThumbManager.getAllRecordedTasks();
       RecordedTasks.removeOutDated();
       GreenThumbManager.saveRecordedTasks(RecordedTasks);
-      GreenThumbManager.saveFileToJson(RecordedTasks);
       GreenThumbManager.saveCommunity(Community.getInstance());
+      GreenThumbManager.saveFileToJson(RecordedTasks);
       GreenThumbManager.saveFileToJson(Community.getInstance());
       GreenThumbManager.saveFileToJson(GreenThumbManager.getAllTradeOffers());
       System.out.println("Files saved to Json");

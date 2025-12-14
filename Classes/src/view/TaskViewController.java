@@ -49,36 +49,30 @@ public class TaskViewController
    * Initializes the table and sets up editable columns.
    */
   @FXML
-  public void initialize()
-  {
+  public void initialize() {
     taskList = GreenThumbManager.getAllTasks();
-
     taskNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
     taskPointCol.setCellValueFactory(new PropertyValueFactory<>("pointAmount"));
     taskTypeCol.setCellValueFactory(new PropertyValueFactory<>("taskType"));
     taskTotalCol.setCellValueFactory(new PropertyValueFactory<>("totalCount"));
-
     taskTable.setEditable(true);
     taskTable.getItems().addAll(taskList.getTaskList());
-
     taskNameCol.setCellFactory(TextFieldTableCell.forTableColumn());
     taskNameCol.setOnEditCommit(event -> {
       String input = event.getNewValue();
       Task task = event.getRowValue();
-      if (isNullOrEmpty(input))
-      {
+      if (isNullOrEmpty(input)) {
         showErrorMessage("Empty value error", "Task Name cannot be empty.");
         taskTable.refresh();
         return;
       }
-      if (input.trim().length() < 4 || input.trim().length() > 32)
-      {
-        showErrorMessage("Name outside of bounds", "Task Name  cannot be less than 4, or more than 32 characters.");
+      if (input.trim().length() < 4 || input.trim().length() > 32) {
+        showErrorMessage("Name outside of bounds", "Task Name cannot be less than 4, or more than 32 characters.");
         taskTable.refresh();
         return;
       }
       if (taskNameAlreadyExists(taskList.getTaskList(), input)) {
-        ControllerHelper.showErrorMessage("Name already exists", "Task name must unique.");
+        showErrorMessage("Name already exists", "Task name must unique.");
         taskTable.refresh();
         return;
       }
@@ -90,20 +84,19 @@ public class TaskViewController
     taskPointCol.setOnEditCommit(event -> {
       Integer newValue = event.getNewValue();
       Task task = event.getRowValue();
-      if (newValue == null)
-      {
-        ControllerHelper.showErrorMessage("Points Empty", "Points must not be empty");
+      if (newValue == null) {
+        showErrorMessage("Points Empty", "Points must not be empty");
         taskTable.refresh();
         return;
       }
       try {
         if (newValue < 0) {
-          ControllerHelper.showErrorMessage("Points Invalid", "Points must be a whole number.");
+          showErrorMessage("Points Invalid", "Points must be a whole number.");
           taskTable.refresh();
           return ;
         }
       } catch (NumberFormatException e) {
-        ControllerHelper.showErrorMessage("Points Invalid", "Number must be a whole number.");
+        showErrorMessage("Points Invalid", "Number must be a whole number.");
         taskTable.refresh();
         return ;
       }
@@ -111,33 +104,27 @@ public class TaskViewController
       GreenThumbManager.saveTasks(taskList);
       taskTable.refresh();
     });
-
-    taskTypeCol.setCellFactory(column -> new TableCell<>()
-    {
-      public void updateItem(Integer item, boolean empty)
-      {
+    taskTypeCol.setCellFactory(column -> new TableCell<>() {
+      public void updateItem(Integer item, boolean empty) {
         super.updateItem(item, empty);
-        if (empty || item == null)
-        {
+        if (empty || item == null) {
           setText(null);
-        }
-        else
-        {
-          switch (item)
-          {
-            case 1: setText("Community"); break;
-            case 2: setText("Individual"); break;
+        } else {
+          switch (item) {
+            case 1:
+              setText("Community");
+              break;
+            case 2:
+              setText("Individual");
+              break;
             default: setText(null);
           }
         }
       }
-
-      public void startEdit()
-      {
+      public void startEdit() {
         super.startEdit();
         Task task = getTableRow().getItem();
-        if (task != null)
-        {
+        if (task != null) {
           int currentValue = task.getTaskType();
           int newValue = (currentValue == 1) ? 2 : 1;
           task.setTaskType(newValue);
@@ -155,12 +142,9 @@ public class TaskViewController
   public void handleRecord()
   {
     int index = taskTable.getSelectionModel().getSelectedIndex();
-    if (index >= 0)
-    {
-      try
-      {
+    if (index >= 0) {
+      try {
         TaskRecordingDialogController.setTaskIndex(index);
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskRecordingDialog.fxml"));
         AnchorPane root = loader.load();
         TaskRecordingDialogController controller = loader.getController();
@@ -174,13 +158,10 @@ public class TaskViewController
         taskTable.getItems().clear();
         taskTable.getItems().addAll(taskList.getTaskList());
       }
-      catch (IOException e)
-      {
+      catch (IOException e) {
         e.printStackTrace();
       }
-    }
-    else
-    {
+    } else {
       showWarningMessage("No Task selected","Please select a task before recording.");
     }
   }
@@ -188,8 +169,7 @@ public class TaskViewController
   /**
    * Deletes the selected task from the table and TaskList.
    */
-  public void handleDelete()
-  {
+  public void handleDelete() {
     Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
     if (selectedTask != null)
     {
@@ -215,30 +195,30 @@ public class TaskViewController
     int taskType;
     int pointAmount;
 
-    if (ControllerHelper.isNullOrEmpty(name)) {
-      ControllerHelper.showErrorMessage("Name Empty or Null Error", "Name must not be empty.");
+    if (isNullOrEmpty(name)) {
+      showErrorMessage("Name Empty or Null Error", "Name must not be empty.");
       taskNameField.clear();
       return;
     }
     if (name.length() > 32 || name.length() < 4) {
-      ControllerHelper.showErrorMessage("Name length Error", "Name must be more than 4 characters, and less than 32 characters including spaces.");
+      showErrorMessage("Name length Error", "Name must be more than 4 characters, and less than 32 characters including spaces.");
       taskNameField.clear();
       return;
     }
-    if (ControllerHelper.taskNameAlreadyExists(taskList.getTaskList(), name)){
-      ControllerHelper.showErrorMessage("Name already exists", "Task name must not already exists.");
+    if (taskNameAlreadyExists(taskList.getTaskList(), name)){
+      showErrorMessage("Name already exists", "Task name must not already exists.");
       taskNameField.clear();
       return;
     }
     try {
       if (Integer.parseInt(taskPointField.getText()) < 0) {
-        ControllerHelper.showErrorMessage("Point Value error", "Point amount must be a positive.");
+        showErrorMessage("Point Value error", "Point amount must be a positive.");
         taskPointField.clear();
         return;
       }
     }
     catch (NumberFormatException e) {
-      ControllerHelper.showErrorMessage("Point Value Error", "Point amount must be a not be empty, or with decimal points.");
+      showErrorMessage("Point Value Error", "Point amount must be a not be empty, or with decimal points.");
       taskPointField.clear();
       return;
     }
@@ -248,13 +228,13 @@ public class TaskViewController
       if (value == 1 || value == 2) {
         taskType = value;
       } else {
-        ControllerHelper.showErrorMessage("Task Type Format error", "Task Type must be a valid number, 1 or 2.");
+        showErrorMessage("Task Type Format error", "Task Type must be a valid number, 1 or 2.");
         taskTypeField.clear();
         return;
       }
     }
     catch (NumberFormatException e) {
-      ControllerHelper.showErrorMessage("Task Type Format error", "Task Type must be a number");
+      showErrorMessage("Task Type Format error", "Task Type must be a number");
       taskTypeField.clear();
       return;
     }
@@ -273,12 +253,10 @@ public class TaskViewController
    * from storage and updating all visible table rows.
    * Also forces column refresh to ensure correct rendering.
    */
-  public void refreshView()
-  {
+  public void refreshView() {
     taskList = GreenThumbManager.getAllTasks();
     taskTable.getItems().setAll(taskList.getTaskList());
-    if (!taskTable.getColumns().isEmpty())
-    {
+    if (!taskTable.getColumns().isEmpty()) {
       taskTable.getColumns().getFirst().setVisible(false);
       taskTable.getColumns().getFirst().setVisible(true);
     }

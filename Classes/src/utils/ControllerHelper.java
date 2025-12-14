@@ -34,26 +34,7 @@ public class ControllerHelper {
     return input == null || input.trim().isEmpty();
   }
   /**
-   * Returns whether parameter is a valid Task Type.
-   *
-   * @return boolean
-   *
-   * @param input to be checked
-   */
-  public static boolean isValidTaskType(int input) {
-    try {
-      if (input > 2 || input < 1 ) {
-        showErrorMessage("Point Format error","Point amount must be either 1, or 2.");
-        return false;
-      }
-    } catch (NumberFormatException e) {
-      showErrorMessage("Point Format Error","Point amount must be a valid number without decimal points..");
-      return false;
-    }
-    return true;
-  }
-  /**
-   * Returns whether the ArrayList<Task> contains string..
+   * Returns whether the ArrayList<Task> contains string.
    *
    * @return boolean
    *
@@ -69,21 +50,7 @@ public class ControllerHelper {
     }
     return false;
   }
-  /**
-   * Returns whether in the ArrayList<TradeOffer> the string already exists.
-   *
-   * @return boolean
-   *
-   * @param list the Arraylist to be checked
-   * @param string the String that should be checked in the Arraylist
-   */
-  public static boolean tradeOfferNameAlreadyExists(ArrayList<TradeOffer> list, String string){
-    for(int i = 0; i != list.size();i++){
-      if (list.get(i).getName().equals(string.trim()))
-        return true;
-    }
-    return false;
-  }
+
   /**
    * Returns whether in the ArrayList<Member> both strings already exists.
    *

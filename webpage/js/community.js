@@ -13,7 +13,6 @@ fetch('../json/communityJsonFile.json')
     pointDifference = Math.trunc(pointDifference*100);
     console.log(pointDifference);
     if(pointDifference < 1){
-
       var width = 1;
       bar.style.width = width + "%";
     }else{

@@ -34,8 +34,7 @@ public class MainViewController
    */
   public void initialize()
   {
-    try
-    {
+    try {
       tasksTab.setContent(loadTaskTabContent());
       tasksTab.selectedProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue && taskViewController != null) {
@@ -55,7 +54,6 @@ public class MainViewController
         }
       });
       communityTab.setContent(loadCommunityTabContent());
-
       communityTab.selectedProperty().addListener((observable, oldValue, newValue) -> {
         if (newValue && communityViewController != null) {
           communityViewController.refreshView();
@@ -93,8 +91,7 @@ public class MainViewController
    * @return AnchorPane root of the loaded UI
    * @throws IOException if the file cannot be loaded
    */
-  private AnchorPane loadTaskTabContent() throws IOException
-  {
+  private AnchorPane loadTaskTabContent() throws IOException {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TaskView.fxml"));
     AnchorPane root = loader.load();
     taskViewController = loader.getController();
@@ -106,8 +103,7 @@ public class MainViewController
    * @return AnchorPane root of the loaded UI
    * @throws IOException if the file cannot be loaded
    */
-  private AnchorPane loadRecordedTabContent() throws IOException
-  {
+  private AnchorPane loadRecordedTabContent() throws IOException {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/RecordedTaskView.fxml"));
     AnchorPane root = loader.load();
     recordedTaskViewController = loader.getController();
@@ -119,8 +115,7 @@ public class MainViewController
    * @return AnchorPane root of the loaded UI
    * @throws IOException if the file cannot be loaded
    */
-  private AnchorPane loadTradeOfferTabContent() throws IOException
-  {
+  private AnchorPane loadTradeOfferTabContent() throws IOException {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/TradeOfferView.fxml"));
     AnchorPane root = loader.load();
     tradeOfferViewController = loader.getController();
@@ -132,8 +127,7 @@ public class MainViewController
    * @return AnchorPane root of the loaded UI
    * @throws IOException if the file cannot be loaded
    */
-  private AnchorPane loadCommunityTabContent() throws IOException
-  {
+  private AnchorPane loadCommunityTabContent() throws IOException {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CommunityView.fxml"));
     AnchorPane root = loader.load();
     communityViewController = loader.getController();

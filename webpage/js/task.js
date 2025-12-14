@@ -38,10 +38,6 @@ fetch('../json/recordedTaskJsonFile.json')
     +data.recordedTaskList[i].timeOfRecord.month+"/"
     +data.recordedTaskList[i].timeOfRecord.year;
     row.appendChild(timeOfRecordCell);
-
-    
-
-
     tasks.appendChild(row);
   }
 })

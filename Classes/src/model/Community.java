@@ -1,10 +1,7 @@
 package model;
-
 import java.io.Serializable;
-
 /**
- * A class representing an address, containing the house number and street name.
- * Used to store information about the location of a person or object
+ * A class representing the community, containing the community's points, the reward description, and reward threshold.
  *
  * @author Nandor Hock
  *
@@ -13,7 +10,6 @@ import java.io.Serializable;
 public class Community implements Serializable
 { 
   private static Community instance;
-
   private int rewardThreshold;
   private String rewardDescription;
   private int communityPoints;
@@ -26,30 +22,25 @@ public class Community implements Serializable
     rewardDescription = "";
     communityPoints = 0;
   }
-
   /**
    * Returns the single instance of Community, creating it if necessary.
    *
-   * @return the shared Community instance
+   * @return the Community instance
    */
   public static Community getInstance() {
-    if (instance == null)
-    {
+    if (instance == null) {
       instance = new Community();
     }
     return instance;
   }
-
   /**
-   * Sets the shared Community instance to the loaded object.
-   * This is called during application startup.
+   * Sets the Community instance from the loaded object.
+   * This is called before application startup.
    *
    * @param loadedCommunity the community object loaded from file
    */
-  public static void setInstance(Community loadedCommunity)
-  {
-    if (loadedCommunity != null)
-    {
+  public static void setInstance(Community loadedCommunity) {
+    if (loadedCommunity != null) {
       instance = loadedCommunity;
     }
   }
