@@ -50,9 +50,13 @@ public class TaskRecordingDialogController
   public void initialize()
   {
     memberFirstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+    memberFirstNameCol.setReorderable(false);
     memberLastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+    memberLastNameCol.setReorderable(false);
     memberPointAmountCol.setCellValueFactory(new PropertyValueFactory<>("points"));
+    memberPointAmountCol.setReorderable(false);
     memberTimeSinceLastRecord.setCellValueFactory(new PropertyValueFactory<>("lastRecordTime"));
+    memberTimeSinceLastRecord.setReorderable(false);
     memberTable.getItems().addAll(memberList.getMemberList());
     datePicker.setValue(LocalDate.now());
     LocalDate localDate = datePicker.getValue();

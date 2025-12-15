@@ -66,8 +66,11 @@ public class TradeOfferViewController {
    */
   @FXML public void initialize() {
     name.setCellValueFactory(new PropertyValueFactory<>("name"));
+    name.setReorderable(false);
     cost.setCellValueFactory(new PropertyValueFactory<>("cost"));
+    cost.setReorderable(false);
     description.setCellValueFactory(new PropertyValueFactory<>("description"));
+    description.setReorderable(false);
     proposer.setCellValueFactory(cellData -> {
       TradeOffer tradeOffer = cellData.getValue();
       Member proposerMember = tradeOffer.getProposer();
@@ -80,7 +83,7 @@ public class TradeOfferViewController {
         return new SimpleStringProperty("[Proposer Missing]");
       }
     });
-
+    proposer.setReorderable(false);
     name.setMinWidth(100);
     tradeOfferTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 

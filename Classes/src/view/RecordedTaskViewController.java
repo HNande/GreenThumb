@@ -37,10 +37,15 @@ public class RecordedTaskViewController
     recordedTaskList = GreenThumbManager.getAllRecordedTasks();
 
     taskNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+    taskNameCol.setReorderable(false);
     pointAmountCol.setCellValueFactory(new PropertyValueFactory<>("pointAmount"));
+    pointAmountCol.setReorderable(false);
     taskTypeCol.setCellValueFactory(new PropertyValueFactory<>("taskType"));
+    taskTypeCol.setReorderable(false);
     taskOwnerCol.setCellValueFactory(new PropertyValueFactory<>("taskOwner"));
+    taskOwnerCol.setReorderable(false);
     timeOfRecordCol.setCellValueFactory(new PropertyValueFactory<>("timeOfRecord"));
+    timeOfRecordCol.setReorderable(false);
 
     recordedTaskTable.getItems().addAll(recordedTaskList.getRecordedTaskList());
   }

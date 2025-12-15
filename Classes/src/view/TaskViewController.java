@@ -52,9 +52,13 @@ public class TaskViewController
   public void initialize() {
     taskList = GreenThumbManager.getAllTasks();
     taskNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+    taskNameCol.setReorderable(false);
     taskPointCol.setCellValueFactory(new PropertyValueFactory<>("pointAmount"));
+    taskPointCol.setReorderable(false);
     taskTypeCol.setCellValueFactory(new PropertyValueFactory<>("taskType"));
+    taskTypeCol.setReorderable(false);
     taskTotalCol.setCellValueFactory(new PropertyValueFactory<>("totalCount"));
+    taskTotalCol.setReorderable(false);
     taskTable.setEditable(true);
     taskTable.getItems().addAll(taskList.getTaskList());
     taskNameCol.setCellFactory(TextFieldTableCell.forTableColumn());

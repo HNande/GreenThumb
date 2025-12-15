@@ -55,10 +55,12 @@ public class TradeOfferExecuteController
     @FXML
     public void initialize()
     {
-        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        pointsColumn.setCellValueFactory(new PropertyValueFactory<>("points"));
-
+      firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+      firstNameColumn.setReorderable(false);
+      lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+      lastNameColumn.setReorderable(false);
+      pointsColumn.setCellValueFactory(new PropertyValueFactory<>("points"));
+      pointsColumn.setReorderable(false);
         executeTradeButton.setDisable(true);
     }
 

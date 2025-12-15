@@ -111,12 +111,19 @@ public class MemberViewController
     memberList = GreenThumbManager.getAllMembers();
 
     firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+    firstName.setReorderable(false);
     lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+    lastName.setReorderable(false);
     phoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+    phoneNumber.setReorderable(false);
     email.setCellValueFactory(new PropertyValueFactory<>("email"));
+    email.setReorderable(false);
     points.setCellValueFactory(new PropertyValueFactory<>("points"));
+    points.setReorderable(false);
     address.setCellValueFactory(new PropertyValueFactory<>("address"));
+    address.setReorderable(false);
     lastRecordTimeColumn.setCellValueFactory(new PropertyValueFactory<>("lastRecordTime"));
+    lastRecordTimeColumn.setReorderable(false);
 
     memberTable.getItems().setAll(memberList.getMemberList());
 
