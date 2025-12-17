@@ -61,13 +61,14 @@ public class ControllerHelper {
    * @param lastName the second String that should be checked in the Arraylist
    */
   public static boolean memberNameAlreadyExists(ArrayList<Member> list, String firstName, String lastName){
+    String trimmedFirstName = firstName.trim();
+    String trimmedLastName = lastName.trim();
     for(int i = 0; i != list.size();i++){
-      if (list.get(i).getFirstName().equals(firstName.trim()) && list.get(i).getLastName().equals(lastName.trim()))
+      if (list.get(i).getFirstName().equals(trimmedFirstName) && list.get(i).getLastName().equals(trimmedLastName))
         return true;
     }
     return false;
   }
-
   /**
    * Returns whether in the list the phone number already exists.
    *
