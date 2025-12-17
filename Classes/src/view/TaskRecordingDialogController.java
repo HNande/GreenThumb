@@ -58,6 +58,7 @@ public class TaskRecordingDialogController
     memberTimeSinceLastRecord.setCellValueFactory(new PropertyValueFactory<>("lastRecordTime"));
     memberTimeSinceLastRecord.setReorderable(false);
     memberTable.getItems().addAll(memberList.getMemberList());
+
     datePicker.setValue(LocalDate.now());
     LocalDate localDate = datePicker.getValue();
     day = localDate.getDayOfMonth();
@@ -104,19 +105,12 @@ public class TaskRecordingDialogController
       ControllerHelper.showErrorMessage("Member Selection error", "Please select a Member before recording");
       return;
     }
-
-    // Record the task and add it to the recorded task list
     recordedTaskList.add(taskList.getElementByIndex(index).recordTask(selectedMember, day, month, year, boost));
     GreenThumbManager.saveCommunity(Community.getInstance());
     GreenThumbManager.saveRecordedTasks(recordedTaskList);
     GreenThumbManager.saveMembers(memberList);
     GreenThumbManager.saveTasks(taskList);
-
-    day = 0;
-    month = 0;
-    year = 0;
     boost = false;
-
     stage.close();
   }
 
@@ -128,7 +122,6 @@ public class TaskRecordingDialogController
   public void toggleBoost(ActionEvent actionEvent) {
     boost = boostButton.isSelected();
   }
-
   /**
    * Handles the date picker selection and stores the chosen date.
    *

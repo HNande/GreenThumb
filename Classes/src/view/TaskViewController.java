@@ -143,8 +143,7 @@ public class TaskViewController
   /**
    * Opens the task recording dialog for the selected task.
    */
-  public void handleRecord()
-  {
+  public void handleRecord() {
     int index = taskTable.getSelectionModel().getSelectedIndex();
     if (index >= 0) {
       try {
